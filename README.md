@@ -1,13 +1,14 @@
-# Dispense del corso di laurea in Tecnologie Quantistiche UniMiB
+# Dispense del corso di laurea in Tecnologie Quantistiche presso Università degli Studi di Milano Bicocca
 
 Raccolte di appunti presi a lezione, integrati con dispense, libri e approfondimenti messi a disposizione dai professori. Queste dispense NON intendono sostituire le lezioni dei vari insegnamenti, ma servono a integrare, comprendere e ripassare gli argomenti trattati. 
 
 ## Dispense in costruzione
 
-* [Teoria della materica condensata I]()
-* [Tecnologie quantistiche applicate]()
-* [Teoria della informazione e della computazione quantistica]()
-* [Laboratorio di stato solido e tecnologie quantistiche I]()
+* [Laboratorio di stato solido e tecnologie quantistiche I](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/laboratorio-di-stato-solido-e-tecnologie-quantistiche-I)
+* [Tecnologie quantistiche applicate](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/tecnologie-quantistiche-applicate)
+* [Teoria della informazione e della computazione quantistica](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/teoria-della-informazione-e-della-computazione-quantistica)
+* [Teoria della materica condensata I](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/teoria-della-materia-condensata-I)
+
 
 ## Contribuisci al progetto
 
