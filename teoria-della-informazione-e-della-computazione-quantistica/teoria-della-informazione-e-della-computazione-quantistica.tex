@@ -2,10 +2,11 @@
 
 % General Settings
 \usepackage[paper = a4paper, margin = 1in]{geometry}
-\usepackage[italian]{babel}
+\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
+\usepackage{graphicx}
 
 % Math packages
 \usepackage{amsmath,amssymb,amsthm}
@@ -14,7 +15,12 @@
 % Quantum circuits packages
 \usepackage[braket, qm]{qcircuit}
 
-% Documento
+% New or renewed commands
+\newcommand{\lecture}[2]{{\scshape{Lecture #1 - #2}} \par}
+\newtheorem{definition}{Definition}[chapter]
+\renewcommand{\thefootnote}{\roman{footnote}}
+
+% Documents
 \begin{document}
     \begin{titlepage}
         \begin{center}
@@ -36,4 +42,6 @@
             {\large \today \par}
         \end{center}
     \end{titlepage}
+    \tableofcontents
+    \input{chapters/ch1.tex}
 \end{document}

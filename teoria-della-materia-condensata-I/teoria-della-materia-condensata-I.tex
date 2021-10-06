@@ -14,7 +14,11 @@
 % Quantum circuits packages
 \usepackage[braket, qm]{qcircuit}
 
-% Documento
+% New commands or theorem
+\newcommand{\lecture}[2]{{\scshape{Lezione #1 - #2}} \par}
+\newtheorem{definition}{Definizione}[chapter]
+
+% Documents
 \begin{document}
     \begin{titlepage}
         \begin{center}
@@ -36,4 +40,6 @@
             {\large \today \par}
         \end{center}
     \end{titlepage}
+    \tableofcontents
+    \input{chapters/ch1.tex}
 \end{document}
