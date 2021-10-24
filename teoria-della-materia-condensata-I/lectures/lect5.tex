@@ -1,0 +1,181 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Lezione 5 %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{1.0cm}
+\lecture{5}{18/10/2021}
+\vspace{1.0cm}
+
+Per valutare l'energia totale di Hartree-Fock nello stato fondamentale possiamo sommare tutte le energie dei vari orbitali, tenendo conto della degenerazione di spin (fattore $2$) e dividendo per $2$ rimuovendo il doppio conteggio che appare nell'andare a valutare l'interazione elettrone-elettrone.
+\begin{equation*}
+    E= 2 \sum_{|\overline k|<k_F} \frac{\hbar^2k^2}{2m} + \sum_{|\overline k|<k_F}E_X(\overline k)
+\end{equation*}
+Il primo termine è l'energia cinetica per un sistema di particelle nella sfera di Fermi, che possiamo definire come:
+\begin{equation*}
+    N\expval{\varepsilon}=N\frac 35 \varepsilon_F
+\end{equation*}
+Se siamo interessati in particolar modo all'energia media per particella abbiamo:
+\begin{equation*}
+    \begin{aligned}
+        \frac E N &= \frac 35\varepsilon_F+\frac 1N \sum_{|\overline k|<k_F}E_X(\overline k) \\
+        & = \frac 35\varepsilon_F+\frac 1N V \int_{|\overline k|<k_F}\dd[3]{k}\frac{E_X(\overline k)}{(2\pi)^3}\\
+        & = \frac 35\varepsilon_F+\frac 1n \frac{4\pi}{(2\pi)^3}\int_0^{k_F}\dd{k}k^2E_X(\overline k)\\
+        & = \cdots \text{ Conti espliciti su Grosso Parravicini - Capitolo 4, Appendice C}\\
+        & = \frac 35 \varepsilon_\text{F}- \frac 3{4\pi}\frac{e_0^2k_\text{F}}{4\pi\varepsilon_0} \\
+        & = \expval{\varepsilon_{\text{cinetica}}}+\expval{\varepsilon_{\text{X}}}
+    \end{aligned}
+\end{equation*}
+Introduciamo l'\textbf{electron gas parameter} $r_\text S$ in relazione alla densità di elettroni:
+\begin{equation*}
+    \frac{4\pi}{3}(r_\text{S}a_0)^3=\frac 1 n
+\end{equation*}
+Tutte le energie possono essere espresse in \textit{Rydberg}: $\text{Ry}=\frac 12 \frac{e_0^2}{4\pi\varepsilon_0}\frac{1}{a_0}$, quindi:
+\begin{equation*}
+    k_\text{F}=(3\pi^2)^{\frac{1}{2}}\bigg(\frac{3}{4\pi}\bigg)\frac{1}{r_\text{S}a_0}
+\end{equation*}
+Inserendo questo risultato nell'energia media per particella abbiamo:
+\begin{equation*}
+    \varepsilon=\bigg(\frac{2.21}{r_\text{S}^2}-\frac{0.916}{r_\text{S}}\bigg)\text{Ry}
+\end{equation*}
+E descrive il caso \textbf{paramagnetico} di un gas di elettroni.
+Per $r_\text{S}\rightarrow 0$, cioè nel limite di alta densità, l'energia cinetica domina sull'energia di interazione tra elettroni (basti guardare come scalano le densità) e il \textbf{metodo di Hartree-Fock} descrive bene il comportamento di questi gas viceversa si comporta male nel limite di bassa densità.\\
+Un'altra osservazione interessante che si può fare riguarda la definizione di $E_{\text X}$ in termini della funzione $F(x)$. Quest'ultima varia in modo smooth (da $1$ a $\frac 12$) non appena $k$ va da $0$ a $k_\text{F}$. Nel caso ipotetico in cui rimpiazziassimo la funzione $F(x)$ con il suo valore medio $\frac 34$, avremo che il termine di scambio è costantemente uguale a:
+\begin{equation*}
+    E_\text{X}=-\frac 3{4\pi}\frac{e_0^2}{4\pi\varepsilon_0}(3\pi^2n)^{\frac 13}
+\end{equation*}
+Questo risultato può essere utilizzato per migliorare il \textbf{modello di Thomas-Fermi} per sistemi elettronici non omogenei di densità locale $n(\overline x)$:
+\begin{equation*}
+    E\big[n(\overline x)\big]=\int \dd[3]{x}V_{\text{ext}}(\overline x)n(\overline x)+E_\text{H}\big[n(\overline x)\big]+\int \dd[3]x n(\overline x)\frac 35\varepsilon_\text{F}(n(\overline x))+\int \dd[3]xn(\overline x)E_\text{X}(n(\overline x)) 
+\end{equation*}
+Questo modello è noto come \textbf{modello di Thomas-Fermi-Dirac}.\newline
+Nell'approssimazione di Hartree-Fock, il normale stato fondamentale di un gas di elettroni è stato costruito da onde piane doppiamente occupate, di vettori d'onda confinati nella sfera di Fermi. Oltre al normale stato fondamentale, è interessante considerare la situazione estrema in cui tutti gli elettroni hanno spin parallelo. Vogliamo confrontare l'energia dello stato fondamentale della \textit{fase normale} (chiamata anche \textbf{fase paramagnetica}) con l'energia della \textit{fase completamente polarizzata} (detta anche \textbf{fase ferromagnetica}). Nel caso \textbf{paramagnetico}, occupiamo tutti i livelli fino a raggiungere l'\textbf{energia di Fermi}, nel caso \textbf{ferromagnetico}, necessitiamo di più livelli, più precisamente il doppio rispetto a quelli che avevamo nel paramagnetico. Pertanto se $k_\text{F}$ cambia, anche il volume diventa tanto maggiore:
+\begin{equation*}
+    2\frac{4\pi}{3}(k_{\text F}^{\text{p}})^3=\frac{4\pi}{3}(k_{\text F}^{\text f})^3
+\end{equation*}
+Abbiamo un fattore $2$ poiché tutti gli spin sono orientati lungo la stessa direzione e verso. Allora:
+\begin{equation*}
+    k_{\text F}^{\text f}=(2)^{\frac 13}k_{\text F}^{\text p}
+\end{equation*}
+E lo inseriamo nella relazione paramagnetica per ottenere il caso ferromagnetico:
+\begin{equation*}
+    \varepsilon^{\text f}=\bigg(\frac{2.21}{r_\text{S}^2}2^{\frac 23}-\frac{0.916}{r_\text{S}}2^{\frac 13}\bigg)\text{Ry}
+\end{equation*}
+Ci chiediamo a questo punto per quale valore della densità possiamo soddisfare la seguente disuguaglianza:
+\begin{equation*}
+    \varepsilon^{\text {ferrom.}} < \varepsilon^{\text {param.}}
+\end{equation*}
+Svolgendo i conti si ottiene che 
+\begin{equation*}
+    r_\text{S} > \frac{2\pi}{5}(2^{\frac 13}+1)\bigg(\frac{9\pi}{4}\bigg)^{\frac 13}=5.45
+\end{equation*}
+Abbiamo quindi una soluzione ferromagnetica per bassa densità quando $r_\text{S} > 5.45$. \\
+Possiamo considerare le tipiche densità dei metalli, in particolare le tipiche densità di reticolo dei metalli (di conseguenza il numero di elettroni di valenza). Abbiamo che:
+\begin{equation*}
+    2<r_\text{S}<5.4
+\end{equation*}
+Osserviamo che il valore $5.45$ è minore del valore $r_\text{S}$ per il cesio (Cs): $5.62$. Ma il cesio che è un metallo alcalino, non è un metallo ferromagnetico, è un metallo paramagnetico. Il \textbf{metodo di Hartree-Fock} non prevede il corretto comportamento e le proprietà magnetiche di un gas omogeneo di elettroni. Manca qualcosa, è un'altra falla nel \textbf{metodo di Hartree-Fock}:
+\begin{enumerate}
+    \item Velocità di Fermi infinita (non corretto);
+    \item Sbaglia la descrizione delle soluzioni magnetiche (caso del Cs).
+\end{enumerate}
+
+\section{Energia di correlazione}
+
+Ciò che manca nel \textbf{metodo di Hartree-Fock} è l'\textbf{energia di correlazione}. L'energia del nostro sistema sarà quindi:
+\begin{equation*}
+    E=E_{\text{HF}}+E_{\text{CE}}
+\end{equation*}
+Se abbiamo un elettrone alla posizione $\overline x$ la probabilità di trovare un altro elettrone in $\overline{x}'$ dipende dalla distanza che separa questi due punti, in quanto tra loro è esercitata una forza repulsiva. La correlazione è intesa quindi sulla posizione occupata dagli altri elettroni. Come abbiamo detto questa correlazione non è presente nel metodo di Hartree-Fock, perché la funzione d'onda di Hartree-Fock è un semplice prodotto di funzioni d'onda a singola particella. La probabilità di trovare un elettrone nella posizione $\overline{x}'$ non dipende dalla probabilità di trovare un elettrone nella posizione $\overline x$ se hanno spin opposto. Mentre elettroni con lo stesso spin dipendono l'uno dall'altro e la probabilità congiunta di trovare in un punto spaziale, dipende dalla distribuzione spaziale degli altri elettroni per via del termine di scambio. È quindi una manifestazione delle forze di scambio.
+Calcolare l'energia di correlazione è difficile, c'è un sistema che va oltre al metodo di Hartree-Fock e proviene dalla \textbf{teoria delle perturbazioni} e richiede:
+\begin{itemize}
+    \item Nuovi metodi perché non possiamo fermarci al secondo ordine, vogliamo considerare un numero infinito di ordini;
+    \item \textbf{Teoria delle perturbazioni a molti corpi};
+    \item L'oggetto matematico: \textbf{funzione di Green a molti corpi}; 
+    \item Analisi diamagnetica della teoria delle perturbazioni dei diagrammi di Feynman,
+\end{itemize}
+Questo risultato, siccome siamo in regime perturbativo, può essere ottenuto solo ad alte densità, cioè per piccoli valori di $r_\text{S}$. A ricavarlo furono Gell-Mann e Brueckner (1957):
+\begin{equation*}
+    \varepsilon=\bigg(\frac{2.21}{r_\text{S}}^2-\frac{0.961}{r_\text{S}}+\varepsilon_{\text C}(r_\text{S})\bigg)\text{Ry}
+\end{equation*}
+dove
+\begin{equation*}
+    \varepsilon_{\text C}(r_\text{S})=-0.096+0.0622\ln{r_\text{S}}
+\end{equation*}
+Questo ricordiamo per $r_\text{S}<1$ ed è una soluzione analitica della teoria delle perturbazioni.
+Recentemente (40 anni fa) è stato introdotto un metodo differente che è un approccio stocastico che prende il nome di \textbf{simulazioni Monte-Carlo quantistiche}, ancora più complicato del precedente, qui non abbiamo più soluzioni analitiche, ma numeriche. Il risultato proviene da un metodo di valutazione stocastica della funzione d'onda che ci permette di ottenere l'energia di correlazione. Ceperly e Alden (1980) sono stati capaci di stimare l'energia di correlazione per un gas di elettroni omogeneo come funzione della densità:
+[GRAFICO DI CEPERLY VEDI PHYSICAL REVIEW LETTER]
+Quello che si nota è che la transizione dal comportamento paramagnetico al comportamento ferromagnetico è si verifica a $r_\text{S}=80$. Ci sono varie parametrizzazioni che spiegano questo risultato ad esempio una è dovuta a Perduew-Zuerger:
+\begin{equation*}
+    \begin{aligned}
+    \varepsilon_{\text C}(r_\text{S})& =(-0.048+0.0311 \ln r_\text{S}-0.0116r_\text{S}+0.002r_\text{S}\ln r_\text{S})\text{Hartree}\\
+    & =2(-0.048+0.0311 \ln r_\text{S}-0.0116r_\text{S}+0.002r_\text{S}\ln r_\text{S})\text{Ry}
+    \end{aligned}
+\end{equation*}
+I primi due termini non sono nient'altro che il risultato ottenuto da Gell-Mann e Brueckner. Ovviamente questo vale sempre per $r_\text{S}<1$, mentre per $r_\text{S}>1$ avremo:
+\begin{equation*}
+    \varepsilon_{\text C}(r_\text{S})=-\frac{0.1428}{1+1.0529\sqrt{r_\text{S}}+0.334r_\text{S}}
+\end{equation*}
+Per valori di $r_\text{S}$ molto grandi, entriamo in una nuova regione che prende il nome di \textbf{cristallo di Wigner} ($r_\text{S}=90$). Entrambe le soluzioni paramagnetiche e ferromagnetiche corrispondo a un gas omogeneo di elettroni. Se la densità diventa davvero piccola c'è un'altra configurazione che è molto favorevole e corrisponde a un cristallo di elettroni. Quest'ultimi diventano localizzati su un reticolo cristallino, ma non sono a riposo, vibrano, oscillano attorno a un punto per mantenere la validità del principio di indeterminazione di Heisemberg. È una collezione di elettroni vibranti ed è possibile valutare l'energia di questi cristalli di Wigner vedendola come somma di due termini: 
+\begin{itemize}
+    \item Energia elettrostatica, interazione tra gli elettroni, elettroni e background e tra il background stesso;
+    \item Energia dei fononi (vibrazioni degli elettroni attorno alla posizione di equilibrio).
+\end{itemize}
+Mostriamo i passaggi per ottenere l'energia totale, ovviamente non possiamo risolverlo analiticamente:
+\begin{equation*}
+    E_{\text{Coulomb}}=\frac 12 \int \dd[3]{x}\dd[3]{x'}n_{\text{tot}}(\overline x)n_{\text{tot}}(\overline{x}')\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}-\overline{x}'|}
+\end{equation*}
+dove
+\begin{equation*}
+    n_{\text{tot}}=n_{\text{background}}-\underbrace{n(\overline x)}_{\mathclap{\text{Densità degli elettroni}}}
+\end{equation*}
+la densità degli elettroni è definita come:
+\begin{equation*}
+    n(\overline x)=\sum_{\overline n}\delta(\overline x-\overline n)
+\end{equation*}
+$\overline n$ non è nient'altro che il reticolo di Bravais degli elettroni. Dobbiamo quindi porre questa espressione della densità all'interno dell'integrale. Ma questa somma converge molto lentamente all'interno di questo integrale, c'è quindi un trucco per velocizzarne la convergenza e prende il nome di \textbf{trasformazione di Ewald}: anziché considerare una funzione delta, consideriamo una funzione delta a cui togliamo una gaussiana e poi aggiungiamo una gaussiana:
+\begin{equation*}
+    \delta \rightarrow (\delta-G)+G
+\end{equation*}
+Il problema di questa lenta convergenza è dovuta al fatto che l'interazione coulombiana è a lungo raggio, dobbiamo andare molto lontani per far convergere questa quantità. Supponiamo di usare questo trucco e inserirlo nell'integrale: la prima gaussiana corrisponde a un sistema neutro perché globalmente la carica è nulla e dal momento che questa carica totale è nulla, converge molto velocemente nello spazio reale. La seconda gaussiana corrisponde a un'interazione di una carica reale e interagisce con tutte le cariche, ma questa carica non è una carica puntiforme che farebbe convergere molto lentamente, ma abbiamo una "brodered charge" che fa convergere velocemente la somma (ARTICOLO ELEARNING 2020-2021).
+Se risolviamo l'integrale otteniamo l'energia di Coulomb che dipende dal tipo di reticolo e dai parametri del reticolo come la densità, dimensione,... In particolare otteniamo che il miglior reticolo che possiamo scegliere (più bassa energia) è il reticolo BCC: body centered cubic lattice:
+[IMMAGINE DEL BCC]
+\begin{equation*}
+    \varepsilon=-\frac{1.79}{r_\text{S}}\text{Ry}
+\end{equation*}
+questa è quindi l'energia per elettrone, è un'energia classica (Hartree), ma non è zero. Nel jellium ricordiamo che questa energia era nulla, ma se localizziamo gli elettroni in un background uniforme, l'interazione di Coulomb non è più nulla.\\
+Dal momento che non abbiamo particelle classiche, ma elettroni quantistici che vibrano attorno alla loro posizione di equilibrio, dobbiamo calcolare i fononi di questo reticolo bcc. Abbiamo una particella nella cella unitaria, abbiamo quindi una particella ad ogni lato del reticolo di Bravier e ci aspettiamo quindi tre relazioni di dispersione per i fononi (3 bande):
+GRAFICO[OMEGA IN FUNZIONE DI Q]
+In un cristallo, oltre alle modalità acustiche trasverse abbiamo una modalità acuistica longitudinale. Ma qui non abbiamo un cristallo vero come il cloruro di sodio. Nel cristallo di Wigner le cariche positive sono cristallizzate e questo ci dà un differente comportamento della modalità longitudinale che non è più acustica ma costante. Il valore di questa frequenza prende il nome di frequenza di plasma e dipende dalla densià:
+\begin{equation*}
+    \omega_p^2=\frac{e_0^2n}{\varepsilon_0m}
+\end{equation*}
+Con i fononi possiamo ottenere l'energia media dovuto al loro contributo:
+\begin{equation*}
+    \varepsilon_J(q)=\hbar\omega_J(q)(n_J(q)+\frac 12)
+\end{equation*}
+$J$ rappresenta l'indice di banda (branch index) mentre $n_J(q)$ è un intero che dipende dal grado di eccitazione di questi fononi. Se siamo a $T=0K$ abbiamo l'energia di punto zero:
+\begin{equation*}
+    E_{\text{ZPE}}=\sum_{Jq}\frac{\hbar\omega_j(q)}{2}
+\end{equation*}
+Se vogliamo l'energia di punto zero per particella:
+\begin{equation*}
+    \frac{E_{\text{ZPE}}}{N}=\frac 1N\sum_{Jq}\frac{\hbar\omega_J(q)}{2}=\frac 1N\sum_J\underbrace{V}_{\mathclap{\text{Z. di Brilloun}}}\int \frac{\dd[3{q}]}{(2\pi)^3}\frac{\hbar\omega_j(q)}{2}=\frac{1}{n}\sum_{J=1}^3\int \frac{\dd[3{q}]}{(2\pi)^3}\frac{\hbar\omega_J(q)}{2}
+\end{equation*}
+Risolvendo otteniamo:
+\begin{equation*}
+    \varepsilon_{\text {WC}}=\bigg(\frac{2.66}{r_\text{S}^{\frac 32}}-\frac{1.79}{r_\text{S}}\bigg)\text{Ry}
+\end{equation*}
+Questo risultato rappresenta l'energia per particella in un cristallo di Wigner per valori di $r_\text{S}$ molto grandi.\\
+Wigner propose prima della soluzione Monte Carlo quantistica una possibile forma dell'energia di correlazione che è in grado di interpolare i valori compresi tra i risultati di Gell-Mann Brucker e tra i valori dei cristalli di Wigner:
+\begin{equation*}
+    \varepsilon_\text{CE}^\text{Wigner}=-\frac{0.88}{7.8+r_\text{S}}\text{Ry}
+\end{equation*}
+Torniamo al caso dei metalli, cosa ci aspettiamo di vedere in un metallo reale? Abbiamo visto che il metodo di Hartree-Fock non è più un buon metodo per valutare l'enegia di coesione di un metallo, cioè l'energia che otteniamo nel formare un metallo. Ma anche se considerassimo l'energia di correlazione non è sufficiente perché nei metalli reali, abbiamo i nuclei ai lati del reticolo e non sono omogeneamente BRODERED. Supponiamo di considerare una correzione all'energia di Hartree dovuto al fatto che localizziamo l'energia dei nuclei. Nel jellium l'energia di Hartree è nulla. Supponiamo di rifinire un modello e considerare che gli elettroni sono ancora distribuiti in maniera omogenea, ma localizziamo la carica dei nuclei. Se facciamo questo l'energia di Hartree non è più nulla, ma sappiamo esattamente quanto è grande perché è la stessa calcolata per il cristallo di Wigner se consideriamo un reticolo BCC per i nuclei:
+\begin{equation*}
+    \varepsilon=\varepsilon_{\text{HF}}-\frac{1.79}{r_\text{S}}\text{Ry}=\bigg(\frac{2.21}{r_\text{S}^2}-\frac{0.416}{r_\text{S}}-\frac{1.79}{r_\text{S}}\bigg)\text{Ry}
+\end{equation*}
+Possiamo usare questa energia per valutare la densità di equilibrio del nostro sistema:
+\begin{equation*}
+    \derivative{\varepsilon}{r_\text{S}}=0 \Rightarrow r_\text{S} = 1.65
+\end{equation*}
+Questo valore ci dà la densità di equilibrio di un gas di elettroni. Questo valore sembra piccolo, perché i valori tipici di $r_\text{S}$ sono in un intervallo $2<r_\text{S}<5.6$. C'è qualcosa che manca, considerare la correlazione non è sufficiente per ottenere $r_\text{S}$ per i metalli reali. Possiamo migliorare questa soluzione senza andare a trattare gli elettroni di banda, ma considerando solo gli elettroni di valenza.

@@ -1,0 +1,134 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Lezione 2 %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1.0cm}
+\newline
+\lecture{2}{08/10/2021}
+
+\section{Metodo di Hartree-Fock}
+
+Abbiamo visto che il \textbf{metodo di Hartree} non tiene conto di questo termine di scambio che abbiamo identificato con $K$. Quest'ultimo però compare nella teoria delle perturbazione e lo abbiamo visto quando abbiamo trattato l'eccitazione dell'atomo di He. Necessitiamo dunque di un nuovo metodo che tenga in considerazione $K$. Consideriamo l'hamiltoniana dell'interazione degli elettroni di He:
+\begin{equation*}
+    \hat H = \frac12\frac{e_0^2}{4\pi\varepsilon_0}\sum_{i\neq j}\frac{1}{|\overline{x}_i-\overline{x}_j|}-\frac 12\sum_{i}V_{\text H}(\overline{x}_i)
+\end{equation*}
+\noindent dove $V_{\text H}$ è il potenziale introdotto per descrivere l'interazione degli elettroni ed è un potenziale sferico.
+Nel \textbf{metodo di Hartree-Fock}, si fa la seguente approssimazione: la funzione di stato fondamentale del sistema a multielettroni è definita da un singolo determinante di Slater:
+\begin{equation*}
+    \psi(\{x_i\})=\underbrace{\frac{1}{\sqrt{N!}}}_{\text{norm.}}\underbrace{\sum_{p}}_{\text{perm.}}(-1)^p\hat p \underbrace{u_\alpha(1)u_\beta(2)\dots u_\nu(N)}_{\Phi}
+\end{equation*}
+\noindent Questa è l'assunzione che si fa, ma non sappiamo quale $\Phi$ scegliere. Abbiamo l'hamiltoniana esatta $\hat H$ e possiamo calcolare l'energia media dell'hamiltoniana con la funzione d'onda $\psi$ dell'approssimazione:
+\begin{equation*}
+    \mel{\psi}{\hat H}{\psi}=E
+\end{equation*}
+Come scegliamo quindi $\Phi$ in maniera da minimizzare l'energia $E$? Si tratta di un problema già trattato con il principio variazionale, in particolar modo è molto simile al caso del ground-state dell'atomo di elio, in cui siamo partiti da una particolare $\psi$.\\
+Nel \textbf{metodo di Hartree-Fock} invece non facciamo alcuna assunzione sulla funzione d'onda $\psi$, noi vogliamo minimizzare l'energia. In questo caso l'energia è un funzionale delle funzioni d'onda $\{u_\alpha\}$, che indichiamo così:
+\begin{equation*}
+    E\big[u_\alpha\{x_i\}\big]
+\end{equation*}
+Per poter minimizzare questo funzionale dobbiamo introdurre l'operazione di \textbf{derivata di un funzionale} (vedi Appendice 1).\\
+Prima di fare ciò, cerchiamo di dare una forma all'energia:
+\begin{equation*}
+    \mel{\psi}{\hat H}{\psi}=E\big[u_\alpha\{x_i\}\big]
+\end{equation*}
+Introduciamo l'\textbf{operatore di antisimmetrizzazione}:
+\begin{equation*}
+    \hat A = \frac{1}{N!}\sum_p(-1)^p\hat p
+\end{equation*}
+\noindent Proprietà:
+\begin{enumerate}
+    \item \textbf{Autoaggiunto}: $\forall\psi,\phi \ \ \ \ip{\psi}{\hat A \phi}=\ip{\hat A \psi}{\phi}$
+    \item \textbf{Idempotente}: $\hat A ^2 = \hat A$
+\end{enumerate}
+Con questa nuova definizione, possiamo riscrivere $\psi$ nel seguente modo:
+\begin{equation*}
+    \psi = \sqrt{N!}\hat A \Phi
+\end{equation*}
+Valutiamo gli elementi di matrice di $\hat H$ sulla base $\psi$:
+\begin{equation*}
+    \hat H = \sum_{i=1}^N \hat h_i + \frac 12 \sum_{i\neq j}^NV_{ij} 
+\end{equation*}
+\begin{equation*}
+    \hat h_i = -\frac{\hbar^2}{2m}\nabla_i^2+V_{\text{ext}}(\overline{x}_i) \ \ \ \ \ \ \ \ \ \ V_{ij}=\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}_i-\overline{x}_j|}
+\end{equation*}
+Siccome $\hat H$ è \textbf{pari} rispetto allo scambio tra particelle, questo significa che $[\hat A, \hat H]=0$
+\begin{equation*}
+    \begin{aligned}
+        \mel{\psi}{\hat H}{\psi}
+        & =\mel{{\sqrt{N!}\hat A \Phi}}{\hat H}{{\sqrt{N!}\hat A \Phi}} \\
+        & =N!\mel{\Phi}{\hat A \hat H \hat A}{\Phi} \text{ usiamo che }[\hat A, \hat H]=\hat A\hat H - \hat H \hat A = 0\\
+        & =N!\mel{\Phi}{\hat H \hat A \hat A}{\Phi} \\
+        & =N!\mel{\Phi}{\hat H \hat A^2}{\Phi} \text{ proprietà 2 di }\hat A\\
+        & =N!\mel{\Phi}{\hat H\hat A}{\Phi} \\
+        & = E
+    \end{aligned}
+\end{equation*}
+Valutiamo ciascun contributo separatamente:
+\begin{equation*}
+    \hat H = \sum_{i=1}^N \hat h_i + \frac 12 \sum_{i\neq j}^NV_{ij} 
+\end{equation*}
+Prendiamo $i=1$ e scriviamo $\Phi$ in maniera esplicita:
+\begin{equation*}
+    \begin{aligned}
+        N!\mel{\Phi}{\hat h_1\hat A}{\Phi}
+        & = N!\mel{u_\alpha(1)\dots u_\nu(N)}{\hat h_1}{\hat A u_\alpha(1)\dots u_\nu(N)} \\
+        & = N!\mel{u_\alpha(1)\dots u_\nu(N)}{\hat h_1}{\frac{1}{N!} u_\alpha(1)\dots u_\nu(N)}  \ \hat h_1 \text{ agisce su part. 1}\\
+        & = \mel{u_\alpha(1)}{\hat h_1}{u_\alpha(1)}\underbrace{\ip{u_\beta(2)\dots u_\nu(N)}{u_\beta(2)\dots u_\nu(N)}}_{\ip{u_\alpha}{u_\beta}=\delta_{\alpha\beta}}\\
+        & = \mel{u_\alpha(1)}{\hat h_1}{u_\alpha(1)} 
+    \end{aligned}
+\end{equation*}
+Questo risultato vale per tutte le $N$ particelle:
+\begin{equation*}
+    \begin{aligned}
+        \mel{u_\alpha(1)}{\hat h_1}{u_\alpha(1)} + \mel{u_\beta(2)}{\hat h_2}{u_\beta(2)} + \dots + \mel{u_\nu(N)}{\hat h_N}{u_\nu(N)} 
+        & = \mel{\psi}{\sum_i \hat h_i}{\psi} \\
+        & = \sum_\mu\mel{\mu}{\hat h}{\mu}
+    \end{aligned}
+\end{equation*}
+dove la somma è eseguita su $\mu$ che rappresenta tutto il set di numeri quantici del sistema, visto che $\hat h$ è la stessa per tutte le particelle. \\
+Consideriamo il termine che descrive le interazioni:
+\begin{equation*}
+    \begin{aligned}
+    \mel{\psi}{\frac12\sum_{i\neq j}^N V_{ij}}{\psi}
+    & =\mel{\sqrt{N!}\hat A \Phi}{\frac12\sum_{i\neq j}^N V_{ij}}{\sqrt{N!}\hat A \Phi} \\
+    & =N!\mel{\hat A \Phi}{\frac12\sum_{i\neq j}^N V_{ij}}{\hat A \Phi} \\
+    & =N!\mel{\Phi}{\frac12\sum_{i\neq j}^N V_{ij}\hat A^2}{\Phi} \\
+    & =N!\mel{\Phi}{\frac12\sum_{i\neq j}^N V_{ij}\hat A}{\Phi} \\
+    \end{aligned}
+\end{equation*}
+Prendiamo una singola coppia di particelle che interagisce: $i=1$, $j=2$:
+\begin{equation*}
+    \begin{aligned}
+    N!\mel{\Phi}{\frac12 V_{12}\hat A}{\Phi}
+    & = N!\mel{u_\alpha(1)u_\beta(2)\dots u_\nu(N)}{\frac12 V_{12}\hat A}{u_\alpha(1)u_\beta(2)\dots u_\nu(N)} \\
+    & = \mel{u_\alpha(1)u_\beta(2)}{\frac 12 V_{12}}{u_\alpha(1)u_\beta(2)}-\mel{u_\alpha(1)u_\beta(2)}{\frac 12 V_{12}}{u_\alpha(2)u_\beta(1)}
+    \end{aligned}
+\end{equation*}
+In questo caso abbiamo 2 contributi, perché il secondo contributo deriva dallo scambio delle due particelle:
+\begin{equation*}
+    \begin{aligned}
+    \mel{u_\alpha(1)u_\beta(2)}{\frac 12 V_{12}}{u_\alpha(1)u_\beta(2)}
+    & = \frac 12 \int d^3x_1d^3x_2u_\alpha^*(1)u_\beta^*(2)V_{12}u_\alpha(1)u_\beta(2) \\
+    & = \frac 12 \mel{\alpha\beta}{V_{12}}{\alpha\beta}
+    \end{aligned}
+\end{equation*}
+\begin{equation*}
+    \begin{aligned}
+    -\mel{u_\alpha(1)u_\beta(2)}{\frac 12 V_{12}}{u_\alpha(2)u_\beta(1)}
+    & = - \frac 12 \int d^3x_1d^3x_2u_\alpha^*(1)u_\beta^*(2)V_{12}u_\beta(1)u_\alpha(2) \\
+    & = - \frac 12 \mel{\alpha\beta}{V_{12}}{\beta\alpha}
+    \end{aligned}
+\end{equation*}
+A questo punto per valutare i contributi di tutte le particelle in interazione, fissiamo le particelle e facciamo variare i numeri quantici:
+\begin{equation*}
+    \mel{\psi}{\frac 12 \sum_{i\neq j}^NV_{ij}}{\psi}=\frac 12 \sum_{\mu\nu}(\underbrace{\mel{\mu\nu}{V_{12}}{\mu\nu}}_{\mathclap{\text{Integrale}\\ \text{diretto}}}-\underbrace{\mel{\mu\nu}{V_{12}}{\nu\mu})}_{\mathclap{\text{Integrale} \\ \text{di scambio}}}=\frac 12 \sum_{\mu\nu}(J_{\mu\nu}-K_{\mu\nu})
+\end{equation*}
+Pertanto l'energia totale sarà quindi:
+\begin{equation*}
+    E=\sum_\mu\mel{\mu}{\hat h}{\mu}+\frac 12\sum_{\mu\nu}(J_{\mu\nu}-K_{\mu\nu})
+\end{equation*}
+Osserviamo che, mentre nel \textbf{metodo di Hartree} c'erano dei termini spuri che descrivevano una interazione dell'elettrone con se stesso, nel \textbf{metodo di Hartree-Fock} quando poniamo $\mu=\nu$, il termine \textit{diretto} viene eliminato da quello di \textit{scambio}.\\
+Ora che abbiamo la forma esplicita dell'energia, dobbiamo miniminizzarne il suo funzionale. Tuttavia non possiamo semplicemente porre che la sua derivata sia nulla, abbiamo una compliazione aggiuntiva perché bisogna rispettare la \textbf{condizione di ortonormalità} $\ip{u_\alpha}{u_\beta}=\delta_{\alpha\beta}$. Consideriamo quindi il problema come un \textbf{problema con i minimi vincolati} e per risolverlo, utilizziamo i \textbf{moltiplicatori di Lagrange} $\lambda$:
+\begin{equation*}
+    \pderivative{(f(\overline x)-\lambda g(\overline x))}{\overline x}=0
+\end{equation*}
+dove $f(\overline x)$ è la nostra funzione che vogliamo minimizzare mentre $g(x)$ il nostro vincolo. \\

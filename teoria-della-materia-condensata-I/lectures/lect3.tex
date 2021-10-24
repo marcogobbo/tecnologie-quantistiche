@@ -1,0 +1,191 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Lezione 3 %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1.0cm}
+\newline
+\lecture{3}{11/10/2021}
+\vspace{1.0cm}
+
+\noindent Nel caso dei funzionali come $E\big[u_\alpha\big]$ con vincolo $\ip{u_\alpha}{u_\beta}-\delta_{\alpha\beta}=0$ utilizziamo $\Lambda_{\alpha\beta}$ come moltiplicatore di Lagrange:
+\begin{equation*}
+    \functionalderivative{u_\alpha^*(\overline x)}\bigg(E\big[\{u_\alpha\},\{u^*_\alpha\}\big]-\Lambda_{\alpha'\beta'}(\ip{u_{\alpha'}}{u_{\beta'}}-\delta_{\alpha'\beta'})\bigg)=0
+\end{equation*}
+\textbf{Termine} $\ip{u_{\alpha'}}{u_{\beta'}}$:
+\begin{equation*}
+    \functionalderivative{u_\alpha^*(\overline x)}\int d^3x'u_{\alpha'}^*(\overline{x}')u_{\beta'}(\overline{x}')=u_{\beta'}(\overline x)
+\end{equation*}
+\textbf{Termine} $\sum_{\mu}\mel{\mu}{\hat h}{\mu}$:
+\begin{equation*}
+    \functionalderivative{u_\alpha^*(\overline x)}\int d^3x'u_\mu^*(\overline{x}')\hat h u_\mu(\overline{x}')=\delta_{\alpha\mu}\hat h u_\alpha(\overline x)
+\end{equation*}
+\textbf{Termine} $\frac 12\sum_{\mu\nu}J_{\mu\nu}$:
+\begin{equation*}
+    \functionalderivative{u_\alpha^*(\overline x)}\frac 12 \sum_{\mu\nu}\int d^3x' d^3x''u_\mu^*(\overline{x}')u_\nu^*(\overline{x}'')\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}'-\overline{x}''|}u_\mu({\overline{x}'})u_\nu(\overline{x}'')
+\end{equation*}
+Se $\mu=\alpha \vee \nu=\alpha$ ho due contributi, prendiamo $\mu=\alpha$ e semplifichiamo il fattore $\frac 12$
+\begin{equation*}
+    \functionalderivative{u_\alpha^*(\overline x)} \sum_{\nu}\int d^3x' u_\alpha^*(\overline{x}')u_\alpha(\overline{x}') \int d^3x''u_\nu^*(\overline{x}'')\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}'-\overline{x}''|}u_\nu(\overline{x}'') =
+\end{equation*}
+\begin{equation*}
+    = \underbrace{\sum_{\nu}\int d^3x''u_\nu^*(\overline{x}'')u_\nu(\overline{x}'')\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}'-\overline{x}''|}}_{\text{Potenziale di Hartree}}u_\alpha(\overline x)=V_{\text{Hartree}}(\overline x)u_\alpha(\overline x)
+\end{equation*}
+\textbf{Termine} -$\frac 12\sum_{\mu\nu}K_{\mu\nu}$:
+\begin{equation*}
+    -\functionalderivative{u_\alpha^*(\overline x)}\frac 12 \sum_{\mu\nu}\int d^3x' d^3x''u_\mu^*(\overline{x}')u_\nu^*(\overline{x}'')\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}'-\overline{x}''|}u_\nu({\overline{x}'})u_\mu(\overline{x}'')
+\end{equation*}
+Come prima, se $\mu=\alpha \vee \nu=\alpha$ ho due contributi, prendiamo $\mu=\alpha$ e semplifichiamo il fattore $\frac 12$
+\begin{equation*}
+    - \functionalderivative{u_\alpha^*(\overline x)} \sum_{\nu}\int d^3x' u_{\alpha}^*(\overline{x}')\int d^3x''u_\nu^*(\overline{x}')u_\nu(\overline{x}'')\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}'-\overline{x}''|}u_\alpha(\overline{x}') =
+\end{equation*}
+\begin{equation*}
+    = -\sum_\nu \int d^3x''u_\nu^*(\overline{x}'')u_\alpha(\overline{x}'')\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}-\overline{x}''|}u_\nu(\overline{x})=-\hat V_{\text{Fock}}(\overline x)u_\alpha(\overline x)
+\end{equation*}
+Mettendo insieme tutti i termini abbiamo:
+\begin{equation*}
+    \hat h(\overline x) u_\alpha(\overline x)+\hat V_H(\overline x)u_\alpha(\overline x)-\hat V_{\text F}(\overline x) u_\alpha(\overline x) = \Lambda_{\alpha\beta'}u_{\beta'}(\overline x)
+\end{equation*}
+Specifichiamo meglio questi contributi:
+\begin{itemize}
+    \item $J_{\mu\nu}=\mel{\mu\nu}{V_{12}}{\mu\nu}$: senza perdere in generalità, distinguiamo la componente spaziale da quella di spin come: $\mu=\mu\sigma$, $\sigma=\pm\frac 12$, quindi
+    \begin{equation*}
+        J_{\mu\nu}=\mel{\mu\nu}{V_{12}}{\mu\nu}=\mel{\mu\sigma\nu\sigma'}{V_{12}}{\mu\sigma\nu\sigma'}=\mel{\mu\nu}{V_12}{\mu\nu}\ip{\sigma\sigma'}{\sigma\sigma'}
+    \end{equation*}
+    dal momento che $V_{12}$ non dipende dallo spin, rimane solo la componente spaziale. Pertanto nel valutare l'energia di Hartree, l'integrale è sì un integrale spaziale, ma la somma viene eseguita anche sullo spin:
+    \begin{equation*}
+        E_{\text H}=\frac 12\sum_{\mu\nu\sigma\sigma'}\mel{\mu\nu}{V_{12}}{\mu\nu}
+    \end{equation*}
+    \item $K_{\mu\nu}=\mel{\mu\nu}{V_{12}}{\nu\mu}$: stesso discorso vale per l'integrale di scambio, tuttavia, il suo valore è non nullo se gli spin hanno lo stesso verso:
+    \begin{equation*}
+        K_{\mu\nu}=\mel{\mu\nu}{V_{12}}{\nu\mu}=\mel{\mu\sigma\nu\sigma'}{V_{12}}{\nu\sigma'\mu\sigma}=-\frac 12 \sum_{\mu\nu\sigma}K_{\mu\sigma\nu\sigma}
+    \end{equation*}
+\end{itemize}
+Possiamo fare un passo in più considerando una \textbf{proprietà del determinante di Slater}: esso è invariante rispetto a una transformazione unitaria del set di numeri quantici delle funzioni d'onda a singola particella $\{u_\alpha\}$. Questo significa che $E_{\text H}$ è invariante. Osserviamo inoltre che la \textbf{matrice dei moltiplicatori di Lagrange} $\Lambda_{\alpha\beta}$ è hermitiana (autovalori lineari) e simmetrica. Mettendo insieme queste informazioni abbiamo che l'equazione dei vincoli è invariante rispetto allo scambio tra particelle, quindi i moltplicatori di Lagrange non dipendono dalle funzioni d'onda e $\Lambda_{\alpha\beta}$ è una matrice hermitiana. Possiamo quindi scegliere $u_\alpha$ affinché $\Lambda_{\alpha\beta}$ sia \textbf{diagonale}. In questo caso avremo:
+\begin{equation*}
+    \hat h u_\alpha(\overline x)+\hat V_{\text H}u_\alpha(\overline x)-\hat V_{\text F}u_\alpha(\overline x)=\varepsilon_\alpha u_\alpha(\overline x)
+\end{equation*}
+dove i $\varepsilon_\alpha$ sono numeri reali e dipendono dalla funzione d'onda.
+\begin{equation*}
+    \underbrace{(\hat h + \hat V_{\text H} - \hat V_{\text F})}_{\hat h_{\text{HF}}}u_\alpha(\overline x)=\varepsilon_\alpha u_\alpha(\overline x)
+\end{equation*}
+se rimuoviamo il termine $\hat V_{\text F}$, rifiutiando quindi di considerare il termine di scambio, troviamo il risultato del \textbf{metodo di Hartree}. \\
+Alla fine quello che dobbiamo risolvere è questa equazione in modo da ottenere soluzioni autoconsistenti $\{u_\alpha\}$. Possiamo calcolare:
+\begin{equation*}
+    E=\sum_{\mu\sigma}\mel{\mu\sigma}{\hat h}{\mu\sigma}+\frac 12 \sum_{\mu\nu\sigma\sigma'}J_{\mu\sigma\nu\sigma'}-\frac 12 \sum_{\mu\nu\sigma}K_{\mu\sigma\nu\sigma}
+\end{equation*}
+Un altro modo di esprimere l'\textbf{equazione di Hartree-Fock}:
+\begin{equation*}
+    \mel{u_\alpha}{\hat h + \hat V_{\text H} - \hat V_{\text F}}{u_\alpha}=\mel{u_\alpha}{\varepsilon_\alpha}{u_\alpha}
+\end{equation*}
+\begin{equation*}
+    \sum_\alpha\mel{\alpha}{\hat h}{\alpha}+\sum_\alpha\mel{u_\alpha}{\hat V_{\text H}}{u_\alpha}-\sum_\alpha\mel{u_\alpha}{\hat V_{\text F}}{u_\alpha}=\sum_\alpha\varepsilon_\alpha
+\end{equation*}
+\begin{equation*}
+    \sum_\mu\mel{\mu}{\hat h}{\mu}+\sum_{\mu\nu}(J_{\mu\nu}-K_{\mu\nu})=\sum_\alpha \varepsilon_\alpha
+\end{equation*}
+è simile all'energia esatta, ma non è esatta poiché stiamo contando due volte l'interazione, vista in un altro modo:
+\begin{equation*}
+    E_{\text{HF}}=\sum_\alpha\varepsilon_\alpha-\frac 12\sum_{\mu\nu}(J_{\mu\nu}-K_{\mu\nu})=\sum_\alpha\varepsilon_\alpha-E_{\text H}-E_{\text X}
+\end{equation*}
+Gli \textbf{autovalori} dell'energia di Hartree-Fock sono i \textbf{moltiplicatori di Lagrange} $\varepsilon_\alpha$, ma qual è il loro significato fisico? Come possono essere usati? La risposta viene dal seguente teorema
+\begin{theorem}[\textbf{Teorema di Koopmans}]
+    Si consideri $N$ elettroni con funzioni d'onda $\{u_\gamma\}$ e il determinante di Slater della soluzione dell'\textbf{equazione di Hartree-Fock}. Supponiamo di considerare N-1 elettroni, rimuovendo quindi un elettrone: un partifolare stato a energia $\varepsilon_\alpha$ descritto da $u_\alpha$. Il nuovo set di funzioni d'onda sarà $\{u_\beta\}\not\owns u_\alpha$. Il sistema a N particella è: $E_N=E_{N-1}+\varepsilon_\alpha$. Ciò significa che $\varepsilon_\alpha$ è l'energia da fornire al sistema per rimuovere l'elettrone. Se per esempio abbiamo un atomo e $\varepsilon_\alpha$ dell'elettrone è negativa, $\varepsilon_\alpha$ corrisponde all'energia da fornire per ionizzare il sistema.
+\end{theorem}
+\begin{prf}
+    \begin{equation*}
+        E_N=\sum_\mu\mel{\mu}{\hat h}{\mu}+\frac 12\sum_{\mu\nu}(J_{\mu\nu}-K_{\mu\nu})
+    \end{equation*}
+    \begin{equation*}
+        E_{N-1}=\sum_{\mu\neq\alpha}\mel{\mu}{\hat h}{\mu}+\frac 12\sum_{\mu\nu\neq \alpha}(J_{\mu\nu}-K_{\mu\nu})
+    \end{equation*}
+    \begin{equation*}
+        E_N=E_{N-1}+\underbrace{\mel{\alpha}{\hat h}{\alpha}+\sum_\mu(J_{\alpha\mu}-K_{\alpha\mu})}_{\varepsilon_\alpha}
+    \end{equation*}
+\end{prf}
+\subsection*{Osservazioni}
+Consideriamo $N$ elettroni e un sistema che passa dallo stato fondamentale a uno eccitato: $\varepsilon_\alpha \rightarrow \varepsilon_{\alpha'}$. Abbiamo un nuovo determinante di Slater e la differenza di energia sarà:
+\begin{equation*}
+    \Delta E = E_{\alpha'}-E_\alpha=\varepsilon_{\alpha'}-\varepsilon_\alpha - (J_{\alpha\alpha'}-K_{\alpha\alpha'})
+\end{equation*}
+Questo valore non è trascurabile quando parliamo di atomi, tuttavia quando parliamo di materiali, se eseguiamo gli integrali, questi valori sono molto piccoli soprattutto tra due elettroni separati da una grande distanza. Questi valori possono essere usati nell'equazione di Hartree-Fock per calcolare lo stato eccitato. Supponiamo di rimuovere in $\alpha$ un elettrone e di metterlo nello stato $\alpha'$, l'\textbf{energia di rilassamento}, $J_{\alpha\alpha}$ è trascurabile in questo caso.\\
+Il \textbf{metodo di Hartree-Fock} fornisce una soluzione per sistemi a molti elettroni con un singolo determinante di Slater ed è molto utile per i \textbf{sistemi a shell chiusa}.\\
+Consideriamo:
+\begin{itemize}
+    \item Atomo di He $1s^2$: è un sistema a shell chiusa ed è descritto bene dal modello di Hartree poiché non c'è energia di scambio.
+    \item Atomo di Be $1s^22s^2$: è un sistema a shell chiusa e abbiamo un contributo da parte dell'energia di scambio.
+    \item Atomo di He eccitato $1s2s$: in questo caso applicando la teoria delle perturbazioni abbiamo:
+    \begin{itemize}
+        \item Stato di singoletto: $S=0, m_s=0$
+        \item Stato di tripletto: $S=1, m_s=\pm 1$ (di cui ne prendiamo il determinante a singola particella del Slater) e $S=1, m_s= 0$
+    \end{itemize}
+    L'idea è quindi di risolvere in maniera autoconsistente il \textbf{metodo di Hartree-Fock} con una funzione d'onda a singola particella per ottenere tutti gli stati. Per gli stati a singola particella l'energia sarà esatta, altrimenti sarà differente.
+    \item Atomo di C $1s^22s^22p^2$: abbiamo differenti termini per questo atomo ${}^3P, {}^2D, {}^1S$, ma soltanto il secondo possiede un determinante di Slater a singola particella, gli altri no.
+\end{itemize}
+
+\section{Modello di Thomas-Fermi}
+Un altro modello che possiamo prendere in considerazione è il \textbf{modello di Thomas-Fermi}, a differenza del \textbf{metodo di Hartree-Fock}, l'energia è scritta come funzionale della densità di elettroni:
+\begin{equation*}
+    E\big[n(\overline x)\big]=\int \dd[3]{x}V_{\text ext}(\overline x)n(\overline x)+E_{\text H}\big[n(\overline x)\big]+E_{\text K}\big[n(\overline x)\big]
+\end{equation*}
+dove
+\begin{equation*}
+    E_{\text H}\big[n(\overline x)\big]=\frac 12 \frac{e_0^2}{4\pi\varepsilon_0}\int \dd[3]{x'}\dd[3]{x''}\frac{n(\overline{x}')n(\overline{x}'')}{|\overline{x}'-\overline{x}''|}
+\end{equation*}
+e supponiamo che il funzionale dell'energia cinetica sia funzione di $n(\overline x)$.\\
+L'approssimazione che si fa in questo modello consiste nel considerare un sistema di un grande numero N di elettroni liberi e confinati in una certa regione dello spazio con le opportune condizioni periodiche al contorno. Supponiamo di avere delle particelle indipendenti in una scatola di volume $V=L^3$:
+\begin{equation*}
+    u_{\overline k}(\overline x)=\frac{e^{i\overline k \cdot \overline x}}{\sqrt V} \ \ \ \ \ \ \ \ \ \  \overline k = \frac{2\pi}{L}(n_x,n_y,n_z) \ \ \ \ \ \ \ \ \ \ \varepsilon_{\overline k}=\frac{\hbar^2\overline{k}^2}{2m}
+\end{equation*}
+Nello stato fondamentale, possiamo riempire tutti i livelli energetici fino all'energia più alta: \textbf{energia di Fermi}, $\varepsilon_{\text F}$.
+Per N particelle e un volume V, possiamo definire la \textbf{densità di particelle}: $n=\frac NV$. Cosicché l'energia di Fermi risulti definita come:
+\begin{equation*}
+    \varepsilon_{\text F}=\frac{\hbar^2k_{\text F}^2}{2m} \ \ \ \ \ k_{\text F}=(3\pi^2n)^{\frac 13}
+\end{equation*}
+Alla luce di ciò possiamo definire la densità di particelle come:
+\begin{equation*}
+    n=\int_0^{\varepsilon_F}d\varepsilon D(\varepsilon)
+\end{equation*}
+dove $D(\varepsilon)$ rappresenta la densità di stati, cioè stati per unità di volume ed energia, $D(\varepsilon)\propto\sqrt\varepsilon$.
+\begin{equation*}
+    D(\varepsilon)=\frac{1}{2\pi^2}\bigg(\frac{2m}{\hbar^2}\bigg)^{\frac 32}\sqrt\varepsilon
+\end{equation*}
+L'energia media per particella sarà:
+\begin{equation*}
+    \expval{\varepsilon}=\frac EN=\frac VN \frac EV = \frac 1 n \frac EV=\frac 1 n \int_{0}^{\varepsilon_{\text F}}d\varepsilon D(\varepsilon)\varepsilon = \frac 3 5 \varepsilon_{\text F}(n)
+\end{equation*}
+L'idea nel \textbf{modello di Thomas-Fermi} è di considerare che localmente non abbiamo più un sistema omogeneo, abbiamo in principio un sistema non omogeneo perché la densità di elettroni dipende da $\overline x$. Più precisamente l'approssimazione riguarda l'energia cinetica quantistica in cui si assume che localmente gli elettroni abbiano una energia cinetica media che corrisponde all'energia cinetica media del sistema omogeneo di particelle indipendenti a quella densità locale.
+\begin{equation*}
+    E_{\text K}=\int \dd[3]{x}n(\overline x)\underbrace{\frac 35 \varepsilon_{\text F}(n(\overline x))}_{\mathclap{\expval{\varepsilon} \text{ al punto } \overline x}}
+\end{equation*}
+Abbiamo usato quindi il risultato di particelle indipendenti in una scatola per costruire un'approssimazione per l'energia cinetica di un sistema non omogeneo di elettroni interagenti. A questo punto possiamo scrivere il funzionale dell'energia come:
+\begin{equation*}
+    E_{\text H}\big[n(\overline x)\big]=\int \dd[3]{x} V_{\text{ext}}(\overline x)n(\overline x)+E_{\text H}\big[n(\overline x)\big]+\int \dd[3]{x}n(\overline x)\frac 35\varepsilon_{\text F}(n(\overline x))
+\end{equation*}
+Ancora una volta vogliamo minimizzare questo funzionale con il seguente vincolo:
+\begin{equation*}
+    \int_V \dd[3]{x} n(\overline x)=N
+\end{equation*}
+A differenza del \textbf{metodo di Hartree-Fock}, qui abbiamo un solo moltiplicatore di Lagrange:
+\begin{equation*}
+    \functionalderivative{n(\overline x)}\Bigg(E\big[n(\overline x)\big]-\mu\bigg(\underbrace{\int d^3x'n(x')}_{=1}-\underbrace{N}_{=0}\bigg)\Bigg)=0
+\end{equation*}
+\begin{equation*}
+    \functionalderivative{n(\overline x)}E\big[n(\overline x)\big]=\mu
+\end{equation*}
+Questa è l'equazione che dobbiamo risolvere e ci dà la densità dello stato fondamentale. Scriviamo esplicitamente:
+\begin{equation*}
+    V_{\text {ext}}(\overline x)+V_{\text H}(\overline x) + \functionalderivative{n(\overline x)}E_{\text K}=\mu
+\end{equation*}
+\begin{equation*}
+    \begin{aligned}
+        \functionalderivative{n(\overline x)}E_{K}
+        & =\functionalderivative{n(\overline x)}\int d^3x n(\overline x)\frac 35 \frac{\hbar^2}{2m}(3\pi^2)^{\frac 23}n(\overline x)^{\frac 23} \\
+        & = \functionalderivative{n(\overline x)}\int d^3x n(\overline x)^{\frac 53}\frac 35 \frac{\hbar^2}{2m}(3\pi^2)^{\frac 23} \\
+        & = \frac 35\frac{\hbar^2}{2m}(3\pi^2)^{\frac 23}\frac 53n^{\frac 23}(\overline x)\\
+        & = \varepsilon_{\text F}(n(\overline x))
+    \end{aligned}
+\end{equation*}
+Ottenendo così l'equazione di Thomas-Fermi:
+\begin{equation*}
+    V_{\text {ext}}(\overline x)+V_{\text H}(\overline x) + \varepsilon_{\text F}(n(\overline x))=\mu
+\end{equation*}
+Risolvendo questa equazione si ottiene la densità dello stato fondamentale, da cui poi possiamo ricavare l'energia dello stato fondamentale.

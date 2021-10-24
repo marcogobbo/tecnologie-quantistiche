@@ -9,14 +9,16 @@
 
 % Math packages
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
 \usepackage{mathrsfs}
-
-% Quantum circuits packages
-\usepackage[braket, qm]{qcircuit}
+\usepackage{physics}
 
 % New commands or theorem
 \newcommand{\lecture}[2]{{\scshape{Lezione #1 - #2}} \par}
 \newtheorem{definition}{Definizione}[chapter]
+\newtheorem{theorem}{Teorema}[chapter]
+\theoremstyle{remark}
+\newtheorem*{prf}{Dimostrazione}
 
 % Documents
 \begin{document}
@@ -41,5 +43,10 @@
         \end{center}
     \end{titlepage}
     \tableofcontents
-    \input{chapters/ch1.tex}
+    \input{lectures/lect1.tex}
+    \input{lectures/lect2.tex}
+    \input{lectures/lect3.tex}
+    \input{lectures/lect4.tex}
+    \input{lectures/lect5.tex}
+    \input{lectures/lect6.tex}
 \end{document}

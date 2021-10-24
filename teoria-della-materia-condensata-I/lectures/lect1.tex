@@ -1,0 +1,196 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Lezione 1 %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Elettroni interagenti}
+
+\lecture{1}{04/10/2021}
+
+\section{Metodo di Hartree}
+Il \textbf{metodo di Hartree} si preoccupa di andare a descrivere i sistemi che prevedono un'interazione tra elettroni nel medesimo sistema (ad esempio atomi). Prima di addentrarci nella trattazione del metodo, facciamo una breve digressione sul concetto di \textbf{particelle identiche}.
+
+\begin{definition}{Particelle identiche}
+    Nel momento in cui si considera un sistema, al cui interno sono presenti delle particelle identiche, a seconda del tipo di quest'ultime si deve soddisfare una determinata proprietà di simmetria rispetto allo scambio tra particelle.
+\end{definition}
+
+\noindent Identifichiamo con $\psi$ la funzione d'onda di un sistema di particelle. In particolar modo essa sarà $\psi(\overline{x}_1, s_1, \dots, \overline{x}_n, s_n)$, dove $\overline x_i$ e $s_i=\pm \frac 12$ sono rispettivamente la variabile spaziale e la proiezione dello spin lungo l'asse $z$ della particella i-esima. A questo punto, ricordiamo che possiamo classificare le particelle nel seguente modo:
+\begin{itemize}
+    \item \textbf{Fermioni}: particelle a spin semi-intero con $\psi$ antisimmetrica rispetto allo scambio tra particelle e seguono la statistica di Fermi - Dirac;
+    \item \textbf{Bosoni}: particelle a spin intero o nullo con $\psi$ simmetrica rispetto allo scambio tra particelle e seguono la statistica di Bose - Einstein.
+\end{itemize}
+
+\noindent Osserviamo quindi che una funzione d'onda ha queste proprietà di simmetria rispetto lo scambio. La $\hat H$ di un sistema è sempre simmetrica rispetto allo scambio tra particelle, essa è definita, nel modo più generale possibile come:
+
+\begin{equation*}
+    \hat H = \sum_{i=1}^N \hat h_i + \hat U_{\text{int}}
+\end{equation*}
+
+\noindent dove:
+\begin{itemize}
+    \item $\hat h_i=\frac{{\hat{\overline{p}}}_i^2}{2m}+\hat V_{\text ext}(\hat{\overline{x}}_i)$ è l'hamiltoniana della particella i-esima e ne indichiamo la sua somma con:
+    \begin{equation*}
+        \hat H_0 = \sum_{i=1}^N \hat h_i
+    \end{equation*}
+    \item $\hat U_{\text{int}}$ è il potenziale di interazione che, nel caso elettrostatico, è: 
+    \begin{equation*}
+        \hat U_{\text{int}}=\frac 12 \sum_{i \neq j}^N\frac{e_0^2}{4\pi\varepsilon_0|\overline x_i - \overline x_j|}
+    \end{equation*}
+\end{itemize}
+
+\noindent Se non ci fosse questo termine di interazione sapremmo risolvere il problema, infatti avremmo che $\hat H = \hat H_0$, per cui la soluzione esatta sarà data da:
+\begin{equation*}
+    \hat H_0\psi = E \psi 
+\end{equation*}
+
+\noindent Per componenti
+\begin{equation*}
+    \hat h u_\alpha(\overline x) = \varepsilon_\alpha u_\alpha(\overline x)
+\end{equation*}
+
+\noindent dove $\alpha$ rappresenta un set completo di numeri quantici ($n, l, m, m_s$). Sappiamo quindi costruire una soluzione a $n$ particelle come:
+\begin{equation*}
+    \Phi(\overline{x}_1, \dots, \overline{x}_n)=u_\alpha(\overline{x}_1)u_\beta(\overline{x}_2)\dots u_\nu(\overline{x}_n)
+    \ \ \ \ \ \ \ \ \ \
+    E = \varepsilon_\alpha + \dots + \varepsilon_\nu
+\end{equation*}
+\noindent Scritta in questo modo non soddisfa la condizione riguardante lo scambio tra particelle. $\Phi$ è quindi sì soluzione dell'hamiltoniana $H_0$ (hamiltoniana separabile), ma non rispetta la simmetria rispetto lo scambio tra particelle.
+
+\noindent Introduciamo il \textbf{determinante di Slater} distinguendo il caso \textbf{fermionico} da quello \textbf{bosonico}.
+
+\subsection{Determinante di Slater per fermioni}
+\noindent Affinché soddisfi questa richiesta, costruiamo il \textbf{determinante di Slater}. Partendo dalla scelta di $\alpha \dots \nu$ possiamo costruire una funzione d'onda che è una combinazione lineare in cui si permutano gli indici. La matrice si costruisce mantenendo $u_i$ costante sulle righe e variando la particella in considerazione e mantenendo la particella costante sulle colonne e variando la $u_i$.
+\begin{equation*}
+    \text{Determinante di Slater }=
+    \frac{1}{\sqrt{N!}}
+    \begin{vmatrix}
+        u_\alpha(1) & u_\alpha(2) & \cdots & u_\alpha(N) \\
+        u_\beta(1) & u_\beta(2) & \cdots & u_\beta(N) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        u_\nu(1) & u_\nu(2) & \cdots & u_\nu(N) \\
+    \end{vmatrix}
+\end{equation*}
+Osserviamo che questo è il determinante di una matrice e corrisponde alla somma di $N!$ addendi, si tratta di diverse permutazioni con diversi segni (a causa del calcolo del determinante). Sono tutti addendi a cui corrispondono funzioni d'onda ortogonali tra loro. Se sono tutti ortogonali posso facilmente normalizzare la funzione d'onda complessiva con un termine $\frac{1}{\sqrt{N!}}$. Concludiamo quindi che questa funzione d'onda soddisfa la proprietà di simmetria rispetto lo scambio. Questo lo notiamo soprattutto nello scambio tra colonne, per cui, uno scambio tra esse produce un segno meno. \\
+
+Ricordiamo che il determinante di una generica matrice è diverso da zero se tutte le righe e colonne sono \textit{linearmente indipendenti}. Questo significa che se tentassimo di costruire un sistema di N particelle con 2 particelle aventi lo stesso set di numeri quantistici, il determinante si annulla, per cui non possiamo costruire il determinante di Slater. Questo risultato permette di enunciare il seguente principio.
+
+\begin{definition}{Principio di esclusione di Pauli}
+    In un sistema di particelle identiche, soluzioni dell'hamiltoniana $\hat H$, non posso costruire una $\psi$ che abbia al suo interno funzioni d'onda con lo stesso set di numeri quantici.
+\end{definition}
+
+\subsection{Determinante di Slater per bosoni}
+Se abbiamo un sistema bosonico, la nostra funzione complessiva sarà simmetrica rispetto lo scambio tra particelle. Osserviamo che vi è un modo semplice per costruire un sistema di funzioni d'onda che soddisfi questa simmetria. Partendo anzitutto dagli stati a particella singola si costruisce il determinante di Slater, tuttavia, a differenza del caso fermionico, ogni segno negativo è trasformato in positivo. Vediamo quindi che non vi è più il problema della \textit{linearità indipendente} di righe e colonne. Quindi, nel caso di bosoni, posso costruire una funzione a N particelle con lo stesso set di numeri quantici, non avrò quindi alcun equivalente del principio di esclusione di Pauli per i bosoni.
+
+Questo però comporta delle complicazioni in termini del fattore di normalizzazione. Se abbiamo N bosoni che occupano stati a singola particella diversa, abbiamo sempre una normalizzazione pari a $\frac{1}{\sqrt{N!}}$.
+
+Possiamo però ora mettere più di una particella con lo stesso $\alpha$ nello stesso stato, non è detto che siano ortonormali tra loro, per cui il coefficiente di normalizzazione non è più $\frac{1}{\sqrt{N!}}$. Supponiamo di mettere un certo numero di particelle nello stato $n_\alpha$, avremo allora il seguente coefficiente di normalizzazione:
+
+\begin{equation*}
+    \frac{1}{\sqrt{N!\Pi_\alpha n_\alpha!}}
+\end{equation*}
+
+Abbiamo quindi, sia nel caso fermionico che bosonico, queste funzioni d'onda che sono delle soluzioni esatte della hamiltoniana separabile:
+\begin{equation*}
+    \hat H_0 = \sum_{i=1}^N \hat h_i
+\end{equation*}
+Le funzioni d'onda formano anche una base per lo spazio di Hilbert. Quindi sono un sistema di autostati per $\hat H_0$ e si può pensare di sviluppare su questa base nel momento in cui si ha anche delle interazioni del tipo:
+\begin{equation*}
+    \hat H = \hat H_0 + \hat U_{\text{int}}
+\end{equation*}
+Lo spazio che quindi ho costruito con questa base, lo possiamo usare per lavorare anche il caso di particelle interagenti. \\
+
+Il metodo più semplice per descrivere l'interazione elettrone-elettrone è il \textbf{metodo di Hartree}, consiste nello scrivere l'equazione agli autovalori a particella singola a cui però si somma un termine che descrive l'interazione con gli altri elettroni noto come \textbf{potenziale di Hartree}. L'equazione agli autovalori risulta quindi:
+
+\begin{equation*}
+    \bigg[-\frac{\hbar^2}{2m}\nabla^2 + V_{\text{ext}}(\overline x) + V_{\text H}(\overline x)\bigg]u_\alpha=\varepsilon_\alpha u_\alpha
+\end{equation*}
+Nel caso elettrostatico $V_{\text H}(\overline x)$ è:
+\begin{equation*}
+    V_{\text H}(\overline x) = \frac{e_0^2}{4\pi\varepsilon_0}\int d^3\overline{x}' \frac{n(\overline{x}')}{|\overline x - \overline{x}'|}
+\end{equation*}
+dove $n(\overline{x}')=\sum_i^N|u_i(\overline{x}')|^2$ è la densità di carica associata a tutti gli elettroni e gli $u_i(\overline x)$ sono gli autostati dell'hamiltoniana $\hat H_0$. \\
+
+In questo caso stiamo facendo un'approssimazione di campo medio, tuttavia in questa relazione stiamo considerando anche un termine di autointerazione che va, ovviamente, risolto. \\
+
+Il modello di Hartree risolve il problema attraverso una soluzione autoconsistente. Si procede attraverso una procedura iterativa, per cui:
+\\
+\textbf{Ciclo 0:}
+\begin{itemize}
+    \item Si trascura il termine $V_{\text H}$, si risolve l'equazione agli autovalori e si trovano gli stati $u_i^0$;
+    \item Si parte dagli orbitali a energia più bassa e si riempiono i vari orbitali;
+    \item Con questi stati $u_i^0$ si costruisce la $n^0(\overline{x})$;
+    \item Nota $n^0(\overline{x})$ ricavo $V_{\text H}(\overline x)^0$.
+\end{itemize}
+\textbf{Ciclo 1:}
+\begin{itemize}
+    \item Inserisco nell'equazione il termine $V_{\text H}^0$, si risolve l'equazione agli autovalori e si trovano gli stati $u_i^1$;
+    \item Si parte dagli orbitali a energia più bassa e si riempiono i vari orbitali;
+    \item Con questi stati $u_i^1$ si costruisce la $n^1(\overline{x})$;
+    \item Nota $n^1(\overline{x})$ ricavo $V_{\text H}^1(\overline x)$.
+\end{itemize}
+\textbf{Ciclo j:}
+\begin{itemize}
+    \item Inserisco nell'equazione il termine $V_H^{j-1}$, si risolve l'equazione agli autovalori e si trovano gli stati $u_i^j$;
+    \item Si parte dagli orbitali a energia più bassa e si riempiono i vari orbitali;
+    \item Con questi stati $u_i^j$ si costruisce la $n^j(\overline{x})$;
+    \item Nota $n^j(\overline{x})$ ricavo $V_{\text H}^j(\overline x)$.
+\end{itemize}
+Itero questo procedimento finché non raggiungo un risultato consistente tale per cui le funzioni d'onda N-1 e N differiscono di poco tra loro. Tramite questo processo raggiungo una soluzione autoconsistente.
+Per quanto riguarda invece l'energia totale, essa non sarà data da:
+\begin{equation*}
+    E=\sum_i\varepsilon_i=\sum_i\bra{u_i}\hat h + V_H\ket{u_i}=\sum_i \bra{u_i}\hat h\ket{u_i}+\int d^3x V_{\text H}(\overline x)|u_i(\overline x)|^2
+\end{equation*}
+Analizziamo bene l'ultimo integrale:
+\begin{equation*}
+    \frac{e_0^2}{4\pi\varepsilon_0}\int \dd[3]{x'} \int \dd[3]{x} \frac{n(\overline x)n(\overline{x}')}{|\overline x - \overline{x}'|}
+\end{equation*}
+Stiamo contando due volte l'interazione coulombiana, quindi a questo risultato si pone davanti un fattore $\frac 12$. Quindi l'energia sarà:
+\begin{equation*}
+    E=\sum_i\varepsilon_i - \frac 12 \frac{e_0^2}{4\pi\varepsilon_0}\int d^3 \overline x'\int d^3 \overline x \frac{n(\overline x)n(\overline{x}')}{|\overline x - \overline{x}'|} = \sum_i\varepsilon_i - E_{\text H}
+\end{equation*}
+Questo metodo è molto semplice, ci permette di descrivere in particolare il caso di 2 elettroni in interazione come nell'atomo di elio. Precisiamo però che nello stato fondamentale funziona, però già nello stato eccitato vi è una complicazione.
+\subsection{Atomo di He}
+Ripartiamo dall'hamiltoniana del sistema:
+\begin{equation*}
+    \hat H = \hat h_1 + \hat h_2 + \frac{e_0^2}{4\pi\varepsilon_0 |\overline{x}_1-\overline{x}_2|} \text{   dove   } \hat h = -\frac{\hbar^2}{2m}\nabla^2-\frac{e_0^2 Z}{4\pi\varepsilon_0 r}
+\end{equation*}
+La ricerca di soluzioni approssimate ci ha portati all'utilizzo della teoria perturbativa considerando l'interazione come una perturbazione. Per l'hamiltoniana di singola particella abbiamo:
+\begin{equation*}
+    \hat h u_{nlmm_s}(\overline x)=\varepsilon_nu_{nlmm_s}(\overline x)
+\end{equation*}
+Se abbiamo, in questo caso, due particelle bisogna decidere quali stati occupare: $1s^2$ oppure $1s2s$. Siccome siamo interessati allo stato eccitato, consideriamo quest'ultima. Bisogna ora scegliere come costruire il determinante di Slater.\\
+
+Vi sono quattro possibili scelte a seconda di come andiamo a posizionare gli elettroni:
+[GRAFICO]
+Ogni configurazione è un determinante di Slater e vi sono 4 stati degeneri. Una volta individuata la soluzione esatta, si procede con l'accendere la perturbazione e la si tratta con la teoria delle perturbazioni. Partiamo con il definire il potenziale di interazione
+
+\begin{equation*}
+    U_{\text{int}}=\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}_1-\overline{x}_2|}
+\end{equation*}
+
+Successivamente dobbiamo costruire la matrice di elementi: $\mel {j}{U_{\text{int}}}{i}$ e per farlo dobbiamo diagonalizzarla sul sottospazio degli stati degeneri. In questo caso risulta opportuno trovare delle simmetrie così da facilitare la risoluzione del problema agli autovalori. In maniera molto intuitiva, gli operatori di spin, commutano con l'hamiltoniana, infatti $\hat{\overline S} = \hat{\overline{S}}_1+\hat{\overline{S}}_2$, da cui possiamo costruire gli operatori $\hat S^2$ ed $\hat S_z$. \\
+Vediamo ora se gli autostati dati dal determinante di Slater sono dei buoni autostati di $\hat H$, $\hat S^2$ ed $\hat S_z^2$:
+\begin{equation*}
+    \psi^{(1)}=\frac {1}{\sqrt 2} \begin{vmatrix} u_{1s}(1)\alpha(1) & u_{1s}(2)\alpha(2) \\ u_{2s}(1)\alpha(1) & u_{2s}(2)\alpha(2) \end{vmatrix}=\frac {1}{\sqrt 2} \big[u_{1s}(1)u_{2s}(2)\alpha(1)\alpha(2)-u_{1s}(2)u_{2s}(1)\alpha(2)\alpha(1)\big]
+\end{equation*}
+\begin{equation*}
+    \psi^{(1)}=\frac {1}{\sqrt 2}\alpha(1)\alpha(2)\big[u_{1s}(1)u_{2s}(2)-u_{1s}(2)u_{2s}(1)\big]
+\end{equation*}
+osserviamo che la componente di spin è simmetrica rispetto allo scambio delle due particelle, mentre la componente spaziale è antisimmetrica.\\
+Pertanto dalla funzione $\psi^{(1)}$ abbiamo il primo \textbf{stato di tripletto}: $\ket{11}$, lo stesso ragionamento lo possiamo applicare per $\psi^{(2)}$ dove in questo caso abbiamo $\beta(1)\beta(2)$, cioè il secondo \textbf{stato di tripletto}: $\ket{1-1}$. Tuttavia se costruissi i determinanti di Slater per $\psi^{(2)}$ e $\psi^{(4)}$, essi non si fattorizzano in una componente spaziale e una di spin, per cui non sono delle buone funzioni/autostati. Se però eseguissimo una combinazione lineare di $\psi^{(2)}$ e $\psi^{(4)}$ troveremmo due stati ortogonali che possono essere fattorizzati in una componente spaziale e una di spin, ottenendo: $\ket{10}$ (terzo \textbf{stato di tripletto}) e $\ket{00}$ \textbf{stato di singoletto}). Quindi avremo tre \textbf{stato di tripletto} simmetrici e uno \textbf{stato di singoletto} antisimmetrico rispetto allo scambio tra le due particelle.
+
+Quindi se scelgo ora questa nuova base $\psi^{(1)}$, $\psi^{(2)}$, $\psi^{(3')}$ e $\psi^{(4')}$, ho che la perturbazione è già diagonale ed è indipendente dallo spin. Per cui non resta che valutare, rispettivamente per il tripletto e il singoletto queste quantità:
+\begin{equation*}
+    \mel{\psi_T}{\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}_1-\overline{x}_2|}}{\psi_T} = J - K
+\end{equation*}
+\begin{equation*}
+    \mel{\psi_S}{\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}_1-\overline{x}_2|}}{\psi_S} = J + K
+\end{equation*}
+Queste due quantità vengono chiamate rispettivamente:
+\begin{equation*}
+    \text{Integrale diretto } J = \frac{e_0^2}{4\pi\varepsilon_0}\int d^3x d^3x'u_{1s}^*(\overline x)u_{1s}(\overline x)u_{2s}^*(\overline{x}')u_{2s}(\overline{x}')\frac{1}{|\overline x - \overline{x}'|}
+\end{equation*}
+\begin{equation*}
+    \text{Integrale di scambio } K = \frac{e_0^2}{4\pi\varepsilon_0}\int d^3x d^3x'u_{1s}^*(\overline x)u_{1s}(\overline{x}')u_{2s}^*(\overline{x}')u_{2s}(\overline{x})\frac{1}{|\overline x - \overline{x}'|}
+\end{equation*}
+In questo caso possiamo osservare che il contributo dell'interazione sarà minore nel caso del tripletto rispetto a quello del singoletto. Inoltre $K$ è un effetto puramente quantistico, non ha alcun analogo classico.
+Pertanto per l'atomo di elio, $J\approx 9.2 \text{ eV}$, mentre $K \approx 0.8 \text{ eV}$. In questo caso però l'\textbf{integrale di scambio} non c'è nel \textbf{modello di Hartree}, lo abbiamo trovato in regime perturbativo, ma non possiamo usare la teoria delle perturbazioni per gli atomi più grandi, a più elettroni. Le funzioni d'onda idrogenoidi non sono un buon punto di partenza, bisogna introdurre qualcosa che tenga conto di $K$ e questo viene fatto dal seguente metodo.

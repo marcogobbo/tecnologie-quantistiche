@@ -1,0 +1,186 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Lezione 6 %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{1.0cm}
+\lecture{6}{22/10/2021}
+\vspace{1.0cm}
+
+\subsection{Funzioni di correlazione}
+
+Prima di continuare la discussione sull'energia di scambio e correlazione e usarla nelle applicazioni, cerchiamo di capire di più della sua origine fisica. Per questo motivo, introduciamo il concetto di \textbf{densità di probabilità congiunta} che indichiamo con $P(\overline x, \overline{x}')$. Queste funzioni hanno il seguente andamento:
+\begin{equation*}
+    P(\overline x, \overline x') \longrightarrow n(\overline x)n(\overline{x}') \text{ per } |\overline x-\overline{x}'|\rightarrow +\infty
+\end{equation*}
+Non ci aspettiamo nessun effetto tra due punti separati da grandi distanze.
+\begin{equation*}
+    P(\overline x, \overline x') \longrightarrow g(\overline x, \overline x')n(\overline x)n(\overline{x}') \text{ quando non sono lontane}
+\end{equation*}
+La funzione $g(\overline x, \overline x')$ prende il nome di \textbf{funzione di correlazione di coppia}. \\
+Questa densità di probabilità congiunta può essere usata per valutare la densità di probabilità di un sistema costituito da \textit{N} particelle.\\
+Supponiamo di calcolare la densità di probabilità di trovare la particella 1 nella posizione $\overline x$ e la particella 2 nella posizione $\overline{x}'$ tenendo conto delle posizioni occupate dalle \textit{N-2} particelle:
+\begin{equation*}
+    P(\overline x, \overline{x}')=N(N-1)\int \dd[3]x_3\dots\dd[3]{x_N} |\psi(\overline x, \overline{x}', \overline{x}_3, \dots, \overline{x}_N)|^2
+\end{equation*}
+In questa relazione stiamo però trascurando lo spin, per tenerne conto avremo quindi:
+\begin{equation*}
+    P(\overline x, \overline{x}')=N(N-1)\sum_{\sigma \sigma'}\sum_{}\int \dd[3]{x_3}\dots\dd[3]{x_N}|\psi(\overline x \sigma, \overline{x}'\sigma', \overline{x}_3\sigma_3,\dots,\overline{x}_N\sigma_N|^2
+\end{equation*}
+In particolar modo possiamo definire:
+\begin{equation*}
+    P_{\sigma\sigma'}(\overline x, \overline{x}')=N(N-1)\sum_{}\int \dd[3]{x_3}\dots\dd[3]{x_N}|\psi(\overline x \sigma, \overline{x}'\sigma', \overline{x}_3\sigma_3,\dots,\overline{x}_N\sigma_N|^2
+\end{equation*}
+Cosicché:
+\begin{equation*}
+    P(\overline x, \overline{x}')=\sum_{\sigma \sigma'}P_{\sigma\sigma'}(\overline x, \overline{x}')
+\end{equation*}
+Possiamo definire $P_{\sigma\sigma'}(\overline x, \overline{x}')$ in un altro modo:
+\begin{equation*}
+    P_{\sigma\sigma'}(\overline x, \overline{x}')=g_{\sigma\sigma'}(\overline{x}, \overline{x}')n_\sigma(\overline x)n_{\sigma'}(\overline{x}')
+\end{equation*}
+Mettendo insieme questi risultati abbiamo che:
+\begin{equation*}
+    g(\overline x, \overline{x}')=\sum_{\sigma \sigma'}g_{\sigma\sigma'}(\overline x, \overline{x}')\frac{n_\sigma(\overline x)n_\sigma(\overline{x}')}{n(\overline x)n(\overline{x}')}
+\end{equation*}
+dove
+\begin{equation*}
+    n(\overline x)=\sum_\sigma n_\sigma(\overline x)
+\end{equation*}
+Per sistemi omogenei e paramagnetici, la densità non dipende dalla posizione, pertanto: $n(\overline x)=n$ e $n_\uparrow=n_\downarrow=\frac n2$.
+Siccome $g_{\sigma\sigma'}(\overline x, \overline{x}')$ dipende dalla distanza tra le due particelle possiamo vederla come:
+\begin{equation*}
+    g_{\sigma\sigma'}(\overline x, \overline{x}')=g_{\sigma\sigma'}(|\overline x- \overline x'|)
+\end{equation*}
+Possiamo quindi esprimere l'equazione per un sistema omogeneo come:
+\begin{equation*}
+    \begin{aligned}
+    g(r) & =\sum_{\sigma\sigma'}g_{\sigma\sigma'}(r)\frac{n_\sigma n_{\sigma'}}{n^2} \\
+        & = (\underbrace{g_{\uparrow\uparrow}(r)+g_{\downarrow\downarrow}(r)}+\underbrace{g_{\uparrow\downarrow}(r)+g_{\downarrow\uparrow}(r)})\frac 14
+    \end{aligned}
+\end{equation*}
+Se un sistema è paramagnetico non c'è una direzione privilegiata:
+\begin{equation*}
+    g(r)=\frac 12(g_{\uparrow\downarrow}(r)+g_{\uparrow\uparrow}(r))
+\end{equation*}
+Tornando alla definizione, diamo uno sguardo ai limiti: $g_{\sigma\sigma'}\rightarrow 1$ quando $r\rightarrow +\infty$. Questo è ciò che ci aspettiamo:
+[GRAFICO]
+Cosa succede alla soluzione di Hartree-Fock per un gas omogeneo di elettroni? Possiamo valutare analiticamente la funzione di correlazione di coppia
+[GRAFICO]
+Osserviamo che:
+\begin{enumerate}
+    \item $g_{\uparrow\downarrow}(r)=1$, non c'è correlazione;
+    \item $g_{\uparrow\uparrow}(r)$ tende a $0$ per piccole distanze e tende a $1$ per $r\rightarrow+\infty$.
+\end{enumerate}
+Vogliamo calcolare la funzione di correlazione di coppia. Ricordiamo che:
+\begin{equation*}
+    \begin{aligned}
+    P_{\sigma\sigma'}(\overline x, \overline{x}') &= n_\sigma(\overline x)n_{\sigma'}(\overline{x}')g_{\sigma\sigma'}(\overline x, \overline{x}') \\
+    & = N(N-1)\sum_{}\int \dd[3]{x_3}\dots\dd[3]{x_N}|\psi(\overline x \sigma, \overline{x}'\sigma', \overline{x}_3\sigma_3,\dots,\overline{x}_N\sigma_N|^2 \\
+    & = \mel{\psi}{\sum_{i\neq j}\delta(\overline{x}_i-\overline{x})\delta(\overline{x}_j-\overline{x}')\delta_{\sigma_i\sigma}\delta_{\sigma_j\sigma'}}{\psi}
+    \end{aligned}
+\end{equation*}
+Questa può essere vista come una interazione tra due particelle: $\mel{\psi}{\sum_{i\neq j}V_{ij}}{\psi}$, le funzioni d'onda sono le funzioni d'onda di Hartree-Fock $\psi=\psi_{\text{HF}}$
+\begin{equation*}
+    \mel{\psi}{\sum_{i\neq j}V_{ij}}{\psi})=\sum_{\mu\nu\sigma\sigma'}\big(\mel{\mu\sigma\nu\sigma'}{V_{12}}{\mu\sigma\nu\sigma'}-\mel{\mu\sigma\nu\sigma'}{V_{12}}{\mu\sigma'\nu\sigma}\big)
+\end{equation*}
+Dobbiamo sommare anche sullo spin, ma se abbiamo delle delta di Kronecker all'interno dell'espressione, abbiamo già scelto lo spin.
+Se consideriamo l'interazione $V_{12}=\delta(\overline{x}_1-\overline x)\delta(\overline{x}_2-\overline{x}')$, allora il braket nel termine di scambio non è nullo quando $\sigma=\sigma'$.
+Avremo allora:
+\begin{equation*}
+    g_{\sigma\sigma'}(r)=\frac{4}{n^2}\sum_{\mu\nu}(\mel{\mu\sigma\nu\sigma'}{V_{12}}{\mu\sigma\nu\sigma'}-\delta_{\sigma\sigma'}\mel{\mu\sigma\nu\sigma}{V_{12}}{\mu\sigma\nu\sigma})
+\end{equation*}
+Valutiamo ora gli integrali per $g_{\uparrow\downarrow}(r)$ e $g_{\uparrow\uparrow}(r)$.
+\begin{equation*}
+    \begin{aligned}
+        g_{\uparrow\downarrow}(r) & = \frac{4}{n^2}\sum_{\mu\nu}\mel{\mu\uparrow\nu\downarrow}{\delta(\overline{x}_1-\overline x)\delta(\overline{x}_2-\overline{x}')}{\mu\uparrow\nu\downarrow} \\
+        & = \frac{4}{n^2}\sum_{\mu\nu}\int \dd[3]{x_1}\dd[3]{x_2}u_\mu^*(\overline{x}_1)u_\nu^*(\overline{x}_2)\delta(\overline{x}_1-\overline{x})\delta(\overline{x}_2-\overline{x}')u_\mu(\overline{x}_1)u_\nu(\overline{x}_2) \\
+        & = \frac{4}{n^2}\sum_{\mu\nu}u_\mu^*(\overline x)u_\mu(\overline x)u_\nu^*(\overline{x}')u_\nu(\overline{x}') \\
+        & = \frac{4}{n^2}\sum_{\mu\nu}|u_\mu(\overline x)|^2|u_\nu(\overline{x}')|^2 \\
+        & = \frac{4}{n^2}\frac n2 \frac n2 \\
+        & = 1
+    \end{aligned}
+\end{equation*}
+La somma è eseguita sugli stati occupati e inoltre $\sum_\mu|u_\mu(\overline{x})|^2=\frac n2$, lo stesso discorso vale per $\nu$.
+\begin{equation*}
+    \begin{aligned}
+        g_{\uparrow\uparrow}(r) & = \frac{4}{n^2}\bigg(\frac {n^2}{4} - \sum_{\mu\nu}\mel{\mu\uparrow\nu\uparrow}{\delta(\overline{x}_1-\overline{x})\delta(\overline{x}_2-\overline{x}')}{\nu\uparrow\mu\uparrow}\bigg) \\
+        & = 1 - \frac{4}{n^2}\sum_{\overline k, \overline{k}'}\int\dd[3]{x_1}\dd[3]{x_2}e^{-i\overline k \cdot \overline{x}_1}e^{-i\overline{k}'\cdot\overline{x}_2}\delta(\overline{x}_1-\overline{x})\delta(\overline{x}_2-\overline{x}')e^{i\overline{k}'\cdot\overline{x}_1}e^{i\overline{k}\cdot\overline{x}_2}\frac{1}{V^2} \\
+        & = 1 - \frac{4}{n^2}\sum_{\overline k, \overline{k}'}e^{i\overline{k}'\cdot(\overline{x}-\overline{x}')}e^{-i\overline{k}\cdot(\overline{x}-\overline{x}')}\frac{1}{V^2} \\
+        & = 1 - \frac{4}{n^2}\bigg|\sum_{k<k_F}\frac{e^{i\overline{k}\cdot(\overline{x}-\overline{x}')}}{V^2}\bigg|^2 \\
+        & = 1 - \frac{4}{n^2}\bigg|\int{k<k_F}\dd[3]{k}\frac{1}{(2\pi)^3} e^{i\overline{k}\cdot(\overline{x}-\overline{x}')}\bigg|^2 \\
+        & = 1 -f^2(r)
+    \end{aligned}
+\end{equation*}
+Passiamo dalla sommatoria all'integrale considerando un gran numero di stati. L'integrale è eseguito sulla sfera di Fermi.\\
+Possiamo calcolare $f^2(r)$ usando le coordinate sferiche:
+\begin{equation*}
+    \begin{aligned}
+        f^2(r) & = \frac{4}{n^2}\Bigg|\frac{1}{(2\pi)^3}\int_0^{k_\text{F}}\dd{k}k^2\int_0^{2\pi}\dd{\varphi}\int_0^\pi\dd{\theta}\sin\theta e^{ikr\cos\theta}\Bigg|^2 \\
+        & = \dots \\
+        & = \Bigg|\frac{3}{(k_\text{F}r)^3}(\sin k_{\text{F}}r-k_{\text F}r\cos k_{\text F}r)\Bigg|^2
+    \end{aligned}
+\end{equation*}
+dove $k_{\text F}=(3\pi^2n)^{\frac13}$
+Osserviamo che:
+\begin{equation*}
+    f(r) \rightarrow 0 \text{ per } r \rightarrow +\infty
+\end{equation*}
+\begin{equation*}
+    f(r) \rightarrow 1 \text{ per } r \rightarrow 0
+\end{equation*}
+Abbiamo quindi:
+\begin{equation*}
+    g_{\uparrow\uparrow}(r)=1-f^2(r)
+\end{equation*}
+\begin{equation*}
+    g_{\uparrow\downarrow}(r)=1
+\end{equation*}
+[GRAFICO]
+Cosa succede quando consideriamo le simulazioni quantistiche Monte Carlo per un gas omogeneo di elettroni? La componente con spin antiparallelo non è più costante, ma dipende dalla densità, se consideriamo $r_{\text S}=0.8$ abbiamo il seguente grafico:
+[GRAFICO]
+Se consideriamo $r_\text{S}=10$ è molto diverso rispetto alla soluzione trovata con Hartree-Fock.
+[GRAFICO]
+Ciò che otteniamo è sempre una soluzione numerica, non è possibile ottenere questi risultati in via analitica.
+
+\section{Buca di scambio e correlazione}
+I concetti di densità di probabilità congiunta e di funzione di correlazione di coppia ci consentono di introdurre un ulteriore oggetto. Partendo da:
+\begin{equation*}
+    P(\overline x, \overline{x}')=g(\overline x, \overline{x}')n(\overline x)n(\overline{x}')
+\end{equation*}
+e integrando rispetto a $\overline{x}'$:
+\begin{equation*}
+    \begin{aligned}
+        \int \dd[3]{x'}P(\overline x, \overline{x}') &= n(\overline x)\int \dd[3]{x'} g(\overline x, \overline{x}')n(\overline{x}') \\
+        & = N(N-1)\int\dd[3]{x'}\dd[3]{x}_3\dots\dd[3]{x}_N|\psi(\overline x, \overline{x}', \overline{x}_3, \dots, \overline{x}_N)|^2
+    \end{aligned}
+\end{equation*}
+Diamo uno sguardo all'integrale, stiamo integrando su tutte le particelle eccetto la prima. Questa ci dà la probabilità di trovare la particella 1 nella posizione $\overline x$. Se questo discorso lo applichiamo a tutte le particelle otteniamo una $n(\overline x)$ che abbiamo per \textit{N} particelle pari a
+\begin{equation*}
+    (N-1)n(\overline x)
+\end{equation*}
+\begin{equation*}
+    \int \dd[3]{x'}g(\overline x, \overline{x}')n(\overline{x}')=(N-1)
+\end{equation*}
+Valutiamo la seguente quantità:
+\begin{equation*}
+    \int \dd[3]{x'}\underbrace{(g(\overline x, \overline{x}')-1)n(\overline{x}')}_{h_{\text{XC}}(\overline x, \overline{x}')}=(N-1)-\underbrace{\int \dd[3]{x'}n(\overline{x}')}_{N}=-1
+\end{equation*}
+$h_{\text{XC}}$ prende il nome di funzione buca di scambio e correlazione e ha la seguente proprietà:
+\begin{equation*}
+    \int \dd[3]{x'}h(\overline x, \overline{x}')=-1
+\end{equation*}
+$h(\overline x, \overline{x}')$ ci dice che c'è un esaurimento della densità elettronica vicino alla posizione di un elettrone e che la densità mancante integrata è esattamente uguale a un elettrone. Questo è fisicamente previsto, poiché il principio di esclusione di Pauli, così come la repulsione di Coulomb, riduce la densità di elettroni vicino a un sito specifico già occupato da un elettrone. La conservazione del numero di particelle richiede che la densità mancante sia uguale a uno, poiché c'è già un elettrone nel sito $\overline x$. Questo esaurimento (o lacuna) della densità elettronica è chiamato il buca di scambio e correlazione. \\
+$h(\overline x, \overline{x}')$ in principio ci consente di trovare l'energia di scambio e correlazione:
+\begin{equation*}
+    \begin{aligned}
+        E_{\text{Coulomb}} & =\mel{\psi}{\sum_{i\neq j}\frac 12 V_{ij}}{\psi} \\
+        & = \frac 12 \int \dd[3]{x}\dd[3]{x'}P(\overline x, \overline{x}')\frac{e_0^2}{4\pi\varepsilon_0|\overline{x}-\overline{x}'|} \\
+        & = \frac 12 \int \dd[3]{x}\dd[3]{x'}(g(\overline x, \overline{x}')-1+1)\frac{e_0^2n(\overline x)n(\overline{x}')}{4\pi\varepsilon_0|\overline{x}-\overline{x}'|} \\
+        & = \underbrace{\frac 12 \int \dd[3]{x}\dd[3]{x'}\frac{n(\overline x)n(\overline{x}')e_0^2}{4\pi\varepsilon_0|\overline{x}-\overline{x}'|}}_{\text{Energia di Hartree}}+\underbrace{\frac 12 \int \dd[3]{x}\dd[3]{x'}\frac{n(\overline x)e_0^2}{4\pi\varepsilon_0|\overline{x}-\overline{x}'|}h_{\text{XC}}(\overline{x}, \overline{x}')}_{\text{Energia di scambio e correlazione}}
+    \end{aligned}
+\end{equation*}
+Come osservazione finale supponiamo di mettere un elettrone nell'origine $O$ e considerare un jellium. Consideriamo un altro elettrone in posizione $r$, ci aspettiamo di vedere vicino all'origine un esaurimento di elettroni. Qual è l'interazione? Non è una interazione tra l'elettrone nell'origine e quello in posizione $r$, ma ci sono una serie di cariche positive in eccesso e questo scherma l'interazione coulombiana tra i due elettroni. Questa schermatura è descritta dal \textbf{potenziale di Yukawa}:
+\begin{equation*}
+    V_{\text{Yukawa}}(r)=-g^2\frac{e^{-\alpha mr}}{r}
+\end{equation*}
+Vedremo come approssimare questo effetto schermo.
