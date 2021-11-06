@@ -1,0 +1,228 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Lezione 7 %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{1.0cm}
+\lecture{7}{25/10/2021}
+\vspace{1.0cm}
+
+\section{Screening}
+
+Abbiamo osservato che l'interazione tra due cariche in un gas omogeneo di elettroni o in generale, in un qualque sistema di interazione tra elettroni, l'interazione è schermata dalle altre cariche presenti. Possiamo formalizzare questa idea con la \textbf{teoria della risposta lineare}
+
+\subsection{Teoria della risposta lineare}
+Questa teoria assume che la densità è lineare. Consideriamo un cambiamento nel $V_{\text{ext}}$ ed è tale per cui genera un cambiamento, a sua volta, nella densità in una relazione lineare:
+\begin{equation*}
+    \delta V_{\text{ext}}(\overline{x}') \longrightarrow \delta n(\overline x) = \int \dd[3]{\overline{x}'}\chi(\overline x, \overline{x}')\delta V_{\text{ext}}(\overline{x}')
+\end{equation*}
+$\chi(\overline x, \overline{x}')$ prende il nome di \textbf{suscettività} e in un gas omogeneo di elettroni dipende solo della distanza tra $\overline x$ e $\overline{x}'$:
+\begin{equation*}
+    \chi(\overline x, \overline{x}')=\chi(|\overline x - \overline{x}'|)
+\end{equation*}
+Questa espressione può essere introdotta usando le trasformazioni di Fourier, possiamo scegliere qualunque definizione, noi scegliamo quella con il fattore $(2\pi)^3$ a denominatore:
+\begin{equation*}
+    \delta n(\overline x) = \frac{1}{(2\pi)^3}\int \dd[3]{q} \delta n(\overline q) e^{i\overline q \cdot \overline x}
+\end{equation*}
+\begin{equation*}
+    \delta n(\overline q) = \frac{1}{(2\pi)^3}\int \dd[3]{x} \delta n(\overline x) e^{-i\overline q \cdot \overline x}
+\end{equation*}
+Ora possiamo usare questa definizione per scrivere la risposta lineare:
+\begin{equation*}
+    \begin{aligned}
+        \delta n(\overline x) &=\frac{1}{(2\pi)^3}\int \dd[3]q\delta n(\overline q)e^{i\overline q \cdot \overline x} \\
+        & = \int \dd[3]{x'}\chi(|\overline x - \overline{x}'|)\frac{1}{(2\pi)^3}\int \dd[3]{q}\delta V_{\text{ext}}(\overline q)e^{i\overline q \cdot \overline x} \\
+        & = \int \dd[3]{x'}\chi(|\overline x - \overline{x}'|)\frac{1}{(2\pi)^3}\int \dd[3]{q}\delta V_{\text{ext}}(\overline q)e^{i\overline q \cdot \overline x}e^{i\overline q \cdot \overline x}e^{-i\overline q \cdot \overline x} \\
+        & = \frac{1}{(2\pi)^3}\int \dd[3]{q}e^{i\overline q \cdot \overline x}\int\dd[3]{x'}\chi(|\overline x - \overline{x}'|)e^{i\overline q \cdot (\overline{x}'-\overline{x})}\delta V_{\text{ext}}(\overline q)
+    \end{aligned}
+\end{equation*}
+Confrontando la prima e l'ultima riga troviamo che:
+\begin{equation*}
+    \begin{aligned}
+        \delta n(\overline q) &=\underbrace{\int \dd[3]{x'}\chi(|\overline x - \overline{x}'|)e^{i\overline q \cdot (\overline{x}' - \overline x)}}_{\text{Trasformata di Fourier di } \chi(-\overline{q})}\delta V_{\text{ext}}(\overline q) \\
+        & = \chi(-\overline{q})\delta V_{\text{ext}}(\overline q)
+    \end{aligned}
+\end{equation*}
+Siccome in un gas omogeneo di elettroni, la suscettività dipende dal modulo di $\overline q$, pertanto:
+\begin{equation*}
+    \delta n(\overline q) = \chi(\overline q)\delta V_{\text{ext}}(\overline q)
+\end{equation*}
+Questo è sempre vero, se consideriamo la convoluzione tra le due funzioni, abbiamo:
+\begin{equation*}
+    \delta n(\overline x)=\int \dd[3]{x'}\chi(\overline x, \overline{x}')\delta V_{\text{ext}}(\overline{x}')
+\end{equation*}
+Questa $\chi$ è la cosiddetta \textbf{suscettività longitudinale} perché $\dots$
+Il cambiamento su $V_{\text{ext}}$ induce, come abbiamo detto, un cambiamento in $n(\overline x)$ che è responsabile del potenziale totale:
+\begin{equation*}
+    \begin{aligned}
+        \delta V_{\text{tot}}(\overline x) &=\delta V_{\text H}+ \delta V_{\text{ext}} \\
+        & = \int \dd[3]{x'}\frac{e_0^2}{4\pi\varepsilon_0|\overline{x} - \overline{x}'|}\delta n(\overline{x}') + \delta V_{\text{ext}}
+    \end{aligned}
+\end{equation*}
+Scritto in termini del reticolo reciproco:
+\begin{equation*}
+    \delta V_{\text{tot}}(\overline q)=V_{\text C}(\overline q)\delta n (\overline q)+\delta V_{\text{ext}}(\overline q)
+\end{equation*}
+Infatti è possibile applicare la trasformata di Fourier al potenziale coulombiano:
+\begin{equation*}
+    \frac{e_0^2}{4\pi\varepsilon_0}\frac{1}{|\overline x|} \longrightarrow V_{\text C}(\overline q)
+\end{equation*}
+Questo potenziale può essere valutato nell'equazione di Poisson, ricordando il caso di una carica posta nell'origine:
+\begin{equation*}
+    \nabla^2 \frac{e_0^2}{4\pi\varepsilon_0|\overline{x}|}=-\frac{e_0^2}{\varepsilon_0}\delta(\overline x)
+\end{equation*}
+\begin{equation*}
+    \nabla^2 \frac{1}{|\overline x|}= -4\pi\delta(\overline x)
+\end{equation*}
+Considerando la trasformata di Fourier e prendendone il laplaciano, abbiamo:
+\begin{equation*}
+    \begin{aligned}
+        \nabla^2\frac{1}{(2\pi)^3}\int \dd[3]{q}V_{\text C}(q)e^{i\overline q \cdot \overline x} & =\frac{1}{(2\pi)^3}\int \dd[3]{q}(-q^2)V_{\text C}(q)e^{i\overline q \cdot \overline x} \\
+        & = -\frac{e_0^2}{\varepsilon_0}\delta(\overline x) \text{ introduco la T.F. della } \delta\\
+        & = -\frac{e_0^2}{\varepsilon_0}\frac{1}{(2\pi)^3}\int \dd[3]{q}\delta(\overline q)e^{i \overline q \cdot \overline x}
+    \end{aligned}
+\end{equation*}
+Confrontando la seconda espressione con quest'ultima, troviamo:
+\begin{equation*}
+    -q^2V_{\text{C}}(\overline q)=-\frac{e_0^2}{\varepsilon_0}\delta(\overline q)
+\end{equation*}
+Esplicitando $V_{\text{C}}$
+\begin{equation*}
+    V_{\text{C}}(\overline q) = \frac{e_0^2}{\varepsilon_0 q^2}\delta(\overline q) = \frac{e_0^2}{\varepsilon_0 q^2}
+\end{equation*}
+Questo perché:
+\begin{equation*}
+    \delta q = \int \dd[3]{x} \delta(\overline x) e^{-i\overline q \cdot \overline x}=1
+\end{equation*}
+Possiamo inserire questo risultato nel potenziale totale:
+\begin{equation*}
+    \delta V_{\text{tot}}(\overline q)=\delta n(\overline q)\frac{e_0^2}{\varepsilon_0q^2}+\delta V_{\text{tot}}(\overline q)
+\end{equation*}
+Possiamo introdurre un ulteriore oggetto: la \textbf{funzione dielettrica}. Questo può essere introdotto attraverso lo studio dell'elettromagnetismo, ricordiamo che:
+\begin{equation*}
+    \overline D = \varepsilon \overline E
+\end{equation*}
+dove
+\begin{equation*}
+    \divergence{D}=\rho_{\text{ext}}(\overline x)
+\end{equation*}
+Se consideriamo un campo longitudinale, $\overline D$ è il campo generato dalle cariche esterne, mentre $\overline E$ rappresenta il campo totale.
+\begin{equation*}
+    \underbrace{\overline D}_{\mathllap{\text{esterno}}} = \varepsilon \underbrace{\overline E}_{\mathrlap{\text{totale}}}
+\end{equation*}
+da cui abbiamo:
+\begin{equation*}
+    \delta V_{\text{ext}}(\overline q) = \varepsilon(\overline q)\delta V_{\text{tot}}(\overline q)
+\end{equation*}
+cioè:
+\begin{equation*}
+    \delta V_{\text{tot}}(\overline q) = \frac{\delta V_{\text{ext}}(\overline q)}{\varepsilon(\overline q)}
+\end{equation*}
+Siccome $\varepsilon < 1$, il potenziale totale è maggiore del potenziale esterno. Torniamo alla definizione di potenziale totale:
+\begin{equation*}
+    \begin{aligned}
+        \delta V_{\text{tot}}(\overline q) & =\delta n(\overline q)V_{\text C}(\overline q)+\delta V_{\text{ext}}(\overline q) \\
+        & = \chi(\overline q)\delta V_{\text{ext}}(\overline q)V_{\text C}(\overline q)+\delta V_{\text{ext}}(\overline q) \\
+        & = \delta V_{\text{ext}}(\overline q)(1+\chi(\overline q)V_{\text C}(\overline q))
+    \end{aligned}
+\end{equation*}
+Mettendo insieme le due equazioni si ottiene:
+\begin{equation*}
+    \frac{1}{\varepsilon(\overline q)}=1+\chi(\overline q)V_{\text C}(\overline q)
+\end{equation*}
+
+\subsection{Suscettività dielettrica per un gas omogeneo di elettroni}
+Possiamo pensare di calcolare la suscettività dielettrica per un gas omogeneo di elettroni, tuttavia non possiamo risolverla in maniera analitica, ma possiamo introdurre alcune approssimazioni. La più semplice delle approssimazione che si può fare è stivare $\varepsilon(\overline q)$ nel \textbf{modello di Thomas-Fermi}. Ricordiamo che l'energia è espressa come:
+\begin{equation*}
+    E\big[n(\overline x)\big]=\int \dd[3]{x} V_{\text{ext}}(\overline x)n(\overline x)+E_{\text H}\big[n(\overline x)\big]+\int \dd[3]{x}n(\overline x)\frac 35 \varepsilon_{\text F}(n(\overline x))
+\end{equation*}
+Attraverso la minimizzazione di questo funzionale di energia possiamo trovare la densità che lo minimizza:
+\begin{equation*}
+    \functionalderivative{E}{n(\overline x)}=\mu
+\end{equation*}
+Ricordiamo che $\mu$ è un moltiplicatore di Lagrange perché abbiamo questo vincolo $\int \dd[3]{x} n(\overline x)=N$. Pertanto, introducendo un cambiamento nel potenziale esterno, avremo:
+\begin{equation*}
+    V_{\text{ext}} \rightarrow V_{\text{ext}}+\delta V_{\text{ext}}
+\end{equation*}
+\begin{equation*}
+    n(\overline{x}) \rightarrow n(\overline x)+\delta n(\overline x)
+\end{equation*}
+L'equazione che minimizza il funzionale energetico porta all'equazione di Thomas-Fermi:
+\begin{equation*}
+    \varepsilon_{\text F}(n(\overline x))+V_{\text H}(\overline x) + V_{\text{ext}}(\overline x) = \mu
+\end{equation*}
+Abbiamo però un cambiamento su $V_{\text{ext}}$:
+\begin{equation*}
+    \varepsilon_{\text{F}}(n(\overline x)+\delta n(\overline x))+V_{\text H}+\delta V_{\text{H}}+V_{\text{ext}}+\delta V_{\text{ext}}=\mu
+\end{equation*}
+Siamo nella teoria della risposta lineare, pertanto il cambiamento è piccolo e possiamo svilupparlo al primo ordine. Ricordando che:
+\begin{equation*}
+    \varepsilon_{\text{F}}=\frac{\hbar^2}{2m}(3\pi^2n)^{\frac 13}
+\end{equation*}
+Possiamo espandere per piccoli cambiamenti:
+\begin{equation*}
+    \varepsilon_{\text{F}}(n(\overline x))+\frac{\hbar^2}{2m}(3\pi^2)^{\frac 23}\frac 23 \frac{n^{\frac 23}}{n}\delta n
+\end{equation*}
+Inserendo questo risultato troviamo che tutti i termini imperturbati si semplificano e rimangono solamente:
+\begin{equation*}
+    \frac 23 \frac{\varepsilon_{\text F}}{n}\delta n(\overline x)+\delta V_{\text H}(\overline x)+\delta V_{\text{ext}}(\overline x)=0
+\end{equation*}
+Ora vogliamo studiare il cambiamento del potenziale in un gas omogeneo di elettroni. Quando abbiamo discusso del gas omogeneo di elettroni, abbiamo introdotto la densità di stati $D(\varepsilon) \propto \sqrt{\varepsilon}$. In particolar modo abbiamo visto che:
+\begin{equation*}
+    D(\varepsilon_{\text{F}})=\frac 32 \frac n{\varepsilon_{\text F}}
+\end{equation*}
+In questo modo possiamo riscrivere l'equazione precedente come:
+\begin{equation*}
+    \frac{\delta n(\overline x)}{D(\varepsilon_{\text F})}+\delta V_{\text H}+\delta V_{\text{ext}}=0
+\end{equation*}
+Possiamo scrivere la stessa equazione nel reticolo reciproco utilizzando la trasformata di Fourier:
+\begin{equation*}
+    \frac{\delta n(\overline q)}{D(\varepsilon_{\text F})}+\delta n(\overline q)V_{\text C}(\overline q)+\delta V_{\text{ext}}(\overline q)=0
+\end{equation*}
+\begin{equation*}
+    \delta n(\overline q)\Bigg[\frac{1}{D(\varepsilon_{\text{F}})}+V_{\text{C}}(\overline q)\Bigg]=-\delta V_{\text{ext}}(\overline q)
+\end{equation*}
+\begin{equation*}
+    \delta n(\overline q)= -\frac{D(\varepsilon_{\text F})}{(1+D(\varepsilon_{\text{F}})V_{\text{C}}(\overline q))}\delta V_{\text{ext}}(\overline q)
+\end{equation*}
+Da cui ricaviamo:
+\begin{equation*}
+    \chi(\overline q)=-\frac{D(\varepsilon_{\text F})}{(1+D(\varepsilon_{\text{F}})V_{\text{C}}(\overline q))}
+\end{equation*}
+Se conosciamo $\chi(\overline q)$ possiamo ottenere:
+\begin{equation*}
+    \begin{aligned}
+        \frac{1}{\varepsilon(\overline q)} &=1+\chi(\overline q)V_{\text{C}}(\overline q) \\
+        & = 1-\frac{D(\varepsilon_{\text F})}{1+D(\varepsilon_{\text F})V_{\text C}(\overline q)}V_{\text C}(\overline q) \\
+        & = \frac{1+D(\varepsilon_{\text F})V_{\text C}(\overline q)- D(\varepsilon_{\text F})V_{\text{C}}(\overline q)}{1+D(\varepsilon_{\text F})V_{\text{C}}(\overline q)} \\
+        & = \frac{1}{1+D(\varepsilon_{\text F})V_{\text{C}}(\overline q)}
+    \end{aligned}
+\end{equation*}
+Invertendo la relazione troviamo:
+\begin{equation*}
+    \begin{aligned}
+        \varepsilon(\overline q) &=1+D(\varepsilon_{\text F})V_{\text{C}}(\overline q) \\
+        & = 1+\frac{D(\varepsilon_{\text F})e_0^2}{\varepsilon_0 q^2} \\
+        & = 1+ \frac{q_{\text{TF}}^2}{q^2}
+    \end{aligned}
+\end{equation*}
+Dove abbiamo introdotto:
+\begin{equation*}
+    q_{\text{TF}}^2=\frac{D(\varepsilon_{\text{F}})e_0^2}{\varepsilon_0}=\frac{1}{\lambda_{\text{TF}}}
+\end{equation*}
+In particolar modo siamo interessati al suo inverso $\lambda_{\text{TF}}$ che prende il nome di \textbf{lunghezza di screening di Thomas-Fermi}. \\
+Viene introdotto questo concetto perché possiamo calcolare
+\begin{equation*}
+    \delta V_{\text{tot}}(\overline q)=\frac{\delta V_{\text{ext}}(\overline q)}{\varepsilon(\overline q)}
+\end{equation*}
+Se consideriamo come potenziale esterno il potenziale generato da una carica puntiforme: $\delta V_{\text{ext}}(\overline q)=\frac{Ze_0^2}{\varepsilon_0 q^2}$, otteniamo:
+\begin{equation*}
+    \delta V_{\text{tot}}(\overline q)=\frac{Ze_0^2}{\varepsilon_0q^2\bigg(1+\frac{q_{\text{TF}}^2}{q^2}\bigg)}=\frac{Ze_0^2}{\varepsilon_0(q^2+q_{\text{TF}}^2)}
+\end{equation*}
+Applicando la trasformata di Fourier e il teorema dei residui (in coordinate sferiche), si trova:
+\begin{equation*}
+    \delta V_\text{tot}(\overline x)=\frac{1}{(2\pi)^3}\int\dd[3]{q}\frac{Ze_0^2}{\varepsilon_0(q^2+q_{\text{TF}}^2)}e^{i \overline q \cdot \overline x} = \frac{Ze_0^2}{4\pi\varepsilon_0r}e^{-\frac r {\lambda_{\text{TF}}}}
+\end{equation*}
+Ricordando $2 < r_{\text S} < 6$ e $\varepsilon_\text{F}$ inserendoli in $q_{\text{TF}}^2$ troviamo che:
+\begin{equation*}
+    \lambda_{\text{TF}}=r_{\text S}^{\frac 12}a_0\frac{2\pi}{\big(\frac{12}{\pi}\big)^\frac 13}\approx 4.01 r_{\text S}^{\frac 12}a_0
+\end{equation*}

@@ -2,24 +2,38 @@
 
 % General Settings
 \usepackage[paper = a4paper, margin = 1in]{geometry}
-\usepackage[english]{babel}
+\usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage[small]{caption}
+\usepackage{subfig}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx,color,listings}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{hologo}
+\usepackage{colortbl}
 
 % Math and physic packages
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathrsfs}
+\usepackage{mathdots}
+\usepackage{mathtools}
+\numberwithin{equation}{section}
+\numberwithin{figure}{chapter}
 
 % Quantum and classical circuits packages
 \usepackage[braket, qm]{qcircuit}
 \usepackage{circuitikz}
+\usepackage{physics}
 
 % New or renewed commands
-\newcommand{\lecture}[2]{{\scshape{Lecture #1 - #2}} \par}
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{theorem}{Theorem}[chapter]
+\newcommand{\lecture}[2]{{\scshape{Lezione #1 - #2}} \par}
+\newtheorem{definizione}{Definizione}[chapter]
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{esempio}{Esempio}[chapter]
 \renewcommand{\thefootnote}{\roman{footnote}}
 
 % Documents
@@ -27,7 +41,7 @@
     \begin{titlepage}
         \begin{center}
             \vspace*{5cm}
-            {\scshape\LARGE Università degli Studi di Milano Bicocca \par}
+            {\scshape\LARGE Università degli Studi di Milano - Bicocca \par}
             \vspace{1.0cm}
             \line(1,0){400} \\
             {\huge\bfseries Teoria della informazione e \\ della computazione quantistica \par}
@@ -37,7 +51,7 @@
             \vspace{1.0cm}
             {Anno accademico 2021/2022 \par}
             \vspace{0.5cm}
-            {\bfseries Marco Gobbo \par}
+            {\bfseries Marco Gobbo e Gabriele Morandi \par}
             \vspace{0.5cm}
             {\url{https://github.com/marcogobbo/tecnologie-quantistiche} \par}
             \vspace*{\fill}
@@ -45,5 +59,12 @@
         \end{center}
     \end{titlepage}
     \tableofcontents
-    \input{chapters/ch1.tex}
+    \input{lectures/lect1}
+    \input{lectures/lect2}
+    \input{lectures/lect3}
+    \input{lectures/lect4}
+    \input{lectures/lect5}
+    \input{lectures/lect6}
+    \input{lectures/lect7}
+    \input{lectures/lect8}
 \end{document}
