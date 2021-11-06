@@ -17,6 +17,7 @@ L'obiettivo di questo progetto è quello di realizzare una raccolta di materiale
 ## Autori
 
 * [Marco Gobbo](https://github.com/marcogobbo)
+* [Gabriele Morandi](https://github.com/GabboM98)
 
 ## Licenza
 
