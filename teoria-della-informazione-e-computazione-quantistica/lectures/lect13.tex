@@ -1,0 +1,245 @@
+%%%%%%%%%%%%%%
+% LECTURE 13 %
+%%%%%%%%%%%%%%
+\vspace{1cm}
+\noindent \lecture{13}{19/11/21}
+
+\section{Codice di correzione di Shor a 9 qubit}
+Nel 1995 Peter Shor propose il primo codice di correzione degli errori quantistici in grado di correggere errori arbitrari a singolo qubit. La sua proposta, in breve, consisteva in una concatenazione dei circuiti di bit flip error e phase flip error che abbiamo visto nelle sezioni precedenti. Per il primo livello di codifica, si garantisce la protezione dagli errori legati al phase flip codificando i qubit logici $\ket{\overline 0}$ e $\ket{\overline 1}$ utilizzando il codice di phase flip a 3 qubit:
+\begin{equation}\label{qe-shor1}
+    \ket{\overline 0} \rightarrow \ket{+++} \, , \qquad \qquad \ket{\overline 1} \rightarrow \ket{---} \, .
+\end{equation}
+Come abbiamo notato sopra, tuttavia, questa codifica è suscettibile a errori di bit flip. Per proteggerci da questo tipo di errori prendiamo ciascuno degli stati $\ket +$ e $\ket -$ e, ricordando le \eqref{basi_di_sigma_12}, codifichiamo ciascun $\ket{0}$ e $\ket{1}$ utilizzando il codice di bit flip a 3 qubit. In questo modo la codifica finale è costituita da 9 qubit in totale:
+\begin{align}
+    &\ket{+++} \rightarrow \frac{\ket{000}+\ket{111}}{\sqrt 2}\frac{\ket{000}+\ket{111}}{\sqrt 2}\frac{\ket{000}+\ket{111}}{\sqrt 2} \equiv \ket{\overline{0}} \, , \label{qe-shor2} \\
+    &\ket{---} \rightarrow \frac{\ket{000}-\ket{111}}{\sqrt 2}\frac{\ket{000}-\ket{111}}{\sqrt 2}\frac{\ket{000}-\ket{111}}{\sqrt 2} \equiv \ket{\overline{1}} \, . \label{qe-shor3}
+\end{align}
+Mettendo insieme i due passaggi che coinvolgono prima la correzione di eventuali phase flip in \eqref{qe-shor1} e dopo la correzione di eventuali bit flip in \eqref{qe-shor2} e \eqref{qe-shor3} avremo quindi la codifica
+\begin{equation*}
+    \ket{\overline 0} = \left(\frac{\ket{000}+\ket{111}}{\sqrt 2}\right)^{\otimes 3} \, , \qquad \qquad \ket{\overline 1} = \left(\frac{\ket{000}-\ket{111}}{\sqrt 2}\right)^{\otimes 3} \, .
+\end{equation*}
+Questi passaggi possono essere implementati nel circuito seguente
+\begin{center}
+    \mbox{
+        \Qcircuit @C=1em @R=0.1 em {
+            & \qw & \ctrl{3} & \ctrl{6} & \gate{H} & \qw & \ctrl{1} & \ctrl{2} & \qw \gategroup{1}{6}{3}{9}{.7em}{--} \\
+            &     &          &          &          &     & \targ    & \qw      & \qw \\
+            &     &          &          &          &     & \qw      & \targ    & \qw \\
+            & \qw & \targ    & \qw      & \gate{H} & \qw & \ctrl{1} & \ctrl{2} & \qw 
+            \gategroup{4}{6}{6}{9}{.7em}{--} \\
+            &     &          &          &          &     & \targ    & \qw      & \qw \\
+            &     &          &          &          &     & \qw      & \targ    & \qw \\
+            & \qw & \qw      & \targ    & \gate{H} & \qw & \ctrl{1} & \ctrl{2} & \qw \gategroup{7}{6}{9}{9}{.7em}{--} \\
+            &     &          &          &          &     & \targ    & \qw      & \qw \\
+            &     &          &          &          &     & \qw      & \targ    & \qw
+        }
+    }
+\end{center}
+Come sopra descritto, la prima parte del circuito (fino a dopo gli \texttt{H-gate}) codifica il qubit utilizzando il codice relativo al phase flip a tre qubit. La seconda parte del circuito codifica ciascuno di questi tre qubit mediante il codice relativo al bit flip; in particolare fa uso di tre copie del circuito di codifica bit flip (si vedano le 3 subroutine tratteggiate). Questo metodo di codifica che utilizza una gerarchia di livelli è noto come \textit{concatenazione}. 
+
+\noindent Per capire se il codice di Shor sia effettivamente in grado di proteggere da errori di phase flip e bit flip su qualsiasi qubit dobbiamo trovare un insieme di operatori tali che $\ket{\overline{0}}$ e $\ket{\overline{1}}$ siano autostati col medesimo autovalore. Per capire la logica generale di funzionamento facciamo un semplice esempio. 
+
+\begin{esempio}
+    Supponiamo che si verifichi un bit flip sul primo qubit (blocco I). Per quanto riguarda il codice relativo al bit flip, possiamo eseguire una misurazione di $Z_0Z_1$ per confrontare i primi due qubit, scoprendo che sono diversi ($x=1$). In questo modo stabiliamo che si è verificato un errore di bit flip sul primo o sul secondo qubit. Successivamente possiamo confrontare il secondo e il terzo qubit eseguendo una misurazione di $Z_1Z_2$: in tal caso scopriremmo che sono uguali ($y=0$), quindi non potrebbe essere stato il secondo qubit a capovolgersi. Concludiamo che il primo qubit deve essere stato capovolto e risolviamo l'errore invertendo nuovamente il primo qubit, riportandolo allo stato originale attraverso il gate $X_0$.
+\end{esempio}
+
+\noindent In modo del tutto analogo all'esempio precedente possiamo rilevare e correggere gli effetti degli errori legati al bit flip su uno qualsiasi dei nove qubit nel codice. Riassumiamo gli stabilizers coinvolti nella rilevazione nella Tabella \ref{tab:shor-bit-flip-cases}:
+\begin{table}[!ht]
+	\centering
+    \begin{tabular}{lc}
+        \toprule
+        Operatori & Blocco \\
+        \midrule
+        $Z_0Z_1$, $Z_1Z_2$ & I \\
+        $Z_3Z_4$, $Z_4Z_5$ & II \\
+        $Z_6Z_7$, $Z_7Z_8$ & III \\
+        \bottomrule
+    \end{tabular}\\
+    \caption{Stabilizers coinvolti nei diversi blocchi per identificare eventuali errori legati al bit flip. Il blocco I coinvolge i primi 3 qubit, il blocco II i qubit 3, 4 e 5 e infine il blocco III contiene i qubit 6, 7 e 8.}
+    \label{tab:shor-bit-flip-cases}
+\end{table}
+
+\noindent Vediamo ora come affrontare errori di phase flip sui 9 qubit. Supponiamo che si verifichi un phase flip sul primo qubit, quindi
+\begin{equation*}
+    Z_0\left(\ket{000}+\ket{111}\right)=\left(\ket{000}-\ket{111}\right) \, ;
+\end{equation*}
+in questa situazione notiamo che c'è qualcosa di strano, perché se si verificasse un phase flip sul secondo o terzo qubit avremmo 
+\begin{align*}
+    Z_1\left(\ket{000}+\ket{111}\right) &= \ket{000}-\ket{111} \, , \\
+    Z_2\left(\ket{000}+\ket{111}\right) &= \ket{000}-\ket{111} \, ,
+\end{align*}
+dunque questi due errori producono entrambi lo stesso effetto di $Z_0$: non possiamo stabilire con precisione in quale qubit si trovi l'errore, ma solamente il blocco di appartenenza. Per tale ragione il codice di Shor si dice \textbf{degenere} in quanto $Z_0$, $Z_1$ e $Z_2$ producono lo stesso effetto, o meglio, in generale qualunque errore di phase flip che comporta un cambiamento di segno sui 3 qubit all'interno dello stesso blocco (I, II o III) è lo stesso (degenerazione $= 3$). 
+
+\noindent Per trovare un errore legato al phase flip dobbiamo quindi utilizzare un \texttt{X-gate}, ma deve essere eseguito come tripletta, cioè
+\begin{equation*}
+    X_0X_1X_2\left(\ket{000}\pm\ket{111}\right)= \pm \left( \ket{000} \pm \ket{111} \right) \, ,
+\end{equation*}
+quindi lo stato di partenza è autostato di questa tripletta di operatori con autovalore $\pm 1$. Per tale ragione, gli stabilizers, i cui autostati sono \eqref{qe-shor2} e \eqref{qe-shor3}, da considerare nel codice di Shor per individuare in quale blocco avvengono errori di phase flip sono
+\begin{equation}\label{X_stabilizers}
+    X_0X_1X_2X_3X_4X_5 \, , \qquad \qquad X_3X_4X_5X_6X_7X_8 \, .
+\end{equation}
+ 
+
+\noindent Un fatto importante da evidenziare è che nonostante gli operatori \eqref{X_stabilizers} permettano di stabilire solamente il blocco in cui è avvenuto l'errore, ciò non limita la sua risoluzione. Più precisamente, in riferimento ai casi scritti sopra, supponiamo che si verifichi un phase flip error nel blocco I: indipendentemente dall'operatore $Z_i$ che ha causato l'errore ($i = 0, 1, 2$), possiamo sempre applicare nuovamente al primo blocco uno qualsiasi di questi 3 operatori per correggere e riportare lo stato alla situazione originale. Il discorso è analogo per gli altri due blocchi. 
+
+\noindent Riassumendo\footnote{Per esercizio si piò dimostrare che effettivamente gli 8 operatori del codice di Shor (6 in Tabella \ref{tab:shor-bit-flip-cases} e 2 in \eqref{X_stabilizers}) possono rilevare qualsiasi errore di bit flip, phase flip e bit-phase flip.}:
+\begin{itemize}
+    \item I sei operatori contenenti $Z$ della Tabella \ref{tab:shor-bit-flip-cases} identificano la posizione di un eventuale bit flip sui 9 qubit;
+    \item I due operatori $X$ in \eqref{X_stabilizers} identificano la posizione di un eventuale phase flip nei 3 diversi blocchi.
+\end{itemize}
+Questa tipologia di misurazioni vengono definite \textbf{syndrome measurements}.
+
+\noindent Per chiarire al meglio il funzionamento del codice di Shor consideriamo il seguente esempio che coinvolge tutte le casistiche possibili: bit flip, phase flip e bit-phase-flip.
+
+\begin{esempio}[\textbf{Errori sul primo qubit}]
+Consideriamo la Tabella \ref{tab:Shor_first_qubit_errors}: supponiamo di considerare separatamente tutti i possibili tre tipi di errori discreti che possono avvenire sul primo qubit
+    \begin{table}[!hb]
+	\centering
+        \begin{tabular}{lcccc}
+            \toprule
+            Stabilizers & Codewords & bit flip ($X_0$) & phase flip ($Z_0$) & Bit-phase flip ($Y_0$) \\
+            \midrule
+            $Z_0Z_1$ & $+1$ & $-1$ & $+1$ & $-1$ \\
+            $Z_1Z_2$ & $+1$ & $+1$ & $+1$ & $+1$ \\
+            $Z_3Z_4$ & $+1$ & $+1$ & $+1$ & $+1$ \\
+            $Z_4Z_5$ & $+1$ & $+1$ & $+1$ & $+1$ \\
+            $Z_6Z_7$ & $+1$ & $+1$ & $+1$ & $+1$ \\
+            $Z_7Z_8$ & $+1$ & $+1$ & $+1$ & $+1$ \\
+            $X_0X_1X_2X_3X_4X_5$ & $+1$ & $+1$ & $-1$ & $-1$ \\
+            $X_3X_4X_5X_6X_7X_8$ & $+1$ & $+1$ & $+1$ & $+1$ \\
+            \bottomrule
+        \end{tabular}\\
+        \caption{Autovalori degli stabilizers del codice di Shor per tutti i possibili errori discreti che avvengono sul primo qubit (il codewords è dato dalla generica combinazione lineare degli stati \eqref{qe-shor2} e \eqref{qe-shor3}). Essendo tutti i casi distinguibili,  tutti i tre tipi di errori discreti possono essere identificati e corretti. }\label{tab:Shor_first_qubit_errors}
+    \end{table}
+    
+    \noindent Si noti che, come nella Tabella \ref{tab:acomm_ZZ}, gli autovalori mostrati possono essere verificati ulteriormente andando a vedere se gli operatori che implementano i vari errori anticommutano con i rispettivi stabilizers. Ad esempio $\acomm{Z_0Z_1}{X_0}=0$ (prima riga e seconda colonna). È sempre possibile distinguere il tipo di errore (syndrome), dove avviene (in che blocco o qubit) e automatizzare questo processo.
+\end{esempio}
+
+\noindent Alla luce di questo discorso ci possiamo chiedere: che cosa ne è stata della problematica B. di inizio Sezione \ref{sec:intro_error_corr}? Il codice di Shor è sufficiente a correggere tutte le tipologie di errori, comprese quelli continui? 
+
+\noindent In effetti, il codice Shor protegge da molto più di semplici errori di bit e phase flip su un singolo qubit: ora mostriamo che protegge da errori completamente arbitrari, a condizione che influiscano solo su un singolo qubit! La cosa interessante è che non è necessario eseguire alcun lavoro aggiuntivo per proteggersi da errori arbitrari: la procedura già descritta funziona perfettamente. Questo è un esempio del fatto straordinario che l'apparente continuum di errori che può verificarsi su un singolo qubit può essere corretto correggendo solo un sottoinsieme discreto di quegli errori; tutti gli altri possibili errori vengono corretti automaticamente da questa procedura! La procedura di discretizzazione degli errori è fondamentale per il motivo per cui la correzione degli errori quantistica funziona e dovrebbe essere considerata in contrasto con la correzione degli errori classica per i sistemi analogici, dove tale discretizzazione degli errori non è possibile. 
+
+\noindent Che cosa produce un generico errore? Immaginiamo di avere un sistema quantistico descritto da una matrice densità $\rho=\op{\psi}{\psi}$ e di considerare solamente il nostro qubit tracciando $\rho$ sull'ambiente descritto dallo spazio di Hilbert $\mathcal{H}_E$:
+\begin{equation*}
+    \rho =\op{\psi}{\psi} \rightarrow \mathcal{E}(\rho) = \sum_k E_k \rho E_k^\dagger \, .
+\end{equation*}
+Supponendo che lo stato del qubit codificato sia $\ket \psi = \alpha\ket{\overline 0} + \beta\ket{\overline 1}$ prima che il rumore agisca, allora successivamente all'interazione con l'ambiente lo stato è descritto dalla matrice densità $\mathcal{E}(\op{\psi}{\psi}) = \sum_k E_k \op{\psi}{\psi} E_k^\dagger$. Per analizzare gli effetti della correzione dell'errore è più facile concentrarsi sull'effetto che essa ha su un singolo termine in questa somma, diciamo $E_k \op{\psi}{\psi} E_k^\dagger$. Come operatore sul solo qubit, $E_k$ può essere espanso come una generica (si veda la \eqref{generical_matrix_C2}) combinazione lineare dell'identità, del bit flip $X$, del phase flip $Z$ e del bit-phase flip $Y$:
+\begin{equation*}
+    E_k\ket \psi = \left(\alpha \mathbb{I} +\beta_x X + \beta_y Y + \beta_z Z\right)\ket \psi \, ,
+\end{equation*}
+dove $\alpha$, $\beta_x$, $\beta_y$ e $\beta_z$ sono coefficienti arbitrari reali: il comportamento continuo è chiaramente in questi coefficienti!
+La syndrome measurement dell'errore fa collassare\footnote{Il coefficiente è irrilevante perché possiamo sempre normalizzare lo stato.} questa sovrapposizione in uno dei quattro stati $\ket \psi$, $X\ket\psi$, $Y\ket\psi$ o $Z\ket\psi$ da cui poi si può recuperare lo stato iniziale $\ket{\psi}$ applicando l'opportuna operazione di inversione. Lo stesso vale per tutti gli altri operation elements $E_k$: la misura causa il collasso dello stato in $S\ket{\psi}$, dove $S = \{ \mathbb{I}, X, Y, Z \}$, e tutti gli stati $S\ket{\psi}$ appartengono a differenti sottospazi degli errori mutualmente ortogonali tra loro.
+
+\noindent Pertanto, la correzione degli errori comporta il ripristino dello stato originale, nonostante il fatto che l'errore sul qubit fosse arbitrario. Questo è un fatto fondamentale e profondo sulla correzione degli errori quantistica: correggendo solo un insieme discreto di errori (il bit flip, il phase flip e il bit-phase flip) un codice di correzione quantistica degli errori è in grado di correggere automaticamente una classe di errori apparentemente molto più ampia (continua!). Ricordiamo però che tutto questo discorso è basato sull'assunzione che il rumore può coinvolgere  solo un singolo qubit.
+
+\section{Codice di correzione di Steane a 7 qubit}
+Nel 1996 il fisico inglese Andrew Steane propose un codice di correzione degli errori basato sull'utilizzo di soli 7 qubit. Il codice di Steane utilizza i seguenti 6 operatori per la diagnostica degli errori:
+\begin{align*}
+    M_0 &= X_0X_4X_5X_6, &N_0 &= Z_0Z_4Z_5Z_6, \\
+    M_1 &= X_1X_3X_5X_6, &N_1 &= Z_1Z_3Z_5Z_6, \\
+    M_2 &= X_2X_3X_4X_6, &N_2 &= Z_2Z_3Z_4Z_6.
+\end{align*}
+Notiamo che soddisfano le proprietà seguenti:
+\begin{enumerate}
+    \item $M_i^2 = N_i^2=\mathbb{I}$ per $i = 0, 1, 2$;
+    \item Sono operatori commutanti, quindi $\comm{M_i}{M_j}=\comm{N_i}{N_j}=\comm{M_i}{N_j}=0$.
+    
+    I primi due commutatori sono ovvi. L'ultimo commutatore, invece, è meno immediato. È utile osservare che i termini che agiscono sullo stesso qubit anticommutano (da $\acomm{X_i}{Z_i} = 0$) e producono un segno meno. Nel caso in cui $i=j$, abbiamo quattro meno moltiplicati tra loro mentre per $i\neq j$ solo due meno moltiplicati tra loro: in ogni caso i segni meno scompaiono e la commutazione è dimostrata. 
+\end{enumerate}
+
+\noindent Trattandosi di operatori commutanti possiamo simultaneamente diagonalizzarli: l'idea è quella di utilizzare questo autospazio comune per codificare i qubit logici del codewords. Lavorando con 7 qubit, lo spazio totale di cui necessitiamo deve essere di dimensione $\text{dim} \mathcal{H}=2^7$: se ci restringiamo agli autovettori di $M_i$ e $N_i$ che hanno autovalore $+1$ allora effettivamente la dimensione del codewords sarà $2^7/2/2/2/2/2/2 = 2$, ossia la dimensione di uno spazio di un singolo qubit logico.
+
+\noindent Il problema è quindi come costruire questo autospazio comune per $\ket{\overline 0}$ e $\ket{\overline 1}$. Il punto importante è che non è necessario conoscere la forma degli stati $\ket{\overline 0}$ e $\ket{\overline 1}$. Consideriamo uno stato generico $\ket{\psi}$; notiamo che
+\begin{equation}\label{eigs_psi_M}
+    M_i\left( (\mathbb{I}+M_i) \ket \psi \right) = (M_i+\mathbb{I}) \ket{\psi} \, ,
+\end{equation}
+quindi $(\mathbb{I}+M_i) \ket \psi$ è autostato di $M_i$ con autovalore $+1$ indipendentemente dalla forma di $\ket{\psi}$. L'idea è quindi quella di iniziare con gli stati $\ket{0000000}$ e $\ket{1111111}$ e di applicare degli operatori come in \eqref{eigs_psi_M}:
+\begin{align*}
+    \ket{\overline 0} &= \frac{\mathbb{I}+M_2}{\sqrt 2}\frac{\mathbb{I}+M_1}{\sqrt 2}\frac{\mathbb{I}+M_0}{\sqrt 2}\ket{0000000} \, , \\
+    \ket{\overline 1} &= \frac{\mathbb{I}+M_2}{\sqrt 2}\frac{\mathbb{I}+M_1}{\sqrt 2}\frac{\mathbb{I}+M_0}{\sqrt 2}\ket{1111111} \, .
+\end{align*}
+Questo rappresenta il modo corretto per codificare i qubit logici $\ket{ \overline{0}}$ e $\ket{\overline{1}}$ perché sono entrambi autostati di tutti gli operatori $M_i$ e $N_i$. 
+
+\noindent Dimostriamolo esplicitamente. Il fatto che siano autostati di $M_i$ con autovalore $+1$ è evidente dalla \eqref{eigs_psi_M}, perciò la domanda è: che cosa succede agli $N_i$? Ricordiamo che $\comm{N_i}{M_j} = 0$ per qualsiasi $i,j$ e notiamo inoltre che ciascun $N_i$ è dato da un prodotto di 4 operatori $Z$, i quali hanno autostati $\ket{0}$ e $\ket{1}$ con autovalori $+1$ e $-1$ rispettivamente: il fatto che $N_i \ket{\overline{0}} = \ket{\overline{0}}$ è quindi ovvio, mentre $N_i \ket{\overline{1}} = (-1)^4 \ket{\overline{1}} = \ket{\overline{1}}$ perché si hanno sempre 4 operatori $Z$. 
+
+\noindent È possibile verificare\footnote{Esercizio! Si utilizzi $(\mathbb{I} + M_i)^2 = 2(\mathbb{I} + M_i)$. Per verificare la normalizzazione si noti che nei 3 prodotti di questi operatori solamente il prodotto delle 3 identità sopravvive: il motivo deriva dal fatto che l'azione di ciascun $M_i$ su $\ket{\overline{0}}$ o $\ket{\overline{1}}$ inverte $0 \leftrightarrow 1$, quindi il braket rimanente coinvolgerà sempre almeno un prodotto scalare $\braket{0}{1} = \braket{1}{0} = 0$.} che i qubit $\ket{\overline 0}$ e $\ket{\overline 1}$, definiti a partire da $M_0$, $M_1$ ed $M_2$, possono essere utilizzati come qubit logici perché sono un sistema ortonormale:
+\begin{align*}
+    \ip{\overline 0}{\overline 0}=\ip{\overline 1}{\overline 1}=1 \, ,\\
+    \ip{\overline 0}{\overline 1}=\ip{\overline 1}{\overline 0}=0 \, .
+\end{align*}
+
+\noindent Consideriamo ora il generico stato del codewords nella base logica, ossia $\ket \psi=\alpha \ket{\overline 0} + \beta \ket{\overline 1}$, e supponiamo che avvenga un'interazione esterna, ad esempio con l'ambiente. Lo stato dopo l'interazione, la quale è implementata da un opportuno operatore che agisce come errore, sarà descritto da $E_k\ket \psi$ con l'assunzione che l'errore possa avvenire su un singolo qubit. I possibili errori che possono avvenire non sono altro che generiche matrici $2 \times 2$ che possono essere parametrizzate da una combinazione lineare di matrici di Pauli. Questo significa che gli $E_k$ non sono altro che una collezione di 
+\begin{equation*}
+    \{X_i, Y_i, Z_i \}_{i=0,\dots,6} \, ;
+\end{equation*}
+in totale ci sono quindi $3 \times 7 = 21$ possibili errori da distinguere: il $3$ è dovuto al fatto che abbiamo come sorgente di errore $X$, $Y$ e $Z$ (3 errori indipendenti su ciascun qubit) mentre il $7$ perché stiamo lavorando con un codice a $7$ qubit. Necessitiamo quindi di $21$ "spazi degli errori" mutualmente ortogonali per correggere tutti i possibili errori. Consideriamo ora la Tabella \ref{tab:steane-bit-flip-cases}, la quale mostra se un determinato operatore $M_i$ o $N_i$ contiene o meno l'operatore corrispondente.  
+
+\begin{table}[!ht]
+	\centering
+    \begin{tabular}{lccccccc}
+        \toprule
+        bit flip & $X_0$     & $X_1$     & $X_2$     & $X_3$     & $X_4$     & $X_5$     & $X_6$    \\
+        \midrule
+        $M_0$    & $\bullet$ &           &           &           & $\bullet$ & $\bullet$ & $\bullet$ \\
+        $M_1$    &           & $\bullet$ &           & $\bullet$ &           & $\bullet$ & $\bullet$ \\
+        $M_2$    &           &           & $\bullet$ & $\bullet$ & $\bullet$ &           & $\bullet$ \\
+        \toprule
+        phase flip & $Z_0$     & $Z_1$     & $Z_2$     & $Z_3$     & $Z_4$     & $Z_5$     & $Z_6$    \\
+        \midrule
+        $N_0$      & $\bullet$ &           &           &           & $\bullet$ & $\bullet$ & $\bullet$ \\
+        $N_1$      &           & $\bullet$ &           & $\bullet$ &           & $\bullet$ & $\bullet$ \\
+        $N_2$      &           &           & $\bullet$ & $\bullet$ & $\bullet$ &           &           \\
+        \bottomrule
+    \end{tabular}\\
+    \caption{I 6 error-syndrome operators $M_i$ e $N_i$ ($i = 0, 1, 2$) per il codice di Steane a 7 qubit. Un punto ($\bullet$) indica se un dato operatore $X_i$ appare in $M_j$ e se un dato operatore $Z_i$ appare in $N_j$.}
+    \label{tab:steane-bit-flip-cases}
+\end{table}
+
+\noindent Abbiamo già discusso la logica generica del codice di correzione degli errori nella Sezione \ref{sec:stabilizers}: il codice deve essere realizzato in maniera tale che se ho un errore tale per cui $\comm{E_k}{M}=0$ ($M$ è uno degli error-syndrome) e sono in un autostato $\ket{\psi}$ di $M$ ($M\ket \psi = \ket \psi$), allora $M\left(E\ket \psi\right)=EM\ket \psi=E\ket\psi$ e rimaniamo quindi nel medesimo autospazio; viceversa se $\acomm{E_k}{M}=0$, allora $M\left(E\ket \psi\right)=-EM\ket \psi=-E\ket\psi$ e quindi finiamo in un autospazio con un valore differente dell'osservabile. Per capire meglio questo discorso e il significato della Tabella \ref{tab:steane-bit-flip-cases} si veda il seguente esempio. 
+
+\begin{esempio}
+    Supponiamo di avere un bit flip error $X_2$: sappiamo che $\comm{X_2}{M_i}=0$ per ogni $i$, ma $\comm{X_2}{N_2}\neq 0$ perché è l'unico operatore che contiene $Z_2$. Se eseguissimo una misura degli error-syndrome avremmo tutti autovalori $+1$, tranne che per la riga corrispondente a $N_2$, nella quale si ha un autovalore pari a $-1$ per la presenza di $Z_2$. Questo non solo ci dice se c'è un bit flip error, ma ci dice anche dove è localizzato, così da poterlo correggere. I simboli "$\bullet$" nella Tabella \ref{tab:steane-bit-flip-cases} indicano dove il segno sarà invertito, ossia dove l'autovalore della misura dell'error-syndrome sarà $-1$! Lo stesso discorso ovviamente lo si può fare per un phase flip error $Z_i$: si otterrà un segno $-1$ nella corrispondente riga di $M_j$ che conterrà l'operatore $X_i$ dello stesso autospazio dell'errore. Questa procedura può essere utilizzata anche per errori di bit-phase flip $Y_i$: in questo caso i segni $-1$ appaiono in entrambi gli operatori $M_j$ e $N_j$. 
+\end{esempio}
+
+\noindent Ricapitolando: 
+\begin{itemize}
+    \item I bit flip error $X$ sono rilevati da dei "$\bullet$" nella parte bassa della tabella.
+    
+    \item I phase flip error $Z$ sono rilevati da dei "$\bullet$" nella parte alta della tabella.
+    
+    \item I bit-phase flip error sono rilevati da dei "$\bullet$" sia nella parte bassa sia in quella alta della tabella.
+\end{itemize}
+In questo modo siamo in grado di distinguere separatamente senza alcuna degenerazione tutti i possibili $21$ errori perché tutti gli errori a singolo qubit sono localizzati in \textbf{singole colonne}. 
+
+\noindent Supponiamo di considerare errori multipli: saremmo in grado di rilevarli utilizzando la medesima trattazione? La risposta è affermativa perché lo spazio di Hilbert $\mathcal{H}$ dei 7 qubit ha dimensione $2^7= 128$, quindi è grande abbastanza da poter trattare anche questo tipo di errori. Per capire questo fatto notiamo che fino ad ora abbiamo lavorato con spazi del tipo $C\oplus E_a C$, ossia spazi che contenevano la somma diretta tra il codewords e gli spazi degli errori che servivano per correggere $C$. In questo caso avremo $\dim (C\oplus E_a C) = 2+2\times21=44$: se valutiamo la differenza di dimensione tra lo spazio di Hilbert totale $\mathcal{H}$ e lo spazio $C\oplus E_a C$ che serve per correggere tutti i possibili 21 errori a singolo qubit, ci rimane un sottospazio di dimensione $128-44 = 84$. Questi spazi rimanenti non sono nient'altro che gli spazi degli errori multipli! Ad esempio,  se si verifica  un errore simultaneo sui qubit $i$ e $j$ con $i \neq j$, possiamo implementarlo come $X_i Z_j \ket{\overline 0}$ e $X_i Z_j \ket{\overline 1}$: in totale avremo quindi $7 \times 6 + 7 \times 6 = 84$ errori simultanei, i quali sono rilevabili per mezzo della Tabella \ref{tab:steane-bit-flip-cases} dalla presenza di "$\bullet$" in \textbf{2 colonne simultaneamente}. In principio siamo quindi in grado di correggere tutti i tipi di errori su singoli qubit o su coppie di qubit.
+
+\noindent Chiaramente, dopo aver analizzato il funzionamento del codice di Steane potrebbe sorgere spontanea la domanda: se esistono, quali sono i vantaggi del codice di Steane rispetto al codice di Shor?
+\begin{itemize}
+    \item Innanzitutto nel codice di Steane è relativamente più semplice il meccanismo di localizzazione e correzione degli errori, dal momento che il numero di qubit coinvolti è minore (7 rispetto a 9). In generale, una volta rilevati gli errori, è necessario intervenire con degli opportuni gate per risolverli: lavorare con un sistema a 7 qubit è più semplice rispetto a 9 qubit in quanto le matrici (gate) con cui si è costretti a lavorare sono $2^7\times 2^7$, molto più piccole rispetto ai gate di risoluzione degli errori nel codice di Shor. 
+    Inoltre gli operatori  logici \texttt{X-gate}, \texttt{Z-gate} e \texttt{H-gate} che implementano le operazioni elementari sulle codewords hanno una forma particolarmente semplice nel codice di Steane:
+    \begin{align*}
+        \overline X &= X_0X_1X_2X_3X_4X_5X_6 \, , \\
+        \overline Z &= Z_0Z_1Z_2Z_3Z_4Z_5Z_6 \, , \\
+        \overline H &= H_0H_1H_2H_3H_4H_5H_6 \, .
+    \end{align*}
+    
+    \item Un altro vantaggio del codice di Steane riguarda il concetto della \textbf{fault tolerance}, che approfondiremo nelle prossime sezioni. Il punto  fondamentale verte sul fatto che sia necessario correggere gli errori in maniera sufficientemente veloce per poter effettuare correttamente il calcolo desiderato.
+\end{itemize}
+
+\noindent Se volessimo codificare un qubit logico usando $n$ qubit necessiteremmo uno spazio di Hilbert di dimensione $\dim \mathcal{H}=2^n$, il quale dovrebbe necessariamente contenere $C \oplus E_aC$: la condizione per $n$ che deve essere soddisfatta prende il nome di \textbf{Quantum Hamming Bound} ed è data da
+\begin{equation*}
+    \dim \mathcal{H} \geq \dim (C \oplus E_a C) \, , \quad \Rightarrow \quad 2^n \geq 2 + 2 \times 3 \times n \, ,
+\end{equation*}
+($2 \times 3$ perché è necessario correggere entrambi i qubit logici di $C$ per tutti e 3 gli errori $X, Y, Z$). Semplificando un 2, la relazione non è altro che 
+\begin{equation}\label{quantum_hamming_bound}
+    2^{n-1}\geq 1+3n \, ,
+\end{equation}
+la quale ci dice qual è la dimensione minima che possiamo usare. Questo risultato è applicabile unicamente a codici \textbf{non-degeneri}, ossia codici in cui possiamo distinguere e localizzare precisamente l'errore. Per contro, il codice di Shor è degenere quindi ad esso non si applica la disuguaglianza \eqref{quantum_hamming_bound}. 
+Il Quantum Hamming Bound è saturato per $n=5$, ci chiediamo quindi se esista un codice che, sfruttando soli 5 qubit, corregga efficientemente tutti i possibili errori. La risposta è affermativa ed è possibile verificare che gli error-syndrome operators sono i seguenti
+\begin{align*}
+    M_0 &= Z_1X_2X_3Z_4 \, , &M_1 &= Z_0 X_3 X_4 Z_0 \, , \\
+    M_2 &= Z_3X_4X_0Z_1 \, , &M_3 &= Z_4X_0X_1Z_2 \, .
+\end{align*}
+Non ci addentriamo nel suo studio, ma ci limitiamo a dire che lavora in maniera simile al codice di Steane a 7 qubit perché è possibile dimostrare che esistono dei qubit logici con $n=5$ che sono autovettori degli operatori precedenti con autovalore $+1$. Lo spazio di Hilbert è quindi diviso da questi operatori in $2^5/2/2/2/2 = 2$, ossia proprio la dimensione del codewords. 
+
+\noindent Infine ci chiediamo: che cosa succederebbe se abbandonassimo l'ipotesi di codice non-degenere? Esiste un codice di correzione con $n < 5$? Intuitivamente possiamo pensare che, dato che lo spazio degli errori $E_a C$ diventa più piccolo, allora si necessiterebbe di dimensioni inferiori per $\mathcal{H}$ poiché serve meno spazio per correggere gli errori. Nonostante ciò, la risposta, che è complicata da dimostrare, è no: $n = 5$ è il numero minimo di qubit per un un generico codice di correzione degli errori anche per codici degeneri. 

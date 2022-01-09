@@ -1,0 +1,143 @@
+\documentclass[a4paper, 12pt]{book}
+
+% General Settings
+\usepackage[paper = a4paper, margin = 1in]{geometry}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{comment}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage[small]{caption}
+\usepackage{subfig}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx,color,listings}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{hologo}
+\usepackage{colortbl}
+
+% Math and physic packages
+\usepackage{physics}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\numberwithin{equation}{section}
+\numberwithin{figure}{chapter}
+
+% Quantum and classical circuits packages
+\usepackage{circuitikz}
+\usepackage{qcircuit}
+
+
+% New or renewed commands
+\newcommand{\lecture}[2]{{\scshape{Lezione #1 - #2}} \par}
+\DeclareMathOperator{\eig}{eig}
+
+\makeatletter
+\providecommand{\leftsquigarrow}{%
+  \mathrel{\mathpalette\reflect@squig\relax}%
+}
+\newcommand{\reflect@squig}[2]{%
+  \reflectbox{$\m@th#1\rightsquigarrow$}%
+}
+\makeatother
+
+% Josephson Junction
+\usepackage{circuitikz}
+
+\makeatletter
+\pgfcircdeclarebipolescaled{instruments}
+{
+    \anchor{text}{\pgfextracty{\pgf@circ@res@up}{\northeast}
+        \pgfpoint{-.7\wd\pgfnodeparttextbox}{
+            \dimexpr.5\dp\pgfnodeparttextbox+.5\ht\pgfnodeparttextbox+\pgf@circ@res@up\relax
+        }
+    }
+}
+{\ctikzvalof{bipoles/oscope/height}}
+{josephson}
+{\ctikzvalof{bipoles/oscope/height}}
+{\ctikzvalof{bipoles/oscope/width}}
+{
+    \pgf@circ@setlinewidth{bipoles}{\pgfstartlinewidth}
+    \pgfextracty{\pgf@circ@res@up}{\northeast}
+    \pgfextractx{\pgf@circ@res@right}{\northeast}
+    \pgfextractx{\pgf@circ@res@left}{\southwest}
+    \pgfextracty{\pgf@circ@res@down}{\southwest}
+    \pgfmathsetlength{\pgf@circ@res@step}{0.25*\pgf@circ@res@up}
+    \pgfscope
+        \pgfpathrectanglecorners{\pgfpoint{\pgf@circ@res@left}{\pgf@circ@res@down}}{\pgfpoint{\pgf@circ@res@right}{\pgf@circ@res@up}}
+        \pgf@circ@draworfill
+    \endpgfscope
+    \pgfscope
+      \pgfpathmoveto{\pgfpoint{\pgf@circ@res@left}{\pgf@circ@res@up}}%
+      \pgfpathlineto{\pgfpoint{\pgf@circ@res@right}{\pgf@circ@res@down}}%
+      \pgfpathmoveto{\pgfpoint{\pgf@circ@res@right}{\pgf@circ@res@up}}%
+      \pgfpathlineto{\pgfpoint{\pgf@circ@res@left}{\pgf@circ@res@down}}%
+      \pgfusepath{draw}
+    \endpgfscope
+}
+\def\pgf@circ@josephson@path#1{\pgf@circ@bipole@path{josephson}{#1}}
+\tikzset{josephson/.style = {\circuitikzbasekey, /tikz/to path=\pgf@circ@josephson@path, l=#1}}
+
+\newtheorem{definizione}{Definizione}[chapter]
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{esempio}{Esempio}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\renewcommand{\thefootnote}{\roman{footnote}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+}
+\urlstyle{same}
+
+% Documents
+\begin{document}
+    \begin{titlepage}
+        \begin{center}
+            \vspace*{3cm}
+            {\scshape\LARGE Università degli Studi di Milano - Bicocca \par}
+            \vspace{1.0cm}
+            \line(1,0){400} \\
+            {\huge\bfseries Teoria della Informazione e \\ Computazione Quantistica \par}
+            \line(1,0){400} \\
+ 	        \vspace{1.0cm}
+            {\Large Raccolta di appunti, dispense e libri \par}
+            \vspace{1.0cm}
+            {Anno accademico 2021/2022 \par}
+            \vspace{0.5cm}
+            {\bfseries Marco Gobbo e Gabriele Morandi \par}
+            \vspace{0.5cm}
+            {\url{https://github.com/marcogobbo/tecnologie-quantistiche} \par}
+            \vspace*{\fill}
+            {\large \today \par}
+        \end{center}
+    \end{titlepage}
+    \tableofcontents
+    \input{lectures/lect1}
+    \input{lectures/lect2}
+    \input{lectures/lect3}
+    \input{lectures/lect4}
+    \input{lectures/lect5}
+    \input{lectures/lect6}
+    \input{lectures/lect7}
+    \input{lectures/lect8}
+    \input{lectures/lect9}
+    \input{lectures/lect10}
+    \input{lectures/lect11}
+    \input{lectures/lect12}
+    \input{lectures/lect13}
+    \input{lectures/lect14}
+    \input{lectures/lect15}
+    \input{lectures/lect16}
+    \input{lectures/lect17}
+    \input{lectures/lect18}
+    \input{lectures/lect19}
+    \input{lectures/lect20}
+    \input{lectures/lect21}
+    \input{bibliography}
+    \addcontentsline{toc}{chapter}{Bibliografia}
+\end{document}

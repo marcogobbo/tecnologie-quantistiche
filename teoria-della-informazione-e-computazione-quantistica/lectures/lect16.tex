@@ -1,0 +1,256 @@
+%%%%%%%%%%%%%%
+% LECTURE 16 %
+%%%%%%%%%%%%%%
+\vspace{1cm}
+
+\noindent\lecture{16}{29/11/2021}
+
+\vspace{0.5cm}
+
+\section{Campo elettromagnetico quantizzato}\label{sec:quantized_em}
+Per capire come il campo elettromagnetico può interagire con un sistema a due livelli dobbiamo prima di tutto studiare come si quantizza la radiazione elettromagnetica. L'idea che sta alla base è quella di considerare, come per la radiazione di corpo nero in fisica classica, il campo elettromagnetico nel vuoto come un'infinita collezione di oscillatori armonici. 
+
+\noindent Consideriamo la nota formulazione dei campi elettromagnetici in termini del potenziale vettore $\vec{A}$:
+\begin{equation}\label{el_magn_A}
+    \vec{E} = - \pdv{\vec{A}}{t} \, , \qquad \vec{B} = \curl \vec{A} \, .
+\end{equation}
+Imponendo il \textbf{gauge di Coulomb}\footnote{Noto anche come \textit{gauge trasversale} o \textit{gauge di radiazione}.} $\div \vec{A} = 0$ sulle equazioni di Maxwell in termini di $\vec{A}$ è possibile ottenere facilmente l'equazione delle onde
+\begin{equation}\label{wave_equation}
+    \frac{1}{c^2} \pdv[2]{\vec{A}}{t} - \laplacian \vec{A} = 0 \, ;
+\end{equation}
+chiaramente la scelta del gauge non cambia la fisica, infatti senza la condizione $\div \vec{A} = 0$ è possibile dimostrare che si ottiene nuovamente la \eqref{wave_equation} con un extra termine a RHS dovuto alla presenza di una sorgente. Generiche soluzioni della \eqref{wave_equation} sono, ad esempio, le onde piane
+\begin{equation}\label{amplitude_solution}
+    \vec{A} = \vec{A}_{\vec{k}} \, e^{i \left(\vec{k} \cdot \vec{x} - \omega t\right)} + \vec{A}_{\vec{k}}^\ast \, e^{-i \left(\vec{k} \cdot \vec{x} - \omega t\right)} \, ,
+\end{equation}
+dove $\vec{A}_{\vec{k}}$ è un generico coefficiente vettoriale complesso che specifica la polarizzazione dell'onda piana e $\vec{k}$ il vettore d'onda che ne individua la direzione di propagazione. Si noti che abbiamo sommato al primo termine il suo complesso coniugato per assicurare che la soluzione sia reale. 
+
+\noindent L'informazione fisica che si ottiene inserendo la soluzione precedente nell'equazione delle onde è la \textbf{relazione di dispersione} $\omega = c |\vec{k}\,|$, quindi d'ora in avanti $\omega$ non è più indipendente da $\vec{k}$; similmente, imponendo la condizione di gauge avremo $\vec{k} \cdot \vec{A}_{\vec{k}} = 0$, perciò il vettore d'onda (direzione della propagazione dell'onda) è perpendicolare rispetto al vettore della polarizzazione. Nel piano perpendicolare a $\vec{k}$ è sempre possibile scegliere una base di vettori di polarizzazione di modulo unitario ($|\vec{\varepsilon}_i| = 1$) tali che 
+\begin{equation*}
+    \vec{A}_{\vec{k}} = A_{k,1} \vec{\varepsilon}_1 + A_{k,2} \vec{\varepsilon}_2 \, .
+\end{equation*}
+Dato che l'equazione \eqref{wave_equation} è lineare, allora una combinazione lineare di soluzioni è anch'essa soluzione, quindi possiamo scrivere la generica soluzione di onde piane come la seguente sovrapposizione
+\begin{equation}\label{infinita_HO}
+    \vec{A}(\vec{x}, t) = \sum_{\vec{k}} \sum_{i=1}^2 \eval{\left( A_{k,i} \vec{\varepsilon}_i e^{i \left( \vec{k} \cdot \vec{x} - \omega t \right)} + \text{ c.c.} \, \right)}_{\omega = c \abs{\vec{k}}} \, ,
+\end{equation}
+dove "c.c." sta per complesso coniugato. Notiamo che abbiamo considerato una sovrapposizione di onde con diverso $\vec{k}$ (nel caso infinito si rimpiazza $\sum_{\vec{k}} \to \int \dd{\vec{k}}$) e, per ognuno di essi, abbiamo scelto una base su cui scrivere il vettore della polarizzazione. La relazione precedente è la più generale soluzione del campo elettromagnetico nel vuoto.
+
+\noindent La somma precedente è costituita nient'altro che da oscillatori perché ogni parentesi è un oscillatore: se scriviamo infatti
+\begin{equation*}
+    \mathcal{A}_{\vec{k}\,}(\vec{x}, t) \equiv \left( A_{k,i} e^{i \vec{k} \cdot \vec{x}} \right) e^{-i \omega_k t} \, ,
+\end{equation*}
+allora $\mathcal{A}_{\vec{k}\,}(\vec{x}, t)$ soddisfa l'equazione del moto \eqref{EOM_HO} di un oscillatore armonico di frequenza $\omega_k$ (pedice $k$ per ricordare che la frequenza soddisfa una relazione di dispersione)
+\begin{equation*}
+    \ddot{\mathcal{A}}_{\vec{k},i} + \omega_k^2 \mathcal{A}_{\vec{k},i} = 0 \, .
+\end{equation*}
+Dunque $\vec{A}(\vec{x}, t)$ in \eqref{infinita_HO} costituisce un'infinita collezione di oscillatori armonici disaccoppiati. 
+
+\noindent Per quantizzare un tale sistema è necessario utilizzare una procedura analoga alla quantizzazione dell'oscillatore armonico: così come si quantizza l'equazione \eqref{EOM_HO} introducendo l'operatore \eqref{x_a_adag}, dobbiamo riscrivere l'ampiezza $\mathcal{A}_{\vec{k},i}$ in funzione degli operatori $(a_{\vec{k},i}, a^\dag_{\vec{k},i})$. Nonostante ciò, già sappiamo che l'hamiltoniana dell'oscillatore armonico quantistico in termini di $(a,a^\dag)$ è la \eqref{eq:ham-oa2}, dunque possiamo facilmente generalizzare tale scrittura per un'\textbf{hamiltoniana del campo elettromagnetico}, ossia
+\begin{equation}\label{em_hamiltonian}
+    H = \sum_{\vec{k},i} \hbar \omega_{\vec{k}} \left( a^{\dag}_{\vec{k},i} a_{\vec{k},i} + \frac{1}{2} \right) \, .
+\end{equation}
+
+\noindent Che tipologia di spettro avrà un sistema di questo tipo? Per ogni oscillatore possiamo introdurre un operatore numero $\hat{n}_{\vec{k}}$ tale che
+\begin{equation*}
+    a^{\dag}_{\vec{k},i} a_{\vec{k},i} \ket{n_{\vec{k},i}} = n_{\vec{k},i} \ket{n_{\vec{k},i}} \, ;
+\end{equation*}
+in questo modo ciascun oscillatore presenterà livelli energetici equispaziati come in Figura \ref{fig:qha}, dove la differenza energetica è data $\hbar \omega_{\vec{k}}$.
+
+\noindent Dato che la \eqref{em_hamiltonian} è una somma, allora lo spazio di Hilbert totale è costituito da un'infinità di spazi di Hilbert disaccoppiati (uno per ciascun oscillatore), dunque è come se si trattasse di un sistema costituito da un'infinità di sottosistemi: lo spazio di Hilbert totale è chiamato \textbf{spazio di Fock} ed è dato dal prodotto tensoriale di tutti i singoli spazi degli oscillatori
+\begin{equation*}
+    \mathcal{H} = \bigotimes_{\vec{k},i} \mathcal{H}_{\vec{k},i} \, .
+\end{equation*}
+
+\noindent Qual è l'interpretazione degli stati $\ket{n_{\vec{k},i}}$? Ogni stato $\ket{n_{\vec{k},i}}$ è costituito da $n_{\vec{k},i}$ fotoni di momento $\vec{p} = \hbar \vec{k}$ e polarizzazione associata ai vettori $\vec{\varepsilon}_i$. Una particella (fotone) nello spazio di Fock corrisponde ad una particolare eccitazione dello stato fondamentale: i vari modi identificano un numero d'onda (lunghezza d'onda e frequenza precise) e ognuno di essi può essere eccitato numerose volte. Se identifichiamo lo stato $\ket{0}$ con un modo non eccitato che non presenta fotoni, allora, per esempio, per gli stati eccitati possiamo scrivere
+\begin{align*}
+    E_{\ket{1}} - E_{\ket{0}} &= \hbar \omega_{\vec{k}} &\Rightarrow& &\ket{1} &= \text{1 fotone con energia } \hbar \omega_{\vec{k}} \, , \\
+    E_{\ket{2}} - E_{\ket{0}} &= 2 \hbar \omega_{\vec{k}} &\Rightarrow& &\ket{2} &= \text{2 fotoni con energia } \hbar \omega_{\vec{k}} \text{ ciascuno} \, .
+\end{align*}
+È importante sottolineare che nello stato $\ket{2}$ (così come $\ket{3}$, $\ket{4}$, \dots), tutti i fotoni presenti hanno la medesima energia ($\hbar \omega_{\vec{k}}$) perché presentano lo stesso momento e la stessa polarizzazione. 
+
+\noindent Qual è l'interpretazione dell'\textbf{energia di punto zero} della \eqref{em_hamiltonian}? Dato che siamo sempre interessati a differenze di energia (solamente queste sono finite), possiamo sempre ridefinire a piacimento l'energia dello stato fondamentale. Per tale motivo possiamo trascurare questo termine costante e riscrivere la \eqref{em_hamiltonian} come 
+\begin{equation*}
+    H = \sum_{\vec{k},i} \hbar \omega_{\vec{k}} \left( a^{\dag}_{\vec{k},i} a_{\vec{k},i} \right) \, .
+\end{equation*}
+
+\noindent Ricordando dalle \eqref{a_adag_action_states} l'azione di $(a,a^\dag)$ sugli stati dell'oscillatore armonico, possiamo interpretare gli operatori $(a_{\vec{k},i}, a^\dag_{\vec{k},i})$ di distruzione e creazione alla luce delle particelle del campo elettromagnetico:
+\begin{align*}
+    a^\dag_{\vec{k},i} &= \text{Operatore che crea un fotone di momento } \vec{k} \, \text{e polarizzazione} \, \vec{\varepsilon}_i \, , \\
+    a_{\vec{k},i} &= \text{Operatore che distrugge un fotone di momento } \vec{k}\, \text{e polarizzazione} \, \vec{\varepsilon}_i \, .
+\end{align*}
+Per tale ragione il generico stato 
+\begin{equation*}
+    \ket{n_{\vec{k}_1, i_1}, n_{\vec{k}_2, i_2}, n_{\vec{k}_3, i_3}, \ldots}
+\end{equation*}
+dello spazio di Fock del campo elettromagnetico rappresenta un insieme di $n_{\vec{k}_j, i_j}$ fotoni con momenti $\vec{p}_j = \hbar \vec{k}_j$ e polarizzazioni $\vec{\varepsilon}_j$. Si noti che ognuno degli stati dati da $n_{\vec{k}_j, i_j}$ può avere in generale un differente numero di fotoni con momenti e polarizzazioni differenti.
+
+\noindent Nel contesto del QC siamo interessati a fotoni con momenti e frequenze ben precise perché, come sottolineato all'inizio del capitolo, l'idea è quella di utilizzare la radiazione per controllare i qubit: si invia un fotone di energia $E = \hbar \omega$, la quale è proprio identica (o circa uguale) alla differenza in energia dei due livelli energetici del qubit
+\begin{center}
+    \mbox{
+        \Qcircuit @C=2em @R=2em {
+            & \qw & \rstick{\ket{1}} \qw \\
+            & \raisebox{.3em}{\begin{huge}$\updownarrow$\end{huge}} & \raisebox{.05em}{\begin{huge} $\leftsquigarrow$ \end{huge}}
+            & \raisebox{0.5em}{$\hbar \omega$}\\
+            & \qw & \rstick{\ket{0}} \qw
+        }
+    }
+\end{center}
+Tipicamente solo un singolo fotone con un ben preciso momento, polarizzazione e direzione è sufficiente per eccitare un sistema come questo. Per questo motivo siamo interessati solamente ad un singolo modo del campo elettromagnetico: la fisica si riduce a ciò che abbiamo ripassato sull'oscillatore armonico quantistico! L'hamiltoniana del campo elettromagnetico risulterà quindi semplicemente nella \eqref{eq:ham-oa2}, dove un particolare fotone è descritto da un singolo oscillatore armonico: gli stati $\ket{n}$ rappresenteranno quindi situazioni con $n$ fotoni con la medesima energia. 
+
+\noindent A seguito della procedura di quantizzazione precedente, il campo elettromagnetico viene promosso dalla semplice ampiezza \eqref{amplitude_solution} ad un operatore (similmente a $x \to \hat{x}(a,a^\dag)$ in \eqref{x_a_adag}). Avremo quindi
+\begin{equation*}
+    \hat{A} = A_0 a e^{i \left( \vec{k} \cdot \vec{x} - \omega t \right)} + A_0^\ast a^\dag e^{-i \left( \vec{k} \cdot \vec{x} - \omega t \right)} \, .
+\end{equation*}
+Non utilizziamo in questo contesto tutti i tecnicismi della QM perché stiamo utilizzando la rappresentazione di Heisenberg\footnote{A differenza della rappresentazione di Schr\"odinger, per la quale sono gli stati ad evolvere nel tempo, in quella di Heisenberg sono gli operatori a dipendere dal tempo. Si pone $\hat{O}_H(t) = e^{i \hat{H} t} \hat{O}_S e^{-i \hat{H} t}$, dove $\hat{O}_S$ è il corrispondente operatore indipendente dal tempo nella rappresentazione di Schr\"odinger.}: il vantaggio di tale rappresentazione risiede nel fatto che è proprio l'operatore appena definito a soddisfare l'equazione del moto \eqref{wave_equation}. Analogamente, anche i campi elettrici e magnetici sono promossi ad operatori. Ad esempio, dalle \eqref{el_magn_A}, l'operatore campo elettrico è dato da
+\begin{equation*}
+    \hat{E} = i \hat{a} \omega A_0 e^{i \left( \vec{k} \cdot \vec{x} - \omega t \right)} - i \hat{a}^\dag \omega A_0^\ast e^{-i \left( \vec{k} \cdot \vec{x} - \omega t \right)} \, ;
+\end{equation*}
+chiaramente la parte operatoriale risiede negli operatori $a$ e $a^\dag$.\\
+A seconda della scelta che si può fare su $A_0$, si utilizzano differenti convenzioni:
+\begin{itemize}
+    \item Se $A_0 \in \mathbb{R}$ allora si scrive
+    \begin{equation*}
+        \hat{E} = i E_0 \left( \hat{a} e^{i \left( \vec{k} \cdot \vec{x} - \omega t \right)} - \hat{a}^\dag e^{-i \left( \vec{k} \cdot \vec{x} - \omega t \right)} \right) \, , \quad \text{con} \quad E_0 = \omega A_0 \, .
+    \end{equation*}
+    \item Quando invece $A_0$ è puramente immaginario si pone
+    \begin{equation*}
+        \hat{E} =  \tilde{E}_0 \left( \hat{a} e^{i \left( \vec{k} \cdot \vec{x} - \omega t \right)} + \hat{a}^\dag e^{-i \left( \vec{k} \cdot \vec{x} - \omega t \right)} \right) \, , \quad \text{con} \quad \tilde{E}_0 = i \omega A_0 \, .
+    \end{equation*}
+\end{itemize}
+
+\newpage
+
+\section{Accoppiamento qubit - campo e.m. classico}\label{sec:qubit_campo_em_classico}
+Cominciamo ora a studiare l'accoppiamento di un qubit con un campo elettromagnetico classico esterno; successivamente affronteremo l'analogo caso di accoppiamento con il campo elettromagnetico quantizzato. In generale la differenza tra le due situazioni dipende da ciò che si sta considerando e da ciò che si intende fare con il qubit. Ad esempio, se si considera una sorgente laser esterna allora si può svolgere una trattazione con entrambi gli accoppiamenti (il caso classico risulta però più semplice), invece quando si devono affrontare situazioni con cavità è necessario considerare solamente il caso quantizzato. 
+
+\noindent Sia nel caso dell'accoppiamento classico sia in quello dell'accoppiamento con il campo quantizzato, quando il qubit è posto in un campo elettromagnetico comincia ad oscillare con la medesima frequenza del campo: si tratta di un tipico modo per controllare a piacimento un qubit.
+
+\noindent Supponiamo di considerare un singolo qubit: come possiamo controllarlo e manipolarlo in maniera tale che diventi qualcos'altro? In termini della sfera di Bloch, ricordiamo, si tratta di muovere questo sistema lungo la superficie della sfera. Un modo di farlo è quello di accoppiarlo ad un campo elettromagnetico classico esterno: ad esempio per un sistema di spin sappiamo che, a meno di costanti, $H = \vec{S} \cdot \vec{B}$, quindi basta regolare il campo magnetico per decidere la direzione dello spin. In una tale situazione sorge spontanea un'idea molto semplice: l'evoluzione temporale sarà data da
+\begin{equation*}
+    \hat{U} = e^{-\frac{i}{\hbar} \hat{H} t} = e^{-\frac{i}{\hbar} \vec{S} \cdot \vec{B} t} \, ,
+\end{equation*}
+ma l'operatore di spin $\vec{S}$ è costituito dalle matrici di Pauli! Questo significa che l'evoluzione temporale è proprio regolata dall'operatore $R_{\vec{n}}(\gamma)$ della \eqref{rotation_n_lambda}, il quale implementa una rotazione di angolo $\gamma$ attorno alla direzione individuata da $\vec{n}$: utilizzando l'accoppiamento $H = \vec{S} \cdot \vec{B}$ (quasi universale) e regolando il campo magnetico è quindi possibile realizzare l'operatore $R_{\vec{n}}(\gamma)$ mediante la sola evoluzione temporale. 
+
+\noindent Discutiamo l'interazione degli stati $\ket{0}$ e $\ket{1}$ di un sistema a due livelli con un campo elettromagnetico esterno. Se immaginiamo che tale sistema sia costituito da un atomo, allora esso interagisce con il campo tramite un'interazione di dipolo del tipo $H = -\vec{d} \cdot \vec{E}$: se l'atomo assorbe radiazione di energia $\hbar \omega$ allora può subire la transizione energetica $\ket{0} \to \ket{1}$. Facciamo due assunzioni:
+\begin{itemize}
+    \item \textbf{La dipendenza spaziale del campo $\vec{E}$ è irrilevante}. Questo è dovuto al fatto che nella maggior parte delle situazioni la lunghezza d'onda della radiazione è molto più grande rispetto alle dimensioni del qubit (comparabili alle dimensioni atomiche, $r_0 \sim 10^{-10}$ m): ad esempio, nello spettro del visibile $\lambda \sim 10^{-6}$ m, mentre per le microonde $\lambda \sim $ cm/m, quindi la differenza è persino maggiore. Il campo esterno è praticamente costante sul qubit e possiamo trascurare la sua dipendenza spaziale. Per tale ragione assumeremo
+    \begin{equation*}
+        \vec{E} = \vec{E}_0 \cos (\omega_d t + \phi_0) \, ,
+    \end{equation*}
+    dove $\omega_d$ è detta \textbf{frequenza di drive}\footnote{Poiché grazie a questa si andrà a guidare l'interazione del campo con il qubit.}. 
+    
+    \item La radiazione interagisce con il dipolo dell'atomo, dove il dipolo non è altro che $\vec{d} = e \vec{x}$, quindi è lineare nella posizione. Siamo interessati solamente a due livelli atomici, dunque calcoleremo sempre elementi di matrice della forma $\mel{\omega}{H}{\omega'}$, dove $\omega, \omega' = 0,1$. In tal caso $\mel{\omega}{H}{\omega'} \sim \mel{\omega}{\hat{d}}{\omega'} \sim \mel{\omega}{\hat{x}}{\omega'}$, ma non vogliamo calcolare elementi di matrice di questo tipo perché dipendono da molti fattori (direzione del campo, tipo di radiazione, regole di selezione in QM, ecc.). In generale \textbf{$\mel{\omega}{\hat{x}}{\omega'}$ pu\`o essere il più generico elemento di una matrice $2 \times 2$}. Per questa ragione l'hamiltoniana a cui siamo interessati descrive un'interazione molto generica, scrivibile nella forma
+    \begin{equation}\label{H_couple}
+        H_{\text{couple}} = - \left( a \mathbb{I} + \vec{b} \cdot \vec{\sigma} \right) \cos (\omega_d t + \phi_0) \, ;
+    \end{equation}
+    si noti che l'hamiltoniana precedente non è solamente applicabile all'interazione di un atomo con la radiazione perché, per esempio, per un sistema di spin si ha $H = - \mu \vec{S} \cdot \vec{B}$, che può essere scritta nella forma precedente. 
+\end{itemize}
+
+\noindent Chiamiamo $H_0$ l'hamiltoniana del qubit imperturbato. D'ora in avanti definiamo $E_1 - E_0 = \hbar \omega_q$\footnote{Chiamiamo $\omega_q$ la frequenza associata al sistema qubit.} la differenza di energia tra i due livelli del qubit (assumiamo sempre che $E_1 > E_0$, quindi $\ket{1}$ è lo stato eccitato). Per convenzione si misura l'energia dal livello energetico intermedio tra i due stati:
+\begin{center}
+    \mbox{
+        \Qcircuit @C=2em @R=2em {
+            & \qw & \rstick{\ket{1}} \qw \\
+            & \raisebox{1em}{- - - - \begin{huge}$\uparrow$\end{huge} - - - -} \\
+            %& \raisebox{.4em}{$\hbar \omega_q$}\\
+            & \qw & \rstick{\ket{0}} \qw
+        }
+    }
+\end{center}
+quindi per simmetria $E_1 = \hbar \frac{\omega_q}{2}$ e $E_0 = -\hbar \frac{\omega_q}{2}$. In questo modo possiamo scrivere
+\begin{equation*}
+    H_0 = - \frac{\hbar}{2} \omega_q \sigma_3 \, ,
+\end{equation*}
+cosicché $H_0 \ket{0} = E_0 \ket{0}$ e $H_0 \ket{1} = E_1 \ket{1}$. Per semplificare la scrittura porremo nel seguito $\hbar=1$. Perciò l'hamiltoniana generale sarà 
+\begin{equation}\label{H_da_riscrivere}
+    H = - \frac{\hbar}{2} \omega_q \sigma_3 - \left( a \mathbb{I} + \vec{b} \cdot \vec{\sigma} \right) \cos (\omega_d t + \phi_0) \, .
+\end{equation}
+Come evidente, le situazioni in cui si considerano $\mathbb{I}$ e $\sigma_3$ nel secondo termine sono immediate da studiare, quindi senza perdita di generalità assumiamo $a = b_3 = 0$; il caso interessante riguarda infatti situazioni in cui la perturbazione è trasversale al qubit, quindi lungo $x$ o $y$. Per convenzione si pone $b_1 + i b_2 = A e^{-i \phi_1}$ in maniera tale che
+\begin{equation*}
+    (b_1 \sigma_1 + b_2 \sigma_2) \cos (\omega_d t + \phi_0) =
+    \begin{pmatrix}
+    0 & A e^{i \phi_1} \\ Ae^{-i \phi_1} & 0
+    \end{pmatrix}
+    \cos (\omega_d t + \phi_0) \, ,
+\end{equation*}
+dove $\phi_1$ contiene informazioni sull'orientazione del campo esterno rispetto al dipolo con cui esso interagisce. Se introduciamo
+\begin{equation}\label{sigma_+_-}
+    \sigma_+ = \frac{\sigma_1 + i \sigma_2}{2} = 
+    \begin{pmatrix}
+    0 & 1 \\ 0 & 0
+    \end{pmatrix} \, , \qquad 
+    \sigma_- = \frac{\sigma_1 - i \sigma_2}{2} = 
+    \begin{pmatrix}
+    0 & 0 \\ 1 & 0
+    \end{pmatrix} \, ,
+\end{equation}
+i quali non sono altro che gli operatori $J_+$ e $J_-$ del momento angolare in QM, allora possiamo infine riscrivere la \eqref{H_da_riscrivere} come
+\begin{equation}\label{H_no_approx}
+    H = - \frac{\omega_q}{2} \sigma_3 - \left( A e^{i \phi_1} \sigma_+ + A e^{-i \phi_1} \sigma_- \right) \cos (\omega_d t + \phi_0) \, ;
+\end{equation}
+Il termine di interazione dell'hamiltoniana \eqref{H_no_approx} è la più generale matrice hermitiana non diagonale che descrive l'accoppiamento con un campo elettromagnetico classico oscillante. Purtroppo se si vuole risolvere il problema dell'evoluzione temporale di questa hamiltoniana si è costretti a svolgere delle approssimazioni perché non esiste alcuna soluzione analitica semplice. L'approssimazione che usiamo è la cosiddetta \textbf{Rotating Waves Approximation} (RWA). Come prima cosa, tramite un cambio di base, vogliamo riscrivere lo stato quantistico in un sistema di riferimento rotante:
+\begin{equation}\label{rotation_RWA}
+    \ket{\psi(t)} \rightarrow \ket{ \tilde{\psi}(t)} = U(t) \ket{\psi(t)} \, ,
+\end{equation}
+dove l'operatore $U(t)$ è peculiare perché unitario ($U(t) U^\dag (t) = \mathbb{I}$) e dipendente dal tempo. Si noti che, nonostante la notazione, $U(t)$ non è l'operatore di evoluzione temporale (in alcuni casi particolari, come nella rappresentazione di interazione, si pone $U(t) = e^{\frac{i}{\hbar} H_0 t}$). 
+
+\noindent Essendo $U(t)$ unitario, la probabilità sarà conservata a seguito di questo cambio di base. Cosa succede esplicitamente alla \eqref{H_no_approx}? Dato che lo stato non ruotato risolve l'equazione di Schr\"odinger
+\begin{equation*}
+    i \dv{t} \ket{\psi(t)} = H \ket{\psi(t)} \, ,
+\end{equation*}
+allora 
+\begin{align*}
+    i \dv{t} \ket{\tilde{\psi}(t)} &= U(t) i \dv{t} \ket{\psi(t)} + i \dot{U}(t) \ket{\psi(t)} \\
+    &= U(t) H \ket{\psi(t)} + i \dot{U}(t) \ket{\psi(t)} \\
+    &= U H U^\dag \ket{\tilde{\psi}(t)} + i \dot{U} U^\dag \ket{\tilde{\psi}(t)} \, .
+\end{align*}
+Questo significa che anche lo stato ruotato risolve l'equazione di Schr\"odinger
+\begin{equation}\label{S_eq_rotated_state}
+    i \dv{t} \ket{\tilde{\psi}(t)} = \tilde{H} \ket{\tilde{\psi}(t)} \, , \quad \text{dove} \quad \tilde{H} = U H U^\dag + i \dot{U} U^\dag \, .
+\end{equation}
+Per riscrivere l'hamiltoniana \eqref{H_no_approx} come nella \eqref{S_eq_rotated_state} è necessario dimostrare il seguente lemma:
+
+\begin{lemma}\label{lemma:lemma_ops}
+    Dati due operatori $A$ e $T$ tali che $\comm{T}{A} = \alpha A$, allora
+    \begin{equation}\label{lemma_ops}
+        e^{i T} A e^{-i T} = e^{i \alpha} A \, .
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    Definiamo $A(t) = e^{i t T} A e^{-i t T}$. Perciò
+    \begin{equation*}
+        \dot{A}(t) = i e^{i t T} T A e^{-i t T} - i e^{i t T} A T e^{-i t T} = i e^{i t T} \comm{T}{A} e^{-i t T} = i \alpha A(t) \, .
+    \end{equation*}
+    La precedente è un'equazione differenziale lineare per $A(t)$ che può essere facilmente risolta scrivendo
+    $A(t) = A(0) e^{i \alpha t} = A e^{i \alpha t}$. Scegliendo $t = 1$ otteniamo la tesi. 
+\end{proof}
+
+\noindent Scriviamo l'hamiltoniana in questo nuovo sistema ruotato: ruotiamo lo stato con una rotazione unitaria dipendente dal tempo scegliendo 
+\begin{equation*}
+    U(t) = e^{-\frac{i}{2} \omega_d \sigma_3 t} \, ,
+\end{equation*}
+ossia andiamo ad un sistema di riferimento che ruota alla stessa frequenza del campo esterno. Per il primo termine di $\tilde{H}$ (coniugazione con $U$) avremo 3 contributi da \eqref{H_no_approx}:
+\begin{align*}
+    U H U^\dag &\propto U \sigma_3 U^\dag + U \sigma_+ U^\dag + U \sigma_- U^\dag \\
+    &\propto \sigma_3 + e^{-i \omega_d t} \sigma_+ + e^{i \omega_d t} \sigma_- \, ,
+\end{align*}
+dove per gli ultimi due termini abbiamo usato la \eqref{lemma_ops} con $\comm{\sigma_3}{\sigma_\pm} = \pm 2 \sigma_\pm$ (formula semplice da dimostrare con le definizioni di $\sigma_\pm$). Dato che il secondo termine di $\tilde{H}$ in \eqref{S_eq_rotated_state} è semplicemente
+\begin{equation*}
+    i \dot{U} U^\dag = \frac{\omega_d}{2} \sigma_3 \, ,
+\end{equation*}
+allora, unendo i pezzi in \eqref{S_eq_rotated_state}, avremo
+\begin{align*}
+    \tilde{H} &= - \frac{\omega_q}{2} \sigma_3 - \left( A e^{i \phi_1} e^{-i \omega_d t} \sigma_+ + A e^{-i \phi_1} e^{i \omega_d t} \sigma_- \right) \cos (\omega_d t + \phi_0) + \frac{\omega_d}{2} \sigma_3 \\
+    &= -\frac{(\omega_q - \omega_d)}{2} \sigma_3 - \left( A e^{-i (\omega_d t - \phi_1)} \sigma_+ + A e^{i (\omega_d t - \phi_1)} \sigma_- \right) \frac{e^{i(\omega_d t + \phi_0)} + e^{-i(\omega_d t + \phi_0)}}{2} \, .
+\end{align*}
+Come anticipato sopra, non esiste alcun modo di estrarre una soluzione analitica esatta dell'hamiltoniana precedente (per adesso abbiamo solo riscritto la $H$ di partenza in un sistema di riferimento differente senza fare alcuna approssimazione). Qui entra in gioco la RWA: scriviamo i 4 termini che si originano dal secondo prodotto di $\tilde{H}$
+\begin{equation*}
+    A e^{i(\phi_0 + \phi_1)} \sigma_+ + A e^{-2i \omega_d t} e^{i(\phi_1 - \phi_0)} \sigma_+ + A e^{2i \omega_d t} e^{-i(\phi_1 - \phi_0)} \sigma_- + A e^{-i(\phi_0 + \phi_1)} \sigma_- \, ;
+\end{equation*}
+abbiamo quindi 2 termini dipendenti dal tempo e 2 indipendenti: nella RWA trascuriamo i termini dipendenti dal tempo perché assumiamo di guardare il sistema per grandi $t$. Come possiamo giustificare tale assunto? La fisica è dominata dalla risonanza, quindi solamente le frequenze vicino alla risonanza contribuiranno significativamente al processo. Questa stima può essere calcolata in teoria delle perturbazioni\footnote{Per vedere esplicitamente perché i termini dipendenti dal tempo sono trascurabili per grandi $t$ è necessario fare un conto completo in teoria delle perturbazioni.}, dove si ottengono dei denominatori $\frac{1}{E_t - E_1 \pm \hbar \omega}$: considerare solo i casi in cui il denominatore si annulla (o quasi) è lo stesso che trascurare i termini dipendenti da $t$ nell'espressione precedente. 
+
+\noindent Tenendo quindi conto della RWA, $\tilde{H}$ può essere riscritta come un'hamiltoniana indipendente dal tempo 
+\begin{equation}\label{H_tild_RWA}
+    \tilde{H} = - \frac{\Delta}{2} \sigma_3 - \left( \frac{A}{2} e^{i \phi} \sigma_+ + \frac{A}{2} e^{-i \phi} \sigma_- \right) \, ,
+\end{equation}
+dove $\phi = \phi_0 +\phi_1$ e $\Delta = \omega_q - \omega_d$. La frequenza $\Delta$ è detta \textbf{frequenza di detuning} e dice quanto siamo lontani dalla risonanza, la quale corrisponde ovviamente al caso $\Delta = 0$. Dato che il segno tra le fasi in $\phi$ è $+$, possiamo essenzialmente riassorbire a piacimento tutte la fasi del campo esterno nella direzione in cui si sta prendendo l'elemento di matrice $\mel{\omega}{\hat{x}}{\omega'}$ o viceversa (nei termini trascurabili dalla RWA c'è al contrario un $-$). Tenendo quindi conto della \eqref{H_tild_RWA}, l'evoluzione temporale è descritta da un'hamiltoniana indipendente dal tempo, perciò l'operatore che la descrive è proprio $e^{-i \tilde{H} t} \equiv R_{\vec{n}}(\gamma)$: l'evoluzione temporale può quindi essere utilizzata per controllare il singolo qubit e muoverlo sulla sfera di Bloch.

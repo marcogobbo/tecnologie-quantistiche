@@ -1,0 +1,279 @@
+%%%%%%%%%%%%%%
+% LECTURE 12 %
+%%%%%%%%%%%%%%
+\chapter{Quantum error correction}
+
+\lecture{12}{15/11/21}
+\vspace{0.5cm}
+
+\noindent Entrambi il CC e il QC sono soggetti ad errori: si pensi ad esempio all'imperfezione dei fili nei circuiti elettrici, ai gate difettosi che non restituiscono il corretto risultato oppure anche al caso dell'interazione con l'ambiente che, come visto nel capitolo precedente, porta sempre ad una perdita di coerenza e di ampiezza nella sovrapposizione quantistica del qubit. A tal proposito, tipicamente il tempo di decoerenza è molto più piccolo rispetto al tempo di decadimento dell'ampiezza, quindi la perdita di interferenza nello stato avviene quasi immediatamente. 
+
+\noindent Nonostante la gestione degli errori di un qubit sia molto più complessa rispetto al caso classico, a causa della continua influenza dell'ambiente, cominciamo la nostra discussione analizzando il caso del CC.
+
+\section{Correzione classica degli errori}\label{sec:classical_correction}
+In CC esistono alcuni protocolli standard per affrontare i problemi sopraelencati: il più famoso prevede una \textbf{codifica} del messaggio contenuto nella stringa di bit in esame in una ripetizione di questi ultimi. Questo significa rimpiazzare, ad esempio, $0 \to 000$ e $1 \to 111$: chiaramente la sequenza di 3 bit finali, chiamati \textbf{bit logici}, ha il medesimo significato del bit iniziale (3 bit uguali $=$ 1 bit), tuttavia la differenza è che si hanno molti più bit. 
+
+\noindent A quale vantaggio porta questa sostituzione? Assumendo che gli errori tipici siano equivalenti ad un \texttt{OR} (bit flip: $0 \to 1$ e $1 \to 0$) e che siano statisticamente indipendenti tra loro, allora la probabilità che due o più errori avvengano simultaneamente nella sequenza finale è molto più piccola rispetto ad averne solamente uno: possiamo quindi correggere un qualsiasi errore usando la \textbf{majority rule}. Se la sequenza di bit ricevuti è costituita da $xxx$, allora il ricevente legge "bit inviato $= 0$" se la maggior parte dei bit sono 0, viceversa, quando la maggior parte sono degli 1 allora legge "bit inviato $= 1$". 
+
+\noindent Più formalmente, chiamiamo $p$ la probabilità di avere un singolo bit flip. Quando si codifica il messaggio in un bit singolo si ha probabilità $p$ di avere una qualche sorta di errore, tuttavia se la codifica avviene in 3 bit allora la sicurezza è maggiore. Per vederlo più esplicitamente calcoliamo la probabilità di avere 2 o 3 bit flip contemporaneamente: nel caso di due bit flip avremo $3 p p (1-p) = 3 p^2(1-p)$ (il 3 indica che il primo errore può avvenire in uno dei 3 bit qualsiasi), mentre la probabilità di avere 3 errori è ovviamente $p^3$, dunque la probabilità totale di avere 2 o più errori è data dalla somma $3p^2-2p^3$. Ma si ha
+\begin{equation}\label{prob_2_simult}
+    3p^2-2p^3 < p \quad \text{per} \quad p < \frac{1}{2} \, ;
+\end{equation}
+bastano quindi probabilità minori del 50\%, di avere un singolo bit flip, per fare in modo che la probabilità di avere 2 o più errori simultanei sia trascurabile. Codificare il messaggio in 3 bit è più sicuro che lasciare il singolo bit. In generale questo discorso funziona ragionevolmente bene in CC. 
+
+\noindent Analizziamo ora l'analogo quantistico.
+
+\section{Introduzione alla correzione quantistica degli errori}\label{sec:intro_error_corr}
+Proviamo a svolgere il medesimo procedimento in QC: rimpiazziamo i singoli qubit con $\ket{0} \to \ket{000}$ e $\ket{1} \to \ket{111}$. Nonostante il problema della duplicazione dei qubit (non è affatto banale raddoppiarli o triplicarli), esistono altri problemi concettuali da tenere necessariamente in considerazione:
+\begin{itemize}
+    \item[A.] \textbf{Teorema di no-cloning}: non possiamo clonare stati generici. 
+    
+    \item[B.] \textbf{Errori continui}: in CC tutti gli errori che avvengono sono discreti, ma in QC, dato che i gate dipendono da parametri continui, gli errori possono essere continui (si pensi banalmente all'amplitude e phase damping).
+    
+    \item[C.] \textbf{Regola di Born}: sappiamo dalla QM che la misurazione porta al collasso della funzione d'onda; per applicare la majority rule sui qubit è quindi necessario interagire con essi e causare irreversibilmente il collasso dello stato.
+\end{itemize}
+
+\noindent Nelle prossime sezioni vedremo che tutte queste problematiche possono essere affrontate nella teoria generale della correzione degli errori. 
+
+\noindent Cominciamo ad introdurre il procedimento che si attua per rimpiazzare i qubit iniziali con dei \textbf{qubit logici}. Come prima cosa si vuole rimpiazzare
+\begin{align*}
+    \ket{0} & \rightarrow \ket{000} \equiv \ket{\overline{0}} \equiv \ket{0}_L \, , \\
+    \ket{1} & \rightarrow \ket{111} \equiv \ket{\overline{1}} \equiv \ket{1}_L \, ,
+\end{align*}
+dove il pedice $L$ sta per "logico". Ricordiamo che un qubit si trova quasi sempre in una sovrapposizione quantistica di stati, quindi si vuole scrivere
+\begin{equation}\label{logical_qubit}
+    a \ket{0} + b \ket{1} \to a \ket{000} + b \ket{111} \, .
+\end{equation}
+Possiamo effettuare questa operazione senza violare il punto A.? La risposta è sì ed è quasi banale perché l'operazione precedente non è la stessa che clonare lo stato. Ciò che non è permesso dal \textit{teorema di no-cloning} è \begin{align}\label{forbidden_no_cloning}
+    a \ket{0} + b \ket{1} \equiv \ket{\psi} & \rightarrow \ket{\psi} \otimes \ket{\psi} \otimes \ket{\psi} \notag \\
+    &= (a \ket{0} + b \ket{1}) \otimes (a \ket{0} + b \ket{1}) \otimes (a \ket{0} + b \ket{1}) \, ;
+\end{align} 
+chiaramente \eqref{logical_qubit} $\neq$ \eqref{forbidden_no_cloning} perché ciò che vogliamo fare è molto più semplice. 
+
+\noindent Possiamo disegnare un circuito che sia in grado di operare la codifica \eqref{logical_qubit} ricordando che il \texttt{CNOT-gate} inverte lo stato solamente quando il control qubit è in $\ket{1}$:
+\begin{center}
+    \mbox{
+        \Qcircuit @C=2em @R=1em {
+            \lstick{a \ket{0} + b \ket{1}} & \ctrl{1} & \ctrl{2} & \qw \\
+            \lstick{\ket{0}} & \targ & \qw & \qw \\
+            \lstick{\ket{0}} & \qw & \targ & \qw
+        }
+    }
+\end{center}
+è chiaro vedere che quando il primo qubit è in $\ket{0}$ allora si ottiene $\ket{000}$ e viceversa quando è in $\ket{1}$ i due \texttt{CNOT-gate} agiscono e producono $\ket{111}$. Questo circuito non contraddice il teorema di no-cloning: ad esempio se il primo qubit si trova in $\ket{1}$ allora il circuito avrà come output
+\begin{equation*}
+    b \ket{1} \otimes \ket{0} \otimes \ket{0} \to b \ket{1} \otimes \ket{1} \otimes \ket{1} \, ,
+\end{equation*}
+il quale è effettivamente il risultato di una clonazione perché se chiamiamo $\ket{1} \equiv \ket{\psi}$ allora l'operazione è
+\begin{equation*}
+    \ket{\psi} \otimes \ket{0} \otimes \ket{0} \to  \ket{\psi} \otimes \ket{\psi} \otimes \ket{\psi} \, ;
+\end{equation*}
+nonostante ciò, la dimostrazione del teorema di no-cloning falliva per stati ortogonali, il che significa che non c'è contraddizione fisica nel clonare stati appartenenti ad una base. Il teorema non è violato perché lo stato clonato non è uno stato generico. 
+
+\noindent Vogliamo cercare di capire come rilevare possibili errori. Supponiamo che si possano verificare errori di bit flip: gli errori causano $\ket{0} \to \ket{1}$ e $\ket{1} \to \ket{0}$ e questa operazione può essere implementata in un circuito con un \texttt{X-gate}. Immaginiamo che il circuito precedente sia soggetto ad un errore di questo tipo: 
+\begin{center}
+    \mbox{
+        \Qcircuit @C=2em @R=1em {
+            \lstick{} & \ctrl{1} & \ctrl{2} & \gate{X} & \qw \\
+            \lstick{} & \targ & \qw & \qw & \qw \\
+            \lstick{} & \qw & \targ & \qw & \qw
+            \gategroup{1}{4}{1}{4}{.7em}{--}
+        }
+    }
+\end{center}
+(il gate è stato inserito nel primo qubit, ma il discorso è analogo anche se fosse stato nel secondo o terzo). Il nostro scopo è quello di correggere l'errore tratteggiato senza disturbare in maniera eccessiva il sistema. Chiaramente essendo l'output il seguente
+\begin{equation*}
+    a \ket{000} + b \ket{111} \overset{X}{\longrightarrow} a \ket{100} + b \ket{011} \, ,
+\end{equation*}
+dobbiamo cercare di capire come rilevare questo errore senza causare il collasso dello stato e come intervenire per ripristinare l'informazione desiderata. 
+
+\noindent Vediamo questo errore in generale. Se solamente singoli\footnote{Stiamo assumendo che la probabilità che avvengano 2 o più errori simultaneamente è soppressa rispetto alla probabilità che avvenga un singolo bit flip. Si veda l'equazione \eqref{prob_2_simult} per ulteriori dettagli.} \texttt{X-gate} su singoli qubit possono intervenire allora, a seconda della posizione di questo gate in uno dei 3 qubit, possono verificarsi 4 casi (compresa la situazione in cui non avviene alcun errore):
+\begin{equation}\label{distinguish_cases}
+    a \ket{000} + b \ket{111} \rightarrow
+    \begin{cases}
+    a \ket{000} + b \ket{111} \, , &\text{Caso I} \\
+    a \ket{100} + b \ket{011} \, , &\text{Caso II} \\
+    a \ket{010} + b \ket{101} \, , &\text{Caso III} \\
+    a \ket{001} + b \ket{110} \, , &\text{Caso IV}
+    \end{cases} \, .
+\end{equation}
+Come possiamo distinguere in quale dei 4 casi ci troviamo? Possiamo pensare di costruire un circuito che distingua le situazioni senza disturbare i 3 qubit in gioco. Per farlo aggiungiamo, dopo i due \texttt{CNOT-gate} che servono per produrre \eqref{logical_qubit}, due qubit extra, chiamati \textbf{ancilla qubit}\footnote{Il nome "ancilla" deriva dal latino \textit{ancilla}, che significa "ancella", "serva", "schiava". Sì, sono qubit schiavi.}, e costruiamo il seguente circuito:
+\begin{center}
+    \mbox{
+        \Qcircuit @C=2em @R=1em {
+            \lstick{} & \targ & \targ & \qw & \qw & \meter & \rstick{\ket{x} = \ket{0}, \ket{1}} \qw \\
+            \lstick{\raisebox{2.8em}{$\large{\substack{\text{Ancilla qubit} \\ \text{preparati in } \ket{0}}}$ \ }} & \qw & \qw & \targ & \targ & \meter & \rstick{\ket{y} = \ket{0}, \ket{1}} \qw \gategroup{1}{1}{2}{1}{1.2em}{\{} \\
+            \lstick{} & \ctrl{-2} & \qw & \qw & \qw & \qw & \qw \\
+            \lstick{} & \qw & \ctrl{-3} & \ctrl{-2} & \qw & \qw & \qw \\
+            \lstick{\raisebox{2.8em}{$\large{\substack{\text{Qubit dei casi} \\ \text{I, II, III e IV}}}$}\ \ } & \qw & \qw & \qw & \ctrl{-3} & \qw & \qw \gategroup{3}{1}{5}{1}{1em}{\{}
+        }
+    }
+\end{center}
+In questo circuito i 3 qubit in esame agiscono sempre da control qubit, quindi rimangono tali non essendo soggetti ad alcun flip dovuto ai diversi \texttt{CNOT-gate} (questo significa che il punto C. è rispettato). Come indicato, si svolge una misurazione sugli ancilla qubit: il risultato, che non causa alcun collasso dei 3 qubit in esame, è un insieme di due numeri $(x,y)$ che possono essere utilizzati per distinguere quale dei 4 errori è avvenuto. Tenendo presente gli stati indicati in \eqref{distinguish_cases} nei differenti casi, avremo le seguenti situazioni:
+\begin{enumerate}
+    \item \textbf{Caso I}: $(x,y) = (0,0)$.
+    
+    \noindent La parte che riguarda $\ket{000}$ non produce alcuna modifica perché i 4 \texttt{CNOT-gate} non agiscono; la parte di $\ket{111}$, invece, attiva tutti e 4 i \texttt{CNOT-gate} ma non produce alcuna variazione finale degli stati $\ket{x} = \ket{0}$ e $\ket{y} = \ket{0}$ perché si hanno due flip consecutivi. 
+    
+    \item \textbf{Caso II}: $(x,y) = (1,0)$.
+    
+    \noindent Lo stato $\ket{100}$ attiva solamente il primo \texttt{CNOT-gate} sul primo ancilla; lo stato $\ket{011}$ attiva gli altri 3, di cui uno sul primo ancilla (come in precedenza) e due consecutivi sul secondo ancilla. Il risultato è quindi $\ket{x} = \ket{1}$ e $\ket{y} = \ket{0}$ per entrambi. 
+    
+    \item \textbf{Caso III}: $(x,y) = (1,1)$. 
+    
+    \noindent Lo stato $\ket{010}$ attiva i due \texttt{CNOT-gate} centrali che agiscono sui due diversi ancilla; lo stato $\ket{101}$ attiva il primo e il quarto \texttt{CNOT-gate}, che anch'essi agiscono su due diversi ancilla. In entrambi i casi si ha un flip su ogni stato e quindi avremo $\ket{x} = \ket{1}$ e $\ket{y} = \ket{1}$. 
+    
+    \item \textbf{Caso IV}: $(x,y) = (0,1)$.
+    
+    \noindent Lo stato $\ket{001}$ attiva solamente l'ultimo \texttt{CNOT-gate}, che modifica il secondo ancilla; lo stato $\ket{110}$ attiva i primi 3 \texttt{CNOT-gate}: i primi due non producono alcuna differenza sul primo ancilla, mentre il terzo inverte il secondo ancilla. Il risultato per entrambe le situazioni è quindi $\ket{x} = \ket{0}$ e $\ket{y} = \ket{1}$. 
+\end{enumerate}
+
+\noindent Una volta effettuata la misurazione sugli ancilla e distinto il caso in esame, si può facilmente intervenire sul qubit corrotto inserendo un \texttt{X-gate} che lo riporti alla situazione iniziale. Si noti, ancora una volta, che non si è misurato il qubit difettoso, ma si sa della sua presenza grazie al risultato degli ancilla. In generale, al posto che effettuare le misure sugli ancilla, è possibile implementare un circuito che svolga questo lavoro in automatico (compreso l'inserimento dell'\texttt{X-gate} per correggere il qubit). 
+
+\section{Stabilizers}\label{sec:stabilizers}
+Qual è il significato fisico in termini di osservabili della misurazione $(x,y)$ che viene effettuata sugli ancilla qubit? 
+
+\noindent Prima di rispondere a questa domanda fissiamo le notazioni: i 3 qubit soggetti ad errori vengono generalmente indicati con un numero, come ad esempio
+\begin{center}
+    \mbox{
+        \Qcircuit @C=2em @R=1em {
+            \lstick{0} & \gate{X} & \qw \\
+            \lstick{1} & \qw & \qw \\
+            \lstick{2} & \qw & \qw 
+        }
+    }
+\end{center}
+\vspace{0.2cm}
+L'\texttt{X-gate} mostrato, invece, corrisponde, in termini di operatori agenti sui 3 qubit, al prodotto tensoriale $X_0 \otimes \mathbb{I}_1 \otimes \mathbb{I}_2$. Per semplicità scriveremo sempre $X_0 \otimes \mathbb{I}_1 \otimes \mathbb{I}_2 \equiv X_0$, $\mathbb{I}_0 \otimes X_1 \otimes \mathbb{I}_2 \equiv X_1$ e così via: i pedici sugli operatori indicano il qubit su cui esso sta agendo. 
+
+\noindent Lo spazio di Hilbert dei 3 qubit, che indicheremo con $\mathcal{H}$, ha dimensione $\dim \mathcal{H} = 2^3 = 8$ perché i qubit logici che stiamo considerando sono triplette dei qubit singoli iniziali: $\ket{\overline{0}} = \ket{000}$ e $\ket{\overline{1}} = \ket{111}$. Chiamiamo \textbf{codewords} gli stati del seguente sottospazio
+\begin{equation}\label{codewords}
+    C = \left\lbrace \ket{\psi} \in \mathcal{H} \; : \; \ket{\psi} = a \ket{000} + b \ket{111} \right\rbrace \subset \mathcal{H} \, ,
+\end{equation}
+ossia l'insieme di tutti i vettori di $\mathcal{H}$ che si scrivono come in \eqref{logical_qubit}. Gli operatori che agiscono su $\mathcal{H}$ che ci interessano particolarmente  sono della forma $M = M_0 \otimes M_1 \otimes M_2$ dove $M_i = \{ \mathbb{I}, X, Y, Z \}$. Questi operatori $M$ sono molto speciali perché sono fattorizzati come prodotto di matrici: non stiamo agendo su $\ket{\overline{0}}$ e $\ket{\overline{1}}$ con generiche matrici $8 \times 8$; in aggiunta, se consideriamo le singole matrici $M_i$ $2 \times 2$ che agiscono sui singoli qubit esse non sono matrici generali di $U(2)$. Alcuni semplici esempi di operatori $M$ sono: $X \otimes \mathbb{I} \otimes \mathbb{I}$, $X \otimes Z \otimes \mathbb{I}$ e $Y \otimes Z \otimes X$.
+
+\noindent Perché questi operatori sono così importanti? In primo luogo perché grazie alla proprietà $\sigma_i^2 = \mathbb{I}$ allora $M^2 = \mathbb{I}$. Ad esempio se $M = X \otimes Z \otimes \mathbb{I}$ avremo
+\begin{equation*}
+    M^2 = (X \otimes Z \otimes \mathbb{I}) (X \otimes Z \otimes \mathbb{I}) = X^2 \otimes Z^2 \otimes \mathbb{I}^2 = \mathbb{I} \otimes \mathbb{I} \otimes \mathbb{I} \equiv \mathbb{I} \, .
+\end{equation*}
+In secondo luogo, le matrici di Pauli sono hermitiane, il che vuol dire che possono essere diagonalizzate. I possibili autovalori ($\lambda = \pm 1$) e autovettori delle matrici di Pauli sono mostrati nella Tabella \ref{tab:Pauli_eig} della Sezione \ref{sec:osservabili}. 
+
+\noindent Grazie alla due ragioni precedenti vale il seguente risultato: se $M$ è non banale (almeno una $M_i \neq \mathbb{I}$) allora lo spazio di Hilbert dei qubit può essere decomposto come somma diretta di due sottospazi della medesima dimensione corrispondenti agli autovalori $\lambda = \pm 1$ dell'operatore $M$ (autospazi di $M$). In termini matematici possiamo scrivere 
+\begin{equation}\label{decomposition_direct_sum}
+    \mathcal{H} = \mathcal{H}_1 \oplus \mathcal{H}_2 \, , \quad \text{con} \quad \dim \mathcal{H}_1 = \dim \mathcal{H}_2 \, ;
+\end{equation}
+questo significa quindi che $\mathcal{H}$ è "tagliato" da $M$ in due sottospazi della stessa dimensione. Cerchiamo di capirlo meglio con un esempio:
+
+\begin{esempio}\label{es:M}
+    Supponiamo che l'operatore sia $M = X \otimes \mathbb{I} \otimes \mathbb{I}$. Dato che abbiamo la matrice $\sigma_x$ è meglio utilizzare la base composta dai suoi autostati: si ha $X \ket{\pm} = \pm \ket{\pm}$, quindi la tripletta di qubit è costituita dagli stati della forma $\{ \ket{\pm \pm \pm} \}$. Lo spazio di Hilbert totale è tagliato negli autospazi:
+    \begin{equation}\label{H_1_H_2}
+        \mathcal{H}_1 = \{ \ket{+ \pm \pm} \} \, , \qquad \mathcal{H}_2 = \{ \ket{- \pm \pm} \} \, ,
+    \end{equation}
+    dove entrambi gli spazi hanno dimensione 4 poiché sono costituiti da 4 stati differenti. Tutti gli stati di $\mathcal{H}_1$ sono autostati di $M$ con autovalore 1 e similmente tutti gli stati di $\mathcal{H}_2$ sono autostati di $M$ con autovalore $-1$.  
+\end{esempio}
+
+\noindent Il fatto che valga la \eqref{decomposition_direct_sum} non è una coincidenza perché per ogni operatore $M$ non banale esiste un operatore invertibile $S$ tale che $S \; : \; \mathcal{H}_1 \to \mathcal{H}_2$ (i due sottospazi $\mathcal{H}_1$ e $\mathcal{H}_2$ sono infatti isomorfi perché possiamo sempre tornare indietro). 
+
+\begin{esempio}
+    In riferimento all'Esempio \ref{es:M}, possiamo scegliere una matrice che anticommuta con $X$, come $Z$ ad esempio, e scrivere $S = Z \otimes \mathbb{I} \otimes \mathbb{I}$. Come agisce $Z$ su $\ket{\pm}$? Ricordiamo che
+    \begin{equation*}
+        Z \ket{\pm} = Z \frac{\ket{0} \pm \ket{1}}{\sqrt{2}} = \frac{\ket{0} \mp \ket{1}}{\sqrt{2}} = \ket{\mp} \, ;
+    \end{equation*}
+    in riferimento ai sottospazi in \eqref{H_1_H_2}, è evidente che se partiamo da $\ket{\psi_1} \in \mathcal{H}_1$ allora $S \ket{\psi_1} = \ket{- \pm \pm} \equiv \ket{\psi_2} \in \mathcal{H}_2$. Chiaramente è invertibile perché basta applicare nuovamente $S$ a $\ket{\psi_2}$ per ottenere uno stato di $\mathcal{H}_1$. 
+\end{esempio}
+
+\noindent L'esempio precedente funzionava perché l'operatore scelto anticommutava con $M$: se possiamo trovare un operatore $S$ tale che $\acomm{S}{M} = 0$ allora tale operatore agisce come $S \; : \; \mathcal{H}_1 \to \mathcal{H}_2$ per una ragione algebrica molto semplice. Consideriamo uno stato $\ket{\psi_1} \in \mathcal{H}_1$, quindi $M \ket{\psi_1} = \ket{\psi_1}$ perché $\mathcal{H}_1$ è autospazio di $M$ con autovalore associato $\lambda = +1$. Allora
+\begin{equation*}
+    M \left( S \ket{\psi_1} \right) = - S \left( M \ket{\psi_1} \right) = - S \ket{\psi_1} \, ,
+\end{equation*}
+quindi $S \ket{\psi_1}$ è autovettore di $M$ con autovalore associato $\lambda = -1$: questo significa necessariamente che $S \ket{\psi_1} \in \mathcal{H}_2$.
+
+\noindent Dopo questa digressione matematica ritorniamo al nostro problema originale nel capire qual è il significato fisico delle misure effettuate sugli ancilla qubit. Cosa c'è di speciale negli stati che si scrivono come in \eqref{codewords}? Possiamo identificarli in qualche modo? Definiamo gli operatori
+\begin{align*}
+    Z_0 Z_1 &= Z \otimes Z \otimes \mathbb{I} \, , \\
+    Z_1 Z_2 &= \mathbb{I} \otimes Z \otimes Z \, ,
+\end{align*}
+dove i pedici indicano su quali qubit le matrici $Z$ stanno agendo. Tutti gli stati di $C$ in \eqref{codewords} sono autostati di questi due operatori con autovalori $+1$ per entrambi: questo è ovvio perché $Z \ket{0} = \ket{0}$ e $Z \ket{1} = - \ket{1}$, infatti
+\begin{align*}
+    Z_0 Z_1 \ket{000} &= \ket{000} \, , & Z_1 Z_2 \ket{000} &= \ket{000} \, , \\
+    Z_0 Z_1 \ket{111} &= \ket{111} \, , & Z_1 Z_2 \ket{111} &= \ket{111} \, .
+\end{align*}
+
+\noindent Affermiamo inoltre che gli stati di $C$ sono il più generale autovettore comune di $Z_0 Z_1$ e $Z_1 Z_2$. La ragione è la seguente: entrambi gli operatori sono della forma di $M$ e ognuno dei due, come autospazio, taglia lo spazio di Hilbert totale $\mathcal{H}$ in 2 sottospazi, le cui dimensioni sono la metà della dimensione dello spazio di partenza (ossia 4). Entrambi gli operatori $Z_0 Z_1$ e $Z_1 Z_2$ possono avere autovalori $\pm 1$: focalizzandoci sull'autovalore in comune, ossia $+1$, abbiamo che la dimensionalità viene tagliata in $8/2/2 = 2$, dove il primo taglio è operato da $Z_0 Z_1$ e il secondo da $Z_1 Z_2$. La dimensionalità rimanente, ossia 2, indica che l'autospazio comune agli operatori ha dimensione 2, e infatti $C$ ha proprio dimensione 2 (tutti gli stati della \eqref{codewords} dipendono da due coefficienti generici, quindi $\dim C = 2$). 
+
+\noindent Alla luce di questo discorso affermiamo che le misure sugli ancilla qubit sono legate agli autovalori $x$ di $Z_0 Z_1$ e $y$ di $Z_1 Z_2$. Gli autovalori dell'azione di questi operatori sugli stati della \eqref{distinguish_cases} sono mostrati nella Tabella \ref{tab:eigs_ZZ}. Si noti che ciascun caso è un sottospazio di $\mathcal{H}$ di dimensione 2 (gli stati dipendono da due coefficienti generici) quindi riempiono tutto lo spazio di Hilbert totale ($8 = 2 + 2 + 2 +2$). 
+Gli autovalori di questi operatori permettono di distinguere i 4 differenti autospazi, ossia le 4 differenti situazioni (qubit intatto o qubit corrotto da uno dei 3 errori).
+
+\begin{table}[!ht]
+	\centering
+    \begin{tabular}{llcc}
+        \toprule
+        Caso & Autospazio & Autovalore di $Z_0 Z_1$ & Autovalore di $Z_1 Z_2$ \\
+        \midrule
+        I & $C = \{ a \ket{000} + b \ket{111} \}$ & $+1$ ($x=0$) & $+1$ ($y=0$) \\
+        II & $E_{II} = \{ a' \ket{100} + b' \ket{011} \}$ & $-1$ ($x=1$) & $+1$ ($y=0$) \\
+        III & $E_{III} = \{ a'' \ket{010} + b'' \ket{101} \}$ & $-1$ ($x=1$) & $-1$ ($y=1$) \\
+        IV & $E_{IV} = \{ a''' \ket{001} + b''' \ket{110} \}$ & $+1$ ($x=0$) & $-1$ ($y=1$) \\
+        \bottomrule
+    \end{tabular}\\
+    \caption{Autovalori degli operatori $Z_0 Z_1$ e $Z_1 Z_2$ sugli autospazi delle differenti situazioni in \eqref{distinguish_cases}. Se associamo agli autovalori le misure $(\lambda = +1) \to (x, y = 0)$ e $(\lambda = -1) \to (x,y = 1)$ allora questi autovalori permettono di distinguere i 4 differenti autospazi perché i valori corrispondenti di $(x,y)$ sono esattamente le misurazioni effettuate sugli ancilla qubit.}
+    \label{tab:eigs_ZZ}
+\end{table}
+
+\noindent Abbiamo detto che un errore non è altro che un \texttt{X-gate} agente su un qubit: dato che $\acomm{X}{Z} = 0$ allora, come evidenzia anche la Tabella \ref{tab:acomm_ZZ}, le misure sugli ancilla qubit non sono altro che i segni rimanenti nelle anticommutazioni di $X_i$ con gli operatori $Z_0 Z_1$ e $Z_1 Z_2$. Esplicitamente avremo:
+\begin{align*}
+    (Z_0 Z_1) \mathbb{I} &= \mathbb{I} (Z_0 Z_1) \, , &(Z_1 Z_2) \mathbb{I} &= \mathbb{I} (Z_1 Z_2) \, , \\
+    (Z_0 Z_1) X_0 &= - X_0 (Z_0 Z_1) \, , &(Z_1 Z_2) X_0 &= X_0 (Z_1 Z_2) \, , \\
+    (Z_0 Z_1) X_1 &= - X_1 (Z_0 Z_1) \, , &(Z_1 Z_2) X_1 &= - X_1 (Z_1 Z_2) \, , \\
+    (Z_0 Z_1) X_2 &= X_2 (Z_0 Z_1) \, , &(Z_1 Z_2) X_2 &= - X_2 (Z_1 Z_2) \, .
+\end{align*}
+Si noti che un determinato $X_i$ commuta sempre con le matrici appartenenti ad un differente sottospazio (differente qubit).
+
+\begin{table}[!hb]
+	\centering
+    \begin{tabular}{c|cccc}
+        \toprule
+        Operatore & Segno $\mathbb{I}$ & Segno $X_0$ & Segno $X_1$ & Segno $X_2$ \\
+        \midrule
+        $Z_0 Z_1$ & $+1$ ($x = 0$) & $-1$ ($x = 1$) & $-1$ ($x = 1$) & $+1$ ($x = 0$) \\
+        $Z_1 Z_2$ & $+1$ ($y = 0$) & $+1$ ($y = 0$) & $-1$ ($y = 1$) & $-1$ ($y = 1$) \\
+        \bottomrule
+    \end{tabular}\\
+    \caption{Il segno rimanente dell'anticommutazione degli operatori $X_i$ (gli \texttt{X-gate} che implementano l'errore) con gli operatori $Z_0 Z_1$ e $Z_1 Z_2$ è esattamente la misura (mostrata tra parentesi) che viene effettuata sui due ancilla qubit.}
+    \label{tab:acomm_ZZ}
+\end{table}
+
+\noindent Questo formalismo che abbiamo utilizzato per rilevare gli errori è spesso chiamato \textbf{syndrome error correction}. In generale il prodotto delle matrici di Pauli in questi operatori è molto utile per scrivere degli algoritmi per la rilevazione di errori: codici basati su questa logica vengono detti \textbf{stabilizer codes}; gli operatori $Z_0 Z_1$ e $Z_1 Z_2$ sono detti \textbf{stabilizers}. Nelle sezioni successive vedremo alcuni di questi codici famosi.
+
+\noindent Abbiamo detto che lo spazio di Hilbert totale dei 3 qubit può essere visto come somma dei sottospazi $C$, $E_{II}$, $E_{III}$ e $E_{IV}$ perché ciascuno ha dimensione 2, quindi $2^3 = 8$ è scrivibile come $2 + 2 + 2 + 2$. Gli spazi degli errori sono 3 poiché stiamo studiando solamente i bit flip errors, i quali possono accadere in 3 posizioni differenti dei qubit logici. La domanda è: avremmo potuto fare di meglio se avessimo scelto di codificare il messaggio in un numero maggiore di qubit? Se si vuole correggere gli errori di bit flip codificando 1 qubit in $n$ qubit, qual è il minimo valore di $n$ da utilizzare? Per rispondere a queste domande ripartiamo dalla \eqref{codewords}: sappiamo che $C$ ha dimensione 2 e immaginiamo che codifichi i singoli qubit di partenza in $n$ qubit logici, che chiamiamo $\ket{\overline{0}}$ e $\ket{\overline{1}}$; per ognuno di essi è possibile il verificarsi di un errore e in tal caso si necessita uno "spazio dell'errore" ortogonale\footnote{Se lo spazio è ortogonale a tutti gli altri allora la misurazione non influenza in alcun modo gli altri spazi.} a tutti gli altri. Il numero degli spazi necessari sarà quindi $ 2 + 2n$: il primo termine è la dimensione del codewords mentre il secondo è la dimensione del numero di spazi necessari per correggere $n$ qubit\footnote{Il $2$ deriva dal fatto che si debbano correggere entrambi i qubit logici $\ket{\overline{0}}$ e $\ket{\overline{1}}$, mentre il fattore $n$ indica che l'errore si può trovare in uno degli $n$ qubit di quello logico. Ad esempio per $n=4$ si avrà $\ket{\overline{0}} = \ket{0000}$ e $\ket{\overline{1}} = \ket{1111}$: vanno corretti entrambi i qubit logici e in più l'errore si può trovare in ciascuno dei quattro "posti" nel ket di stato.}. Dato che la dimensione dello spazio di Hilbert di $n$ qubit è $2^n$, allora per avere un codewords e degli spazi degli errori mutualmente ortogonali dovremo avere
+\begin{equation*}
+    2^n \geq 2 + 2 n \, , \quad \Rightarrow \quad 2^{n-1} \geq 1 + n \, .
+\end{equation*}
+Il minimo numero che soddisfa la disuguaglianza precedente è proprio $n = 3$.
+
+\noindent Il \textbf{bit flip error} appena analizzato non è l'unico errore che si può verificare: talvolta può accadere ad esempio un \textbf{phase flip error}, il quale è facilmente implementabile nei circuiti con un semplice \texttt{Z-gate} ricordando che $Z \ket{0} = \ket{0}$ e $Z \ket{1} = -\ket{1}$. Per analizzare una situazione di questo tipo bisogna ricordarsi che per cambiare base da quella di $Z$, $\{ \ket{0}, \ket{1} \}$, a quella di $X$, $\{ \ket{+}, \ket{-} \}$, basta applicare un \texttt{H-gate} (si ricordi la matrice \eqref{Hadamard_matrix}): $H \ket{0} = \ket{+}$ e $H \ket{1} = \ket{-}$. 
+
+\noindent Per correggere gli errori di phase flip è quindi necessario codificare gli stati in maniera differente: $\ket{0} \to \ket{+++}$ e $\ket{1} \to \ket{---}$. Se si parte con uno stato generico $a \ket{+++} + b \ket{---}$ allora l'azione dello \texttt{Z-gate} è semplicemente quella di scambiare $+ \leftrightarrow -$:
+\begin{align*}
+    a \ket{+++} + b \ket{---} &\overset{Z_0}{\longrightarrow} a \ket{-++} + b \ket{+--} \, , \\
+    a \ket{+++} + b \ket{---} &\overset{Z_1}{\longrightarrow} a \ket{+-+} + b \ket{-+-} \, , \\
+    a \ket{+++} + b \ket{---} &\overset{Z_2}{\longrightarrow} a \ket{++-} + b \ket{--+} \, .
+\end{align*}
+A questo punto la logica è esattamente la stessa di quella che abbiamo adoperato in precedenza! In termini di circuiti, per costruire una tale codifica è necessario aggiungere 3 \texttt{H-gate} al termine del circuito originale:
+\begin{center}
+    \mbox{
+        \Qcircuit @C=2em @R=1em {
+            \lstick{a \ket{0} + b \ket{1}} & \ctrl{1} & \ctrl{2} & \gate{H} & \qw \\
+            \lstick{\ket{0}} & \targ & \qw & \gate{H} & \qw \\
+            \lstick{\ket{0}} & \qw & \targ & \gate{H} & \qw
+        }
+    }
+\end{center}
+Infatti dopo i due \texttt{CNOT-gate} lo stato è come in \eqref{logical_qubit}, mentre dopo i 3 \texttt{H-gate} si avrà 
+\begin{equation}\label{eig_X_1}
+    a \ket{000} + b \ket{111} \overset{H^{\otimes 3}}{\longrightarrow} a \ket{+++} + b \ket{---} \, .
+\end{equation}
+Da qui in poi per correggere gli errori si agisce esattamente come prima: questa volta lo stato \eqref{eig_X_1} è autostato degli operatori $X_0 X_1$ e $X_1 X_2$ con autovalore $+1$ e ogni qualvolta avverrà un phase flip error si potrà rilevare l'errore per mezzo del cambiamento di tale autovalore. La discussione è identica alla precedente sostituendo $Z \leftrightarrow X$, $\ket{0} \leftrightarrow \ket{+}$ e $\ket{1} \leftrightarrow \ket{-}$: si tratta solamente di un cambio di base!
+
+\noindent Chiaramente può sorgere spontanea la domanda: come faccio se voglio correggere entrambi i bit-phase flip errors? Nelle prossime sezioni vedremo che il codice che si utilizza, dovuto nuovamente a Shor, utilizza solamente 9 qubit per correggere qualsiasi tipologia di errore (assicurando in questo modo che anche il problema B. di inizio sezione sia risolto). Vedremo che correggere tutti gli errori riguardanti i gate $X,Y,Z$ è equivalente a correggere qualsiasi tipologia di errore continuo!
+

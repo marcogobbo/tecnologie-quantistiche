@@ -1,0 +1,190 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Lezione 9 %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{1.0cm}
+\lecture{7}{5/11/2021}
+\vspace{1.0cm}
+L'ultima volta abbiamo parlato dello screening in un gas omogeneo di elettroni nell'approssimazione di Lindhard ottenendo
+\begin{equation*}
+    \varepsilon(q)=1-V_C\chi^0(q)=1+\frac{q_{\text{TF}^2}}{q^2}F\left(\frac{q}{q_{\text{TF}}}\right)
+\end{equation*}
+dove $q_{\text{TF}}$ è il vettore d'onda Thomas-Fermi e $F(x)=\frac 12 + \frac{1-x^2}{4x}\log\frac{\abs{1+x}}{\abs{1-x}}$. Questa funzione $F(x)$ è la stessa che avevamo incontrato quando abbiamo introdotto l'energia di scambio in un gas omogeneo di elettroni e possiede un punto di flesso a tangente verticale. Analizziamo da un punto di vista fisico $\varepsilon(q)$:
+\begin{itemize}
+    \item Per valori piccoli di $q$, cioè per grandi lunghezze d'onda, otteniamo l'approssimazione di Thomas Fermi, $V_{\text{ext}}$ varia lentamente;
+    \item Per valori grandi di $q$, cioè per piccole lunghezze d'onda, abbiamo che lo screening è meno forte e gli elettroni non possono riorganizzarsi per schermare la perturbazione.
+\end{itemize}
+Possiamo spiegare questa rapida decrescita dello screening per $q>k_{\text F}$ tornando all'espressione
+\begin{equation*}
+    \chi^0(q)=\frac{2}{(2\pi)^3}\int_{\mathbb{R}^3}\dd[3]{k}\frac{f_{\overline k}-f_{\overline k+q}}{\varepsilon_{\overline k}-\varepsilon_{\overline k+q}}
+\end{equation*}
+notiamo che c'è un grande contributo a $\chi^0(q)$ quando il denominatore è nullo, quando andiamo verso il punto di singolarità e l'integrale non diverge. Rappresentiamo la \textbf{sfera di Fermi} e facciamo alcune considerazioni:
+\begin{itemize}
+    \item Se $\overline k$ è interno alla sfera di Fermi, perché dobbiamo iniziare dagli stati occupati, possiamo considerare questa sorta di transizione virtuale verso gli stati vuoti, fuori dalla sfera di Fermi. Questo è il processo che contribuisce all'integrale.
+    \item La differenza in energia tra lo stato iniziale e finale può tendere a zero, quando il punto iniziale è esattamente sulla superficie della sfera così da poter avere una transizione al di fuori della sfera di Fermi che sia poco distante dal punto iniziale.
+    \item Possiamo raggiungere gli stati vuoti con un'energia che è la stessa del punto iniziale, per qualunque valore di $q$ fino al diametro di questa sfera, perché se $q>2k_{\text F}$, dobbiamo andare molto lontani dalla sfera di Fermi e l'energia non è più uguale all'energia di Fermi.
+\end{itemize}
+Per valori di $q \leq 2k_{\text F}$, possiamo avere questa eccitazione virtuale che coinvolge gli stati con la stessa energia, cioè stati che contribuiscono maggiormente al valore di $\chi^0(q)$.
+Per valori di $q > 2k_{\text F}$, non ci sono stati con la stessa energia per cui $\chi^0(q)$ inizia a decrescere.\\
+Conoscendo $\varepsilon(q)$, possiamo calcolare la variazione $\delta n (q)$, questo perché
+\begin{equation*}
+    \begin{aligned}
+        \delta n(q) &= \chi(q)\delta V_{\text{ext}}(q) \qquad \text{Consideriamo }\delta V_{\text{ext}}(\overline x)=\frac{Ze_0^2}{4\pi\varepsilon_0\abs{\overline x}}\\
+                     &= \left[\frac{1}{\varepsilon(q)}-1\right]\frac{1}{\frac{e_0^2}{\varepsilon_0 q^2}}\frac{Ze_0^2}{\varepsilon_0q^2} \\
+                     &= \left[\frac{1}{\varepsilon(q)-1}\right]Z
+    \end{aligned}
+\end{equation*}
+ricordando che
+\begin{equation*}
+    \varepsilon(q)=1+\frac{q_{\text {TF}^2}}{q^2}F\left(\frac{q}{2k_{\text F}}\right)
+\end{equation*}
+e inserendola in $\delta n(x)$:
+\begin{equation*}
+    \delta n(x)=\frac{1}{(2\pi)^3}\int \dd[3]q \delta n(q)e^{iq\cdot x}
+\end{equation*}
+Nel limite di grandi valori di $x$, il che significa grandi rispetto alle lunghezze d'onda tipiche $x\gg \frac{1}{k_{\text F}}$ si può dimostrare che
+\begin{equation*}
+    \delta n(x)\rightarrow \frac{Z}{\abs{x}^3}\cos (2k_{\text F}r)
+\end{equation*}
+Queste oscillazioni vengono chiamate \textbf{oscillazioni di Friedel} e sono presenti se stiamo considerando l'approssimazione di Lindhard.
+[GRAFICI]
+Queste oscillazioni di Friedel possono essere osservate sperimentalmente attraverso l'utilizzo dell'\textbf{STM}: \textbf{Scanning Tunneling Microscope} inventato da Binnig e Rohrer nel 1985 all'IBM di Zurigo. Si tratta di un potente strumento per lo studio delle superfici a livello atomico che sfrutta l'effetto tunnel. Quando una punta conduttrice è portata molto vicino alla superficie da esaminare, una differenza di potenziale applicata tra i due può permettere agli elettroni di attraversare il vuoto tra di loro per effetto tunnel. La corrente di tunnelling che ne risulta dipende dalla posizione della punta, della tensione applicata e della densità locale degli stati del campione. \\
+Simili effetti di screening possono essere visti tra due elettroni in interazione. Se guardiamo a un elettrone in una determinata posizione, ci aspettiamo di avere uno svuotamento di elettroni attorno a questo elettrone per via delle repulsioni elettrostatiche (descritto dall'energia di correlazione). Questo svuotamento di elettroni agisce come uno screening, infatti se consideriamo l'interazione tra due elettroni non è dato solamente dal potenziale di Coulomb, ma è anche dato anche dallo screening degli altri elettroni. \\
+Tutto ciò che abbiamo imparato può essere utilizzato per descrivere un gas omogeneo di elettroni a livello del metodo di Hartree-Fock
+\begin{equation*}
+    \varepsilon_{\text{HF}}(k)=\frac{\hbar^2k^2}{2m}-\frac{e_0^2}{4\pi\varepsilon_0}\frac 1V \sum_{k'<k_{\text F}} \underbrace{\int \dd[3]{x}\frac{e^{i(\overline k - \overline k')\cdot \overline x}}{\abs{\overline x}}}_{\mathclap{\text{Trasformazione di Fourier di }V_C}}
+\end{equation*}
+L'idea è quella di schermare questo $V_C$ con ciò che abbiamo imparato. La trasformata di Fourier di $V_C$ è
+\begin{equation*}
+    \int \dd[3]{x}\frac{4\pi}{q^2 \varepsilon(q)}\frac{e^{i(\overline k - \overline k')\cdot \overline x}}{\abs{\overline x}} \qquad q=(k-k')
+\end{equation*}
+In questo modo, abbiamo una modifica all'energia di Hartee-Fock che risolve la divergenza di $v_k$ e questo è stato reso possibile dall'approssimazione di Lindhard. In un certo senso è come se avessimo introdotto in maniera fenomenologica la correlazione, ma questo non è ancora sufficiente per una buona descrizione del gas omogeneo di elettroni. Questo screening è una descrizione statica dello spazio, dovremmo considerare uno screening dinamico.
+Supponiamo di considerare $\delta V_{\text{ext}}(x', t')$ che comporta ad una variazione nella densità di elettroni
+\begin{equation*}
+    \delta n(x, t)=\int \dd[3]{x'}dt'\chi(x,t, x', t')\delta V_{\text{ext}}(x', t') \qquad t'<t
+\end{equation*}
+Nel caso di un gas omogeneo di elettroni $\chi(\abs{x-x'}, t-t')$. Possiamo considerare ora di realizzare una trasformazione di Fourier di questa quantità
+\begin{equation*}
+    \delta n(\overline x,t)= \frac{1}{(2\pi)^3}\int \dd[3]{q} \int \frac{\dd{\omega}}{2\pi}\delta n(q, \omega) e^{iqx}e^{-i\omega t}
+\end{equation*}
+dove $\omega$ è il coniugato del tempo e il segno meno è convenzionale.\\
+Ancora una volta, il cambiamento nella densità è una convoluzione tra due funzioni
+\begin{equation*}
+    \delta n(q, \omega)=\chi(q, \omega)\delta V_{\text{ext}}(q, \omega)
+\end{equation*}
+Considerando l'approssimazione di Lindhard ($\delta V_{\text{tot}}=\delta V_{\text{ext}}+\delta V_{\text H}$)
+\begin{equation*}
+    \delta n(q, \omega)=\chi^0(q, \omega)\delta V_{\text{tot}}(q, \omega)
+\end{equation*}
+dove $\chi^0(q, \omega)$ è valutato nell'approssimazione RPA (random phase approximation) come la risposta in tempo e spazio di un indipendente gas omogeneo di elettroni il cui calcolo è effettuato in regime perturbativo (time-dependent). Se utilizzassimo il metodo di Hartree-Fock introducendo l'approssimazione RPA time-dependent otterremmo una buona descrizione per l'energia di correlazione. Ma questo non può essere fatto perché abbiamo trattato hamiltoniane indipendenti dal tempo. Per introdurre uno screening dinamico, dovremmo introdurre le funzioni di Green. Se utilizzassimo uno schema più sofisticato rispetto a quello di Hartree-Fock che sfrutta le funzioni di Green e l'approssimazione di Lindhard, otterremmo l'energia di correlazione di Gell-Mann e Brueckner.\\
+Tornando allo screening time-independent abbiamo visto che $\chi(q)$, nel caso di un gas omogeneo di elettroni dipende dalla distanza $\chi(\abs{\overline x'-\overline x})$. Per non un gas omogeneo di elettroni, ad esempio nel particolare caso di un cristallo $\chi(\overline x, \overline x')=\chi(\overline x + \overline n, \overline x' + \overline n)$, dove $\overline n$ è il vettore di un reticolo. Questa periodicità spaziale, si riflette nella trasformazione di Fourier, abbiamo un'invarianza, infatti
+\begin{equation*}
+    \chi(\overline q, \overline q')=\chi(\overline q+ \overline G, \overline q+ \overline G')
+\end{equation*}
+dove $\overline q$ è la zona di Brilloun, mentre $\overline G$ e $\overline G'$ sono il reciproco del vettore reticolo.\\
+In questo caso possiamo valutare $\varepsilon_{\text{RPA}}$ in un cristallo
+\begin{equation*}
+    \varepsilon_{\text RPA} \rightarrow \varepsilon_{\text RPA}(\overline q+ \overline G, \overline q+ \overline G')
+\end{equation*}
+\section{Teoria del funzionale densità}
+Nelle sezioni precedenti, il problema dei molti elettroni è stato affrontato approssimando il più possibile l'esatta funzione d'onda a molti elettroni dello stato fondamentale. Nella teoria del funzionale densità l'enfasi si sposta dalla funzione d'onda dello stato fondamentale alla densità elettronica $n(\vec x)$ di un corpo di uno stato fondamentale, molto più gestibile. La teoria del funzionale  densità mostra che l'energia dello stato fondamentale di un sistema a molte particelle può essere espressa come un funzionale della densità a un corpo; la minimizzazione di questo funzionale consente in linea di principio la determinazione dell'effettiva densità dello stato fondamentale. Il successo della teoria è anche quello di fornire una ragionevole approssimazione del funzionale da minimizzare. La particolarità dell'approccio del funzionale densità alla teoria dei molti corpi, è quella di ottenere rigorosamente un'equazione di Schrodinger a un elettrone con un potenziale effettivo locale nello studio delle proprietà dello stato fondamentale dei sistemi a molti elettroni.\\
+Questa teoria è basata su un teorema introdotto da Hohenberg e Kohn nel 1964\footnote{Hohenberg, P., \& Kohn, W. (1964). Inhomogeneous Electron Gas. Phys. Rev., 136, B864–B871.}
+\begin{theorem}[\textbf{Teorema di Hohenberg e Kohn}]
+    Consideriamo un sistema di $N$ elettroni interagenti un un campo elettrico esterno, descritto dall'hamiltoniana standard a molti elettroni
+    \begin{equation*}
+        \hat H = \hat T + \hat U_{\text{ee}} + \sum_{i=1}^N \hat V_{\text{ext}}(\vec{x}_i).
+    \end{equation*}
+    Siamo interessati a conoscere l'energia di stato fondamentale, in particolare l'energia è un funzionale della densità di elettroni nello stato fondamentale
+    \begin{equation*}
+        E\left[n(\vec x)\right] \qquad n(\vec x)= \text{densità di elettroni}.
+    \end{equation*}
+    Se conosciamo l'hamiltoniana siamo in grado di risolvere l'equazione agli autovalori
+    \begin{equation*}
+        \hat H \psi_{\text{GS}}=E_{\text{GS}}\psi_{\text{GS}},
+    \end{equation*}
+    e dalla $\psi_{\text{GS}}$ siamo in grado di ottenere $n(\vec x)$. Il \textbf{teorema di Hohenberg e Hohn} afferma che esiste una corrispondenza biunivoca tra la densità dello stato fondamentale di un sistema di $N$ elettroni e il potenziale esterno che agisce su di esso
+    \begin{equation*}
+        V_{\text{ext}}(\vec x)\longleftrightarrow n_{\text{GS}}(\vec x)
+    \end{equation*}
+    in questo senso, la densità elettronica allo stato fondamentale diventa la variabile di interesse, poiché da $n_{\text{GS}}(\vec x)$ ricaviamo $\hat V_{\text{ext}}(\vec x)$, da cui otteniamo $E_{\text{GS}}$. Avremo quindi che se $V_{\text{ext}}'\neq V_{\text{ext}}$, allora $n_{\text{GS}}(\vec x)'\neq n_{\text{GS}}(\vec x)$
+\end{theorem}
+
+\noindent Quali sono le conseguenze di questo teorema?
+\begin{equation*}
+    \begin{aligned}
+        E_{\text{GS}}\left[n(\vec{x})\right] &=\int \dd[3]x \hat V_{\text{ext}}(\vec x)n(\vec x)+\underbrace{\mel{\psi_{\text{GS}}\left[n(\vec{x})\right]}{\hat T + \hat U_{\text{ee}}}{\psi_{\text{GS}}\left[n(\vec{x})\right]}}_{\text{È un funzionale di } n(\vec x)} \\
+        &= \int \dd[3]{x}\hat V_{\text{ext}}(\vec x)n(\vec x)+F\left[n(\vec x)\right]
+    \end{aligned}
+\end{equation*}
+dove $F\left[n(\vec x)\right]$ è un funzionale universale che non dipende da $\hat V_{\text{ext}}(\vec x)$. \\
+Se scegliessimo $n(\vec x)=n_{\text{GS}}(\vec x)$ otterremmo l'energia dello stato fondamentale. In realtà possiamo considerare $E_{\text{GS}}\left[n(\vec{x})\right]$ perché se $n(\vec x)\neq n_{\text{GS}}(\vec x)$, allora possiamo vederlo come risultato di un cambiamento nel potenziale esterno $\hat V_{\text{ext}}(\vec x)'\neq \hat V_{\text{ext}}(\vec x)$. Supponiamo di calcolare questo come
+\begin{equation*}
+    E\left[n(\vec x)\right])= \mel{\psi_{\text{GS}}}{\hat T + \hat U_{\text{ee}+V_{\text{ext}}}}{\psi_{\text{GS}}}
+\end{equation*}
+possiamo vedere gli altri stati come associati ad altri stati fondamentali e quindi, per il principio variazionale
+\begin{equation*}
+    E\left[n(\vec x)\right]) \geq E_{\text{GS}}\left[n_\text{GS}(\vec{x})\right].
+\end{equation*}
+Possiamo minimizzare il funzionale con il vincolo sul numero totale di elettroni $\int \dd[3]{x}n(\vec x)=N$:
+\begin{equation*}
+    \functionalderivative{E\left[n(\vec x)\right]-\mu\left[\int \dd[3]{x'}n(\vec x')- N\right]}{n(\vec x)}=0
+\end{equation*}
+il cui risultato è
+\begin{equation*}
+    \functionalderivative{E}{n(\vec x)}=\hat V_{\text{ext}}(\vec x)+\functionalderivative{F}{n(\vec x)}=\mu
+\end{equation*}
+cioè al moltiplicatore di Lagrange.\\
+Trovare l'energia di stato fondamentale esatta necessita conoscere $F$, ma il teorema non ci dice nulla sulla sua forma, si limita ad affermare la sua esistenza. Nel \textbf{modello di Thomas Fermi} abbiamo visto una forma di $F$, esso risulta essere espresso come
+\begin{equation*}
+    F\left[n(\vec x)\right]=E_{\text H}\left[n(\vec x)\right]+\int \dd[3]{x} n(\vec x) \frac 35 \varepsilon_{\text F}\left(n(\overline x)\right)+\underbrace{\int \dd[3]x n(\vec x)\varepsilon_X(n(\vec x))}_{\text{Termine di Dirac}}
+\end{equation*}
+Tuttavia, l'energia cinetica quantistica risulta essere troppo approssimata, vedremo come costruire un funzionale più affidabile.\\
+Limitiamoci per ora a dimostrare il \textbf{teorema di Hohenberg e Kohn}:
+\begin{proof}
+    Il teorema afferma che esiste una relazione biunivoca tra $n_{\text{GS}}(\vec x)$ e $\hat V_{\text{ext}}(\vec x)$. Questo significa che se $V_{\text{ext}}'\neq V_{\text{ext}}$, allora $n_{\text{GS}}(\vec x)'\neq n_{\text{GS}}(\vec x)$. Proseguiamo per assurdo e richiediamo che se $V_{\text{ext}}'\neq V_{\text{ext}}$, allora $n_{\text{GS}}(\vec x)' = n_{\text{GS}}(\vec x)$, quindi $\psi_{\text{GS}}'\neq \psi_{\text{GS}}$. Mostriamo che è una contraddizione.\\
+    Andiamo a valutare i valori di aspettazione
+    \begin{equation*}
+        \begin{array}{l}
+            \mel{\psi_{\text{GS}}'}{\hat T+ \hat U_{\text{ee}}+\hat V_{\text{ext}}}{\psi_{\text{GS}}'} \\
+            \mel{\psi_{\text{GS}}}{\hat T+ \hat U_{\text{ee}}+\hat V_{\text{ext}}}{\psi_{\text{GS}}},
+        \end{array}
+    \end{equation*}
+    chiamiamo
+    \begin{equation*}
+        \begin{array}{l}
+            E'=\mel{\psi_{GS}'}{\hat T + \hat U_{\text{ee}}}{\psi_{GS}'} \\
+            E=\mel{\psi_{GS}}{\hat T + \hat U_{\text{ee}}}{\psi_{GS}},
+        \end{array}
+    \end{equation*}
+    avremo quindi che
+    \begin{equation*}
+        E'+\mel{\psi_{GS}'}{\hat V_{\text{ext}}}{\psi_{GS}'} > E+\mel{\psi_{GS}}{\hat V_{\text{ext}}}{\psi_{GS}}
+    \end{equation*}
+    se $n_{\text{GS}}(\vec x)' = n_{\text{GS}}(\vec x)$ allora
+    \begin{equation*}
+        E' > E
+    \end{equation*}
+    Ora consideriamo
+    \begin{equation*}
+        \begin{array}{l}
+            \mel{\psi_{\text{GS}}}{\hat T+ \hat U_{\text{ee}}+\hat V_{\text{ext}}'}{\psi_{\text{GS}}} \\
+            \mel{\psi_{\text{GS}}'}{\hat T+ \hat U_{\text{ee}}+\hat V_{\text{ext}}'}{\psi_{\text{GS}}'},
+        \end{array}
+    \end{equation*}
+    chiamiamo
+    \begin{equation*}
+        \begin{array}{l}
+            E'=\mel{\psi_{GS}'}{\hat T + \hat U_{\text{ee}}}{\psi_{GS}'} \\
+            E=\mel{\psi_{GS}}{\hat T + \hat U_{\text{ee}}}{\psi_{GS}}
+        \end{array}
+    \end{equation*}
+    avremo quindi che
+    \begin{equation*}
+        E+\mel{\psi_{GS}}{\hat V_{\text{ext}}'}{\psi_{GS}} > E'+\mel{\psi_{GS}'}{\hat V_{\text{ext}}'}{\psi_{GS}'}
+    \end{equation*}
+    se $n_{\text{GS}}(\vec x)' = n_{\text{GS}}(\vec x)$  allora
+    \begin{equation*}
+        E > E'
+    \end{equation*}
+    Ma questo è il risultato opposto rispetto al precedente, abbiamo quindi trovato un assurdo, per cui se $V_{\text{ext}}'\neq V_{\text{ext}}$, allora $n_{\text{GS}}(\vec x)'\neq n_{\text{GS}}(\vec x)$
+\end{proof}

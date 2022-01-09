@@ -6,18 +6,35 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage[small]{caption}
+\usepackage{subfig}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx,color,listings}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{hologo}
+\usepackage{colortbl}
 
-% Math packages
+% Math and physic packages
 \usepackage{amsmath,amssymb,amsthm}
-\usepackage{mathtools}
 \usepackage{mathrsfs}
+\usepackage{mathdots}
+\usepackage{mathtools}
+\numberwithin{equation}{section}
+\numberwithin{figure}{chapter}
+
+% Quantum and classical circuits packages
+\usepackage[braket, qm]{qcircuit}
+\usepackage{circuitikz}
 \usepackage{physics}
 
-% New commands or theorem
+% New or renewed commands
 \newcommand{\lecture}[2]{{\scshape{Lezione #1 - #2}} \par}
 \newtheorem{definition}{Definizione}[chapter]
 \newtheorem{theorem}{Teorema}[chapter]
-\theoremstyle{remark}
+\newtheorem{esempio}{Esempio}[chapter]
+\renewcommand{\thefootnote}{\roman{footnote}}
 \newtheorem*{prf}{Dimostrazione}
 
 % Documents
@@ -50,4 +67,5 @@
     \input{lectures/lect5.tex}
     \input{lectures/lect6.tex}
     \input{lectures/lect7.tex}
+    \input{lectures/lect9.tex}
 \end{document}

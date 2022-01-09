@@ -1,0 +1,291 @@
+%%%%%%%%%%%%%
+% LECTURE 9 %
+%%%%%%%%%%%%%
+\chapter{Sistemi aperti}
+
+\lecture{9}{05/11/2021}
+\section{Matrice densità}
+Il formalismo della \textbf{matrice densità} viene solitamente introdotto per affrontare situazioni in cui sono presenti sia un'incertezza quantistica, intrinseca alla QM, che un'incertezza classica, dovuta all'ignoranza su alcune configurazioni del sistema. Spesso viene introdotta nell'ambito della fisica statistica, tuttavia viene largamente utilizzata anche in altri contesti. 
+
+\noindent Ad esempio: supponiamo di considerare un laboratorio e un ambiente esterno in cui è immerso; spesso, per descrivere la fisica del sistema completo, non si possono tenere in considerazione tutti i gradi di libertà dell'ambiente, così si assume che esista un'opportuna descrizione del laboratorio (nel quale potrebbe esserci un qubit o un apparato sperimentale) più l'ambiente e si prende una traccia (capiremo tra un attimo cosa significhi) su tutti i gradi di libertà dell'ambiente. In questo modo si ottiene una \textbf{descrizione efficace} del laboratorio, la quale contiene "nascosta" la nostra ignoranza relativa all'ambiente. 
+
+\noindent Vediamo la definizione generale:
+
+\begin{definizione}[\textbf{Matrice Densità}]
+    Siano $\ket{\psi_i}$ un insieme di stati quantistici con probabilità classica $p_i$ ($\sum_i p_i = 1$), ossia la probabilità di realizzare ogni stato $\ket{\psi_i}$ è data da $p_i$. Indichiamo con $\{ p_i, \ket{\psi_i} \}$ l'insieme di tali stati con le rispettive probabilità (assumiamo che $\braket{\psi_i} = 1$). Si definisce \textbf{matrice densità} (o \textbf{operatore densità}) $\rho$ la seguente
+    \begin{equation}\label{density_matrix}
+        \rho = \sum_i p_i \ket{\psi_i} \otimes \bra{\psi_i} \, .
+    \end{equation}
+\end{definizione}
+
+\noindent Si noti che, come evidenziato, le $p_i$ sono probabilità \textit{classiche} poiché è già intrinseca ad ogni stato $\ket{\psi_i}$ la descrizione mediante probabilità \textit{quantistica}. Chiaramente $\rho$, in quanto prodotto esterno, agisce come un operatore sugli stati dello spazio di Hilbert. È importante sottolineare che che gli stati $\ket{\psi_i}$ sono normalizzati ma non necessariamente ortogonali. 
+
+\noindent L'introduzione della \eqref{density_matrix} è utile perché permette di scrivere differenti quantità in forma compatta. Ad esempio, la media di un'osservabile $A$ può essere scritta come
+\begin{equation}\label{expval_A_rho}
+    \expval{A} = \Tr (\rho A) \, .
+\end{equation}
+\begin{proof}
+    Scriviamo 
+    \begin{equation*}
+        \Tr (\rho A) = \sum_i p_i \Tr \left( \ketbra{\psi_i} A \right) = \sum_i p_i \expval{A}{\psi_i} = \expval{A} \, ,
+    \end{equation*}
+    dove nel secondo passaggio abbiamo utilizzato la proprietà ciclica della traccia per muovere il ket a destra. Notiamo che questa operazione può essere svolta per la ragione seguente: in generale per gli operatori si ha $\Tr B = \sum_n \expval{B}{n}$ dove $\{ \ket{n} \}$ è una base ortonormale, perciò nel passaggio sopra possiamo scrivere
+    \begin{equation*}
+        \Tr \left( \ketbra{\psi_i} A \right) = \sum_n \braket{n}{\psi_i} \mel{\psi_i}{A}{n} = \sum_n \mel{\psi_i}{A}{n} \braket{n}{\psi_i} = \expval{A}{\psi_i} \, ,
+    \end{equation*}
+    dove nell'ultimo passaggio abbiamo utilizzato la relazione di completezza $\mathbb{I} = \sum_n \ketbra{n}$.
+\end{proof}
+
+\noindent Se si possiede solamente uno stato $\ket{\psi}$, esso viene chiamato \textbf{stato puro}, quindi la matrice densità si scriverà come $\rho = \ketbra{\psi}$. Al contrario, un insieme di stati $\{ p_i, \ket{\psi_i} \}$, con almeno 2 probabilità $p_i \neq 0$, avrà matrice densità $\rho = \sum_i p_i \ketbra{\psi_i}$ ed è chiamato \textbf{stato misto} o \textbf{miscela di stati} (nota anche come \textbf{mixture}). Ribadiamo nuovamente che in quest'ultima situazione l'incertezza classica $p_i$ si va ad aggiungere all'incertezza puramente quantomeccanica degli stati quantistici.
+
+\begin{esempio}[\textbf{Miscela in Meccanica Statistica}]
+    Il più semplice esempio di miscela di stati in meccanica statistica è costituito dall'insieme di stati $\{ E_n, \ket{n} \}$, dove $H \ket{n} = E_n \ket{n}$, in cui assegniamo ad ogni stato una probabilità classica 
+    \begin{equation*}
+        P(E_n) = \frac{e^{-\frac{E_n}{k_BT}}}{Z} \, , \; \text{ con } \; Z = \sum_n e^{-\frac{E_n}{k_BT}} \, ,
+    \end{equation*}
+    dove $Z$ è chiamata \textbf{funzione di partizione}. Quindi per studiare un tale sistema dal punto di vista quantistico possiamo dire che in aggiunta all'incertezza quantistica ci sono altre probabilità classiche $P(E_n)$ dipendenti dalla temperatura. Per un tale sistema la matrice densità non è altro che
+    \begin{equation*}
+        \rho = \sum_n p_n \ketbra{n} \, , \; \text{ dove } \; p_n \equiv P(E_n) = \frac{e^{-\frac{E_n}{k_BT}}}{Z} \, . 
+    \end{equation*}
+\end{esempio}
+
+\noindent Vediamo immediatamente l'esempio dei qubit per capire la differenza della matrice densità nel caso di uno stato puro e per miscele di stati:
+
+\begin{esempio}[\textbf{Singolo qubit: stato puro}]
+    Immaginiamo un qubit nello stato $\ket{0}$. La matrice \eqref{density_matrix} non è altro che
+    \begin{equation*}
+        \rho = \ketbra{0} = 
+        \begin{pmatrix}
+            1 \\ 0
+        \end{pmatrix} \otimes 
+        \begin{pmatrix}
+            1 & 0
+        \end{pmatrix} 
+        = 
+        \begin{pmatrix}
+            1 & 0 \\ 0 & 0
+        \end{pmatrix} \, ,
+    \end{equation*}
+    dove nell'ultimo passaggio abbiamo utilizzato il prodotto di Kronecker della definizione \ref{def:Kronecker}.
+\end{esempio}
+
+\begin{esempio}[\textbf{Singolo qubit: miscela di stati}]\label{example:mixture_qubit}
+    Si consideri un qubit nella miscela di stati in cui $\ket{0}$ è dato con probabilità $p$ e $\ket{1}$ con probabilità $1-p$ (non stiamo prendendo la solita sovrapposizione di stati della QM). Allora la matrice densità risulterà
+    \begin{equation*}
+        \rho = p \ketbra{0} + (1-p) \ketbra{1} = p 
+        \begin{pmatrix}
+            1 & 0 \\ 0 & 0
+        \end{pmatrix} + 
+        (1-p)
+        \begin{pmatrix}
+            0 & 0 \\ 0 & 1
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            p & 0 \\ 0 & 1-p
+        \end{pmatrix} \, .
+    \end{equation*} 
+\end{esempio}
+
+\noindent Notiamo che dal punto di vista dell'informazione, nello stato puro la matrice densità ha solamente un'entrata: non vi è alcuna incertezza classica (solamente quantistica). Al contrario, per la miscela di stati abbiamo il caso della maggior incertezza possibile quando $p = \frac{1}{2}$ perché $\rho = \frac{1}{2} \mathbb{I}$. In generale, per matrici diagonali,  sono miscele le configurazioni in cui pi\`u di un'entrata diagonale \`e non nulla. Si noti dall'esempio \ref{example:mixture_qubit} che sulle entrate diagonali di $\rho$ si può leggere l'incertezza classica collegata agli stati $\ket{0}$ e $\ket{1}$. 
+
+\noindent Questi esempi erano molto semplici perché $\rho$ è diagonale: la matrice densità non è in generale diagonale né per gli stati puri né per le miscele. Vediamo alcuni esempi:
+
+\begin{esempio}[\textbf{Stato puro: $\rho$ non diagonale}]\label{example:rho_non_diagonal_pure}
+    Consideriamo il caso dello stato puro di un qubit nella sua forma più generale, ossia $\ket{\psi} = \alpha \ket{0} + \beta \ket{1}$. La \eqref{density_matrix} diventa una matrice non diagonale, infatti
+    \begin{equation*}
+        \rho = \ketbra{\psi} = 
+        \begin{pmatrix}
+            \alpha \\ \beta
+        \end{pmatrix}
+        \otimes
+        \begin{pmatrix}
+            \alpha^\ast & \beta^\ast
+        \end{pmatrix} 
+        = 
+        \begin{pmatrix}
+            \abs{\alpha}^2 & \alpha \beta^\ast \\ \alpha^\ast \beta & \abs{\beta}^2
+        \end{pmatrix} \, .
+    \end{equation*}
+\end{esempio}
+
+\noindent Si noti dall'esempio precedente la differenza tra le entrate diagonali e non: su quelle diagonali vi sono le probabilità quantistiche del risultato di una misura, mentre su quelle non diagonali sono presenti dei prodotti tra $\alpha$ e $\beta$ che misurano, in un certo senso, l'interferenza (sovrapposizione) tra $\ket{0}$ e $\ket{1}$.
+
+\begin{esempio}[\textbf{Miscela: $\rho$ non diagonale}]\label{example:rho_non_diagonal_mixture}
+    Supponiamo di avere la miscela costituita dal 50\% di probabilità di avere $\ket{0}$ e dal $50\%$ di probabilità di avere $\ket{+} = \frac{1}{\sqrt{2}} (\ket{0} + \ket{1})$. In questo caso $\rho$ non è diagonale ed è data da una combinazione lineare di stati non ortogonali:
+    \begin{equation*}
+        \rho = \frac{1}{2} \ketbra{0} + \frac{1}{2} \ketbra{+} = \frac{1}{2} \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} + \frac{1}{4} \begin{pmatrix} 1 \\ 1 \end{pmatrix} \otimes \begin{pmatrix} 1 & 1 \end{pmatrix} = \begin{pmatrix} \frac{3}{4} & \frac{1}{4} \\ \frac{1}{4} & \frac{1}{4} \end{pmatrix} \, . 
+    \end{equation*}
+\end{esempio}
+
+\noindent Vediamo alcune proprietà generali della matrice densità:
+\begin{enumerate}
+    \item \textit{$\rho$ è hermitiana e positiva}. 
+    \begin{proof}
+        Ricordando che $p_i \geq 0 \in \mathbb{R}$ allora
+        \begin{equation*}
+            \left( \sum_i p_i \ketbra{\psi_i} \right)^\dag = \sum_i p_i \ketbra{\psi_i} \, .
+        \end{equation*}
+        La positività di un operatore $A$ è data dalla proprietà $\expval{A}{\phi} \geq 0$ per ogni $\ket{\phi}$, quindi
+        \begin{equation*}
+            \expval{\rho}{\phi} = \bra{\phi} \sum_i p_i \ket{\psi_i} \braket{\psi_i}{\phi} = \sum_i p_i \braket{\phi}{\psi_i} \underbrace{\braket{\psi_i}{\phi}}_{\braket{\phi}{\psi_i}^\ast} = \sum_i p_i \abs{\braket{\phi}{\psi_i}}^2 \geq 0 \, .
+        \end{equation*}
+    \end{proof}
+    
+    \item $\Tr \rho = 1$.
+    \begin{proof}
+        \begin{equation*}
+            \Tr \left[ \sum_i p_i \ketbra{\psi_i} \right] = \sum_i p_i \Tr \ketbra{\psi_i} = \sum_i p_i \braket{\psi_i} = 1 \, ,
+        \end{equation*}
+        dove nel penultimo passaggio abbiamo usato la proprietà ciclica della traccia come nella dimostrazione della \eqref{expval_A_rho}.
+    \end{proof}
+    
+    \item \textit{$\Tr \rho^2 \leq 1$ e $\Tr \rho^2 = 1$ solo per gli stati puri}.
+    \begin{proof}
+        Dato che $\rho$ è hermitiana allora può essere diagonalizzata, quindi $\rho \ket{n} = \rho_n \ket{n}$. In particolare avremo
+        \begin{equation}\label{diagonalization_rho}
+            \rho = \sum_i p_i \ketbra{\psi_i} \equiv \sum_n \rho_n \ketbra{n} \, ;
+        \end{equation}
+        quindi la matrice densità è scrivibile come somma del prodotto tra i proiettori nella direzione degli autospazi e dei corrispondenti autovalori. Notiamo che la formula precedente consiste di fatto nella diagonalizzazione in notazione di Dirac. Chiaramente in generale $p_i \neq \rho_i$! Dato che $\Tr \rho = 1$ allora dalla precedente si ha che $\sum_n \rho_n = 1$. Cerchiamo di valutare $\Tr \rho^2 = \sum_n \rho_n^2$: dato che la matrice densità è hermitiana e positiva allora $\rho_n \geq 0 \in \mathbb{R}$, ma al tempo stesso si deve avere $0 \leq \rho_n \leq 1$ poiché $\sum_n \rho_n = 1$. Ma allora
+        \begin{equation*}
+            0 \leq \rho_n^2 \leq \rho_n \leq 1 \, , \quad \Rightarrow \quad \sum_n \rho_n^2 \leq \sum_n \rho_n = 1 \, .
+        \end{equation*}
+        Il caso limite è dato da
+        \begin{equation*}
+            \sum_n \rho_n^2 = 1 = \sum_n \rho_n \quad \Leftrightarrow \quad \rho_n = \rho_n^2 \, , \; \forall n \, ,
+        \end{equation*}
+        ma per numeri tra 0 e 1 questo è vero solamente per $\rho_n = 1 \lor \rho_n = 0$: solamente un valore è diverso da 0 (uguale a 1) mentre tutti gli altri sono 0, quindi $\rho = \ketbra{n}$ per un particolare $n$, ossia si tratta di uno stato puro. 
+    \end{proof}
+    Si noti che la formula $\left[ \Tr \rho^2 = 1 \Leftrightarrow \text{ stato puro} \right]$ è un criterio per stabilire se effettivamente uno stato è puro. Inoltre, essendo $\rho$ hermitiana, può sempre essere diagonalizzata secondo la \eqref{diagonalization_rho} e quindi la sua forma non è unica (si pensi ai casi degli esempi \ref{example:rho_non_diagonal_pure} e \ref{example:rho_non_diagonal_mixture} che possono essere diagonalizzati).
+\end{enumerate}
+
+\noindent Torniamo al caso dei qubit. Avevamo visto che la più generale matrice hermitiana $2 \times 2$ può essere scritta come $\rho = a_0 \mathbb{I} + \vec{a} \cdot \vec{\sigma}$ con $a_0, \vec{a} \in \mathbb{R}$, ma $\Tr \rho = 1$ e quindi, dato che le matrici di Pauli hanno traccia nulla, avremo $1 = 2 a_0$, ossia $a_0 = \frac{1}{2}$. Possiamo allora scrivere la matrice densità come
+\begin{equation}\label{density_matrix_Pauli}
+    \rho = \frac{\mathbb{I} + \vec{r} \cdot \vec{\sigma}}{2} \, , \; \text{ dove } \; r_i \in \mathbb{R} \, .
+\end{equation}
+Quali sono gli autovalori di $\rho$? Sappiamo che $\vec{r} \cdot \vec{\sigma}$ è lo spin in direzione $\vec{r}$, il quale ha autovalori $\abs{\vec{r}\,}$ e $-\abs{\vec{r}\,}$, inoltre $\rho$ è hermitiana, quindi
+\begin{equation*}
+    \eig(\rho) \equiv \lambda = \frac{1 \pm \abs{\vec{r} \,}}{2} \geq 0 \, , \quad \Rightarrow \quad \abs{\vec{r}\,} \leq 1 \, . 
+\end{equation*}
+Calcoliamo ora $\Tr \rho^2$ sempre usando la \eqref{density_matrix_Pauli}:
+\begin{equation*}
+    \Tr \rho^2 = \Tr \left[ \frac{1}{4} \left( \mathbb{I} + 2 \vec{r} \cdot \vec{\sigma} + \abs{\vec{r}\,}^2 \right) \right] = \frac{1 + \abs{\vec{r}\,}^2}{2} \leq 1 \, ,
+\end{equation*}
+dove abbiamo usato il risultato seguente
+\begin{equation*}
+    r_i r_j \sigma_i \sigma_j = r_i r_j \left( \delta_{ij} \mathbb{I} + i \varepsilon_{ijk} \sigma_k \right) = \abs{\vec{r}\,}^2 + i (\varepsilon_{kij} r_i r_j) \sigma_k = \abs{\vec{r}\,}^2 + i \underbrace{(\vec{r} \times \vec{r}\,)}_0 \cdot \, \vec{\sigma} = \abs{\vec{r}\,}^2 \, .
+\end{equation*}
+Notiamo che per gli stati puri $\frac{1+ \abs{\vec{r}\,}^2}{2} = 1 \Leftrightarrow \abs{\vec{r}\,}^2 = 1$, quindi possiamo impiegare nuovamente la descrizione grafica con la sfera di Bloch che abbiamo introdotto nella Sottosezione \ref{subsec:Bloch}. Associamo il punto dato da $\vec{r}$ con la matrice densità \eqref{density_matrix_Pauli} in maniera tale da estendere questa descrizione anche ai punti interni della sfera (si veda la Figura \ref{fig:BlochSphere} a Pagina \pageref{fig:BlochSphere}): i punti sulla superficie sono stati puri, mentre quelli all'interno sono delle miscele di stati. Tenendo presente la Figura \ref{fig:BlochSphere2} a Pagina \pageref{fig:BlochSphere2}, focalizziamo la nostra attenzione su due direzioni precise:
+\begin{itemize}
+    \item Consideriamo l'asse $z$: in tal caso avremo $\vec{r} = (0, 0, r)$ con $r \in [-1, 1]$. Chiaramente i due stati corrispondenti ai punti sulla superficie sono $\ket{0}$ per $z=1$ e $\ket{1}$ per $z = -1$. La matrice densità non è altro che
+    \begin{equation}\label{rho_z_Bloch}
+        \rho = \frac{\mathbb{I}}{2} + \frac{r}{2} \sigma_3 = 
+        \begin{pmatrix}
+            \frac{1+r}{2} & 0 \\ 0 & \frac{1-r}{2}
+        \end{pmatrix}
+        \equiv
+        \begin{pmatrix}
+            p & 0 \\ 0 & 1-p
+        \end{pmatrix} \, , \; \text{ con } \; p = \frac{1+r}{2} \, ;
+    \end{equation}
+    si tratta della stessa forma dell'Esempio \ref{example:mixture_qubit}: si ha una miscela di stati con probabilità classiche $p$ di avere $\ket{0}$ e $1-p$ di avere $\ket{1}$. 
+    
+    \item Consideriamo ora, invece, l'asse $x$: in tal caso $\vec{r} = (r, 0, 0)$ e gli stati sulla superficie (intersezione sfera con asse $x$) sono $\ket{+}$ per $x = 1$ e $\ket{-}$ per $x = -1$. La \eqref{density_matrix_Pauli} non è altro che
+    \begin{equation}\label{rho_x_Bloch}
+        \rho = \frac{\mathbb{I}}{2} + \frac{r}{2} \sigma_1 =
+        \begin{pmatrix}
+            \frac{1}{2} & \frac{r}{2} \\ \frac{r}{2} & \frac{1}{2}
+        \end{pmatrix} \, ;
+    \end{equation}
+    perciò i punti corrispondenti a $\ket{+}$ e $\ket{-}$ sono gli stati puri nella direzione in cui si sta misurando lo spin, mentre tutti gli altri punti intermedi lungo $x$ sono una miscela di $\ket{+}$ e $\ket{-}$. 
+\end{itemize}
+
+\noindent Notiamo che il punto $\vec{r} = 0$ è l'unico punto comune a tutti e 3 gli intervalli nelle 3 direzioni spaziali: esso corrisponde alla massima indeterminazione possibile, infatti
+\begin{equation*}
+    \rho = \frac{\mathbb{I}}{2} = 
+    \begin{pmatrix}
+        \frac{1}{2} & 0 \\ 0 & \frac{1}{2}
+    \end{pmatrix} \, ,
+\end{equation*}
+il quale non è altro che una sovrapposizione dei due autostati corrispondenti ognuno una probabilità classica del 50\%. Un fatto importante da sottolineare è che la matrice precedente può essere ottenuta sia dalla \eqref{rho_z_Bloch} che dalla \eqref{rho_x_Bloch} ponendo $p = \frac{1}{2}$ e $r = 0$: solamente conoscendo la matrice densità di un sistema non siamo in grado di distinguere la miscela di stati in cui ci troviamo!
+
+\section{Sottosistemi e traccia parziale}
+Torniamo ad affrontare alcuni casi interessanti dal punto di vista della fisica dei qubit. Il formalismo della matrice densità risulta utile quando si hanno sistemi bipartiti tali che $\mathcal{H} = \mathcal{H}_A \otimes \mathcal{H}_B$. Supponiamo che Alice si trovi in un laboratorio descritto da $\mathcal{H}_A$ e che Bob invece sia in un altro laboratorio descritto da $\mathcal{H}_B$: la matrice densità è utile quando si vuole studiare la fisica dal punto di vista di Alice, la quale ignora il laboratorio di Bob; Alice vorrebbe ignorare parte dello spazio di Hilbert totale perché non ne ha l'accesso completo.  Questo fatto, vedremo, porta ad una descrizione fisica in termini di miscele di stati anche se si era partiti da uno stato puro in $\mathcal{H}$. 
+
+\noindent Che cosa significa fare esperimenti dal punto di vista di Alice? Significa che Alice effettua misure di osservabili della forma $O = O_A \otimes \mathbb{I}_B$, quindi agisce solamente nel proprio laboratorio senza fare nulla sul laboratorio di Bob. Immaginiamo che i due laboratori siano soggetti a dell'indeterminazione classica, quindi il sistema totale è ben descritto da un'opportuna matrice densità $\rho$. Siamo interessati al sottosistema descritto da $\mathcal{H}_A$: chiamiamo $\{ \ket{nm} \}$ la base dello spazio di Hilbert totale $\mathcal{H}$ dove $\ket{nm} \equiv \ket{n}_A \otimes \ket{m}_B$ con $\ket{n}_A \in \mathcal{H}_A$ e $\ket{m}_B \in \mathcal{H}_B$. Calcoliamo il valor medio di $O$ mediante la \eqref{expval_A_rho}:
+\begin{align*}
+    \expval{O} &= \Tr (O \rho) = \sum_{n,m} \expval{O \rho}{nm} \\
+    &= \sum_{\substack{n,m \\ n', m'}} \mel{nm}{O_A \otimes \mathbb{I}_B}{n'm'} \mel{n'm'}{\rho}{nm} \\
+    &= \sum_{\substack{n,m \\ n', m'}} \mel{n}{O_A}{n'} \underbrace{\braket{m}{m'}}_{\delta_{mm'}} \mel{n'm'}{\rho}{nm} \\
+    &= \sum_{n,m,n'} \mel{n}{O_A}{n'} \mel{n'm}{\rho}{nm} \\
+    &= \sum_{n,n'} \mel{n}{O_A}{n'} \sum_m \mel{n'm}{\rho}{nm} \, ,
+\end{align*}
+dove nella seconda riga abbiamo inserito una relazione di completezza nello spazio $\mathcal{H}$: $\mathbb{I} = \sum_{n',m'} \ketbra{n'm'}$. Definiamo ora il seguente oggetto
+\begin{equation}\label{rho_A}
+    \mel{n'}{\rho_A}{n} \equiv \sum_m \mel{n'm}{\rho}{nm} \, ,
+\end{equation}
+dove chiaramente $\rho_A$ agisce solamente su $\mathcal{H}_A$. In questo modo la precedente diventa
+\begin{equation*}
+    \expval{O} = \sum_{n,n'} \mel{n}{O_A}{n'} \mel{n'}{\rho_A}{n} = \sum_n \expval{O_A \rho_A}{n} = \Tr (O_A \rho_A) \, ,
+\end{equation*}
+dove abbiamo tolto, nel penultimo passaggio, una relazione di completezza in $\mathcal{H}_A$. In definitiva abbiamo ricavato
+\begin{equation}\label{expval_O_partial_trace}
+    \expval{O} = \Tr (O_A \rho_A) \, .
+\end{equation}
+Siamo partiti dal considerare un valor medio di una grandezza di tutto lo spazio di Hilbert, ma abbiamo ricavato una formula che considera solamente oggetti che agiscono su $\mathcal{H}_A$! La relazione \eqref{expval_O_partial_trace} permette di dare una \textbf{descrizione efficace} di tutti i gradi di libertà del sistema prendendo una cosiddetta "\textbf{traccia parziale sullo spazio di Hilbert $\mathcal{H}_B$}". 
+
+\noindent Omettendo $n,n'$ ad entrambi i membri, possiamo scrivere la definizione \eqref{rho_A} in forma più compatta come
+\begin{equation*}
+    \rho_A = \sum_m \expval{\rho}{m} \equiv \Tr_B \rho \, ;
+\end{equation*}
+risulta ancora più evidente che $\rho_A$ sia costruita prendendo una traccia sui gradi di libertà del laboratorio di Bob, tuttavia notiamo che quest'ultima formula è un po' fuorviante dato che $\rho_A$ è un operatore e il RHS sembrerebbe invece un numero: il simbolo "$\Tr_B$" non produce un numero, bensì un operatore agente unicamente su $\mathcal{H}_A$.
+
+\noindent Vediamo immediatamente due semplici esempi per fissare meglio questi concetti. 
+\begin{esempio}[\textbf{Fisica "fattorizzata"}]
+    Supponiamo che la fisica di un sistema possa essere "fattorizzata" scrivendo $\rho = \rho_A \otimes \rho_B$. Supponiamo di voler studiare il sistema dal punto di vista di Alice:
+    \begin{equation*}
+        \Tr_B \rho = \Tr_B (\rho_A \otimes \rho_B) = \sum_m \expval{\rho_A \otimes \rho_B}{m} = \rho_A \otimes \sum_m \expval{\rho_B}{m} = \rho_A \underbrace{\Tr \rho_B}_1 = \rho_A \, ;
+    \end{equation*}
+    quindi se si vuole studiare la fisica di $\mathcal{H}_A$ e la fisica totale è disaccoppiata, ci si aspetta che prendere una traccia sui gradi di libertà esterni produca $\rho_A$: per effettuare una misura nel laboratorio di Alice bisogna solamente utilizzare $\rho_A$. 
+\end{esempio}
+
+\begin{esempio}[\textbf{Qubit in stati separabili}]
+    Supponiamo che Alice e Bob condividano due qubit in uno stato separabile, $\ket{00}$ ad esempio, dove la prima entrata appartiene ad Alice e la seconda a Bob. Anche in una situazione come questa la fisica è fattorizzata e le misurazioni sono indipendenti perché il collasso dello stato non produce alcunché di nuovo. Cosa succede a $\rho$ dal punto di vista di Alice? Sappiamo che $\rho = \ketbra{00}$ quindi
+    \begin{equation*}
+        \rho_A \equiv \Tr_B \rho = \Tr_B \ketbra{00} = \sum_m \braket{m}{00} \braket{00}{m} = \ketbra{0} \, ,
+    \end{equation*}
+    dove nell'ultimo passaggio sopravvivono solamente i prodotti scalari per $m=0$. In questa situazione abbiamo ottenuto che $\rho_A$ corrisponde alla matrice densità di uno stato puro, perché metà delle paia di qubit appartengono ad Alice. 
+\end{esempio}
+
+\noindent Chiaramente, in analogia con gli stati separabili, i casi degli esempi precedenti non sono molto utili e interessanti. Vediamo, invece, che per stati entangled l'effetto della traccia diventa del tutto non banale:
+
+\begin{esempio}[\textbf{Qubit in stati entangled}]
+    Supponiamo che Alice e Bob condividano lo stato entangled $\ket{\psi} = \frac{1}{\sqrt{2}} \left( \ket{00} + \ket{11} \right)$ (come nell'esempio precedente ad Alice appartiene la prima entrata mentre a Bob la seconda). Scriviamo la matrice densità totale:
+    \begin{equation*}
+        \rho = \ketbra{\psi} = \frac{1}{2} \left( \ketbra{00} + \ketbra{00}{11} + \ketbra{11}{00} + \ketbra{11} \right) \, ;
+    \end{equation*}
+    si noti che lo stato $\ket{\psi}$ è puro nello spazio di Hilbert totale. Vediamo la matrice densità di Alice:
+    \begin{equation*}
+        \rho_A = \Tr_B \rho = \sum_m \expval{\rho}{m} = \expval{\rho}{0} + \expval{\rho}{1} \, ;
+    \end{equation*}
+    calcoliamo separatamente i due termini:
+    \begin{align*}
+        \expval{\rho}{0} &= \frac{1}{2} \left( \braket{0}{00} \braket{00}{0} + \braket{0}{00} \braket{11}{0} + \braket{0}{11} \braket{00}{0} + \braket{0}{11} \braket{11}{0} \right) = \frac{1}{2} \ketbra{0} \, , \\
+        \expval{\rho}{1} &= \frac{1}{2} \left( \braket{1}{00} \braket{00}{1} + \braket{1}{00} \braket{11}{1} + \braket{1}{11} \braket{00}{1} + \braket{1}{11} \braket{11}{1} \right) = \frac{1}{2} \ketbra{1} \, ,
+    \end{align*}
+    quindi avremo semplicemente che
+    \begin{equation*}
+        \rho_A = \frac{1}{2} \left( \ketbra{0} + \ketbra{1} \right) = \frac{1}{2} \sum_n \ketbra{n} = \frac{\mathbb{I}}{2} \, .
+    \end{equation*}
+    Come sottolineato in precedenza, si tratta del caso peggiore possibile in cui tutto è completamente indeterminato: dal punto di vista di Alice c'è una totale casualità. 
+\end{esempio}
+
+\noindent Perciò anche se si parte da uno stato puro nello spazio di Hilbert totale (universo) e si decide di effettuare un esperimento solo localmente, la traccia parziale pu\`o trasformarlo  in una matrice densità: tracce parziali producono tipicamente matrici densità. 
+
+\noindent Come ultima curiosità enunciamo il teorema seguente:
+\begin{teorema}[\textbf{Teorema di purificazione}]
+    Data la traccia parziale $\rho_A$ agente su $\mathcal{H}_A$, esiste sempre uno spazio di Hilbert più grande $\mathcal{H} = \mathcal{H}_A \otimes \mathcal{H}_B$ e uno stato puro $\ket{\psi} \in \mathcal{H}$ tale che
+    \begin{equation*}
+        \rho_A = \Tr_B \rho \, , \; \text{ con } \; \rho = \ketbra{\psi} \, .
+    \end{equation*}
+\end{teorema}

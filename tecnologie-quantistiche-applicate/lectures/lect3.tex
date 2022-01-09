@@ -1,0 +1,148 @@
+\vspace{1cm}
+\newline
+\lecture{3}{14/10/2021}
+\vspace{0.5cm}
+\noindent Abbiamo visto come sia possibile calcolare il valore di aspettazione di $\expval{A}$ a partire dalle funzioni d'onda. Vogliamo vedere come sia possibile sfruttare la matrice densità per ottenere il medesimo risultato. Cominciamo con il considerare il generico insieme di stati $\{p_i, \ket{\psi_i}\}$ e la matrice densità corrispondente $\hat \rho=\sum_i p_i\op{\psi_i}{\psi_i}$. Per il singolo stato $\ket{\psi_i}$ avevamo visto che
+\begin{equation*}
+    \begin{aligned}
+        \expval{A}_{\psi_i} &= \sum_k p_k a_k \\
+                            &= \sum_k \op{\psi_i}{a_k}\op{a_k}{\psi_i}a_k \\
+                            &= \bra{\psi_i}\sum_k a_k \ket{a_k}\ip{a_k}{\psi_i} \\
+                            &= \expval{A}{\psi_i}
+    \end{aligned}
+\end{equation*}
+Tuttavia, nel caso della matrice densità, abbiamo un insieme di funzioni d'onda, per cui
+\begin{equation*}
+    \begin{aligned}
+        \expval{A} &= \sum_i p_i \expval{\hat A}{\psi_i} \\
+                   &= \sum_i p_i \Tr \left(\hat A\op{\psi_i}{\psi_i}\right) \\
+                   &= \Tr \left(A\sum_i p_i \op{\psi_i}{\psi_i}\right) \\
+                   &= \Tr\left(\hat A\rho\right) \, .
+    \end{aligned}
+\end{equation*}
+
+\subsection*{Equazione di von-Neumann - Liouville}
+Per il \textbf{IV Postulato}, riguardante l'evoluzione temporale, la matrice densità evolve come $\hat U \hat \rho \hat U^\dagger$, ci chiediamo se sia possibile realizzare un'equazione analoga a quella di Schrödinger per la matrice densità. La risposta è affermativa infatti
+\begin{equation*}
+    \begin{aligned}
+        \derivative{\hat \rho}{t} &= \sum_i p_i\left(\derivative{\ket{\psi_i}}{t}\bra{\psi_i}+\ket{\psi_i}\derivative{\bra{\psi_i}}{t}\right) \\
+                                  &= \sum_i \frac{p_i}{i\hbar}\left(\hat H \op{\psi_i}{\psi_i-\op{\psi_i}{\psi_i}}\hat H\right) \\
+                                  &= \frac{1}{i\hbar}\comm{\hat H}{\hat \rho}
+    \end{aligned}
+\end{equation*}
+
+\noindent Consideriamo ora un paio di esempi per assodare i concetti finora trattati
+\begin{esempio}
+    Consideriamo un qubit nella base computazionale $\{\ket 0, \ket 1\}$ oppure possiamo pensare di prendere la base
+    \begin{equation*}
+        \ket a = \frac{\ket 0 +\ket 1}{\sqrt 2} \,
+    \end{equation*}
+    \begin{equation*}
+        \ket b = \frac{\ket 0 -\ket 1}{\sqrt 2} \, ;
+    \end{equation*}
+    entrambe le basi sono degli stati puri.\\
+    Consideriamo lo stato $\ket a$ e costruiamo la matrice densità per la base computazionale
+    \begin{equation*}
+        \hat \rho = \frac 12 \op{0}{0} + \frac 12 \op{1}{1} \, ,
+    \end{equation*}
+    come possiamo notare, gli stati hanno la medesima probabilità. Ora possiamo fare una \textbf{projective measurament} definendo i proiettori:
+    \begin{itemize}
+        \item $\hat P_0=\op{0}{0}$;
+        \item $\hat P_1=\op{1}{1}$;
+        \item $\hat P_a=\op{a}{a}$.
+    \end{itemize}
+    Andiamo a misurare le probabilità di misurare $\ket 0$ e $\ket 1$ sullo stato $\ket a$:
+    \begin{equation*}
+        p(\ket 0)=\mel{a}{\hat P_0}{a}=\frac 12 \quad \, , \quad p(\ket 1)=\mel{a}{\hat P_1}{a}=\frac 12 \, .
+    \end{equation*}
+    Cosa succede se consideriamo $\rho$?
+    \begin{equation*}
+        p(\ket 0)=\mel{0}{\hat \rho}{0}=\frac 12 \quad \, , \quad p(\ket 1)=\mel{1}{\hat \rho}{1}=\frac 12 \, .
+    \end{equation*}
+    Come possiamo notare otteniamo in entrambi i casi la medesima probabilità, se invece andassimo a misurare $\ket a$?
+    \begin{equation*}
+        \begin{aligned}
+            p(\ket a) &= \mel{a}{\hat P_a}{a} \\
+                      &= \ip{a}{a}\ip{a}{a} \\
+                      &= 1 \, .
+        \end{aligned}
+    \end{equation*}
+    Per quanto riguarda la matrice densità
+    \begin{equation*}
+        \begin{aligned}
+            p(\ket a) &= \mel{a}{\hat \rho}{a} \\
+                      &= \Tr \left(\hat \rho \op{a}{a}\right) \\
+                      &= \frac 12 \, .
+        \end{aligned}
+    \end{equation*}
+    In questo caso, misurare in un altra base ci dà due risultati differenti.
+\end{esempio}
+\noindent Questo esempio in realtà lo possiamo incontrare, dal punto di vista pratico, se ci addentriamo nello studio dello spin di un elettrone in un atomo (esperimento di Stern-Gerlach) oppure nella trattazione della polarizzazione di un fotone.
+
+\noindent In generale noi possiamo scrivere la matrice densità in una base e poi riscriverla in un secondo momento in un'altra base
+\begin{equation*}
+    \hat \rho = \sum_k \omega_k \op{\psi_k}{\psi_k} \, ,
+\end{equation*}
+dove 
+\begin{equation*}
+    \{\omega_k, \ket{\psi_k}\} \quad \text{e} \quad \ket{\psi_k}=\sum_j a_k^k \ket{a_j} \, .
+\end{equation*}
+Nella nuova base, la matrice densità sarà
+\begin{equation*}
+    \begin{aligned}
+        \hat \rho &= \sum_k {\omega_k}\left(\sum_j a_j^k \ket{a_j}\right)\left(\sum_i a_i^{*k}\bra{a_i}\right) \\
+             &= \sum_{k,j,i} \omega_k a_j^ka_i^{*k}\op{a_j}{a_i}
+    \end{aligned}
+\end{equation*}
+per cui gli elementi di matrice saranno
+\begin{equation*}
+    \begin{aligned}
+        \rho_{mn} &= \mel{a_m}{\hat rho}{a_n} \\
+                       &= \sum_k \omega_k a_m^ka_n^{*k}
+    \end{aligned}
+\end{equation*}
+e gli elementi sulla diagonale
+\begin{equation*}
+    \rho_{nn}=\sum_k\omega k \abs{a_n^k}^2
+\end{equation*}
+
+\subsection{POVM: Misura a valori operatoriali positivi}
+Molte tipe di misurazioni non possono essere viste come proiezioni, ad esempio la rivelazione della posizione di un fotone non può essere eseguita poiché quando misuriamo il fotone, esso viene assorbito dal rivelatore e il fotone non esiste più. La proiezione non permette inoltre di distinguere in maniera esatta due stati non ortogonali, ad esempio se abbiamo due stati $\ket \psi$ e $\ket \phi$, se sono tra loro ortogonali sarà facile distinguerli con i proiettori, ma se non sono ortogonali non posso distinguerli e gli unici risultati che possiamo dare sono:
+\begin{itemize}
+    \item È nello stato $\ket \psi$;
+    \item È nello stato $\ket \phi$;
+    \item O in qualcos'altro.
+\end{itemize}
+Una misura a valori operatoriali positivi (POVM) è una misura i cui valori sono operatori semi-definiti positivi su uno spazio di Hilbert, che non richiedono ortogonalità, cioè non soddisfano la terza proprietà che abbiamo visto quando abbiamo introdotto i proiettori: $\hat P_i \hat P_j = \hat P_i\delta_{ij}$. La POVM può essere utile per classificare uno stato con 3 possibili identificazioni (come $\ket \psi$, $\ket \phi$ o "non so") dove invece una misura proiettiva è inutile.
+
+\subsection{Cambi di base: stati puri e miscele}
+
+\noindent Supponiamo di avere una matrice densità $\hat \rho=\sum_i p_i \op{\psi_i}{\psi_i}$ e un'osservabile $\hat A$ ($\ket {a_k}$, $a_k$). Vogliamo valutare il valore di aspettazione di questa osservabile:
+\begin{equation*}
+    \begin{aligned}
+        \expval{A} &= \Tr\left(\hat\rho \hat A\right) \\
+                   &= \Tr\left(\sum_{ijk} \rho_{ij}\op{a_i}{a_j}a_k\op{a_k}{a_k}\right) \\
+                   &= \sum_{ik}\rho_{ik}a_k\Tr\left(\op{a_i}{a_k}\right) \\
+                   &= \sum_{ik}\rho_{ik}a_k\ip{a_k}{a_i} \\
+                   &= \sum_k\rho_{kk}a_k
+    \end{aligned}
+\end{equation*}
+Quindi, solo i $\rho_{kk}=\mel{a_k}{\rho}{a_k}$ sono necessari per calcolare il valore di aspettazione e gli elementi fuori diagonale nella nostra rappresentazione sono apparentemente inutili. Tuttavia, gli elementi off-diagonal spesso ci dicono se la matrice corrisponde a uno stato puro o meno. Se abbiamo una matrice di densità non diagonale in base a un osservabile, anche se il valore di aspettazione dell'osservabile stessa è dato solo dagli elementi diagonali, se gli elementi fuori diagonale sono diversi da zero allora lo stato può essere puro, poiché la matrice diagonalizzata può avere tutte le voci uguali a $0$, tranne una uguale a $1$. Questi elementi fuori diagonale sono chiamati coerenza della matrice densità. Per esempio, consideriamo la seguente matrice $2\times 2$
+\begin{equation*}
+    \begin{pmatrix}
+        a & c \\
+        c^* & b
+    \end{pmatrix}
+\end{equation*}
+I coefficienti $c$ e $c^*$ prendono il nome di \textbf{coerenze}, questo perché:
+\begin{itemize}
+    \item Se $c=c^*=0$, allora abbiamo una miscela di stati;
+    \item Se $c=c^*\neq 0$, allora possiamo avere uno stato puro, in quanto la matrice può essere diagonalizzata nella forma
+        \begin{equation*}
+            \begin{pmatrix}
+                1 & 0 \\
+                0 & 0
+            \end{pmatrix}
+        \end{equation*}
+\end{itemize}
+Osserviamo che, generalmente, $c$ e $c^*$ seguono una legge di decadimento, per cui scalano come $e^{-t/T_1}$, il che significa che lo stato sta perdendo la sua purezza al passare del tempo. Questo è uno dei problemi più importanti quando si lavora con dei sistemi come i qubit, in quanto ne limita il suo utilizzo.

@@ -1,0 +1,341 @@
+%%%%%%%%%%%%%
+% LECTURE 5 %
+%%%%%%%%%%%%%
+\chapter{Algoritmi quantistici}
+
+\vspace{1cm}
+
+\lecture{5}{18/10/2021}
+
+\vspace{0.5cm}
+
+\noindent Prima di cominciare la vera discussione riguardante gli algoritmi più importanti e conosciuti della computazione quantistica, affrontiamo l'analisi della crittografia quantistica, la quale mostra ancora una volta le potenzialità dei metodi quantistici rispetto a quelli classici. 
+
+\section{Crittografia quantistica}
+Molti anni prima che fu introdotta la crittografia RSA\footnote{Inventata nel 1977 da Ronald Rivest, Adi Shamir e Leonard Adleman.} che utilizziamo oggigiorno, molte persone pensavano che gli stati quantistici e il \textit{bizzarro} comportamento della QM potessero essere utilizzati per scopi crittografici. Il protocollo quantistico che fu pensato per trasmettere dati criptati è il \textbf{protocollo BB84}. Consideriamo, come al solito, Alice e Bob in differenti città e supponiamo che vogliano comunicare tra loro tramite una linea criptata. Vediamo come viene affrontato questo problema sia dal punto di vista classico che quantistico. 
+
+\subsection{Esempio di crittografia classica}
+Classicamente entrambi possiedono una sequenza $S$ di bit casuali, chiamata \textbf{codepad}. Immaginiamo che Alice voglia inviare a Bob un messaggio $M$: un modo classico di inviare il messaggio criptato è quello di inviare la sequenza $M \oplus S$, dove il simbolo "$\oplus$" indica l'\textbf{addizione bit a bit modulo 2}. Ad esempio supponiamo che il codepad sia $S = 0110$ e il messaggio sia $M = 1111$: la sequenza $M \oplus S$ è data da 
+\begin{table}[!ht]
+	\centering
+    \begin{tabular}{c|cccc|l}
+        \toprule
+        $S$ & 0 & 1 & 1 & 0 & $= 6$ \\
+        $M$ & 1 & 1 & 1 & 1 & $=15$ \\
+        \midrule
+        $M \oplus S$ & 1 & 0 & 0 & 1 & $=9$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\noindent dove nell'ultima colonna abbiamo inserito il numero associato a quel messaggio (ad esempio, leggendo da destra verso sinistra, per $S$ si ha $0 \times 2^0 + 1 \times 2^1 + 1 \times 2^2 + 0 \times 2^3 = 6$). Il vantaggio di questo modo di crittografare messaggi risiede nel fatto che, anche se si parte con una stringa $M$ sensata, l'operazione $M \oplus S$ la trasforma in una sequenza apparentemente casuale di 0 e 1 che può essere decifrata solamente se si possiede il codepad. Infatti, una volta che Bob riceve $M \oplus S$, si può facilmente ricostruire il messaggio originale calcolando $(S \oplus M) \oplus S = M \oplus (S \oplus S) = M$ dato che 
+\begin{equation*}
+    x \oplus x =
+    \begin{cases}
+        0 \oplus 0 = 0 \\
+        1 \oplus 1 = 0 
+    \end{cases} \, , \quad \forall \, x \, .
+\end{equation*}
+Il problema di un tale protocollo crittografico, oltre al fatto che il codepad non debba essere scoperto da nessun altro al di fuori di Alice e Bob, risiede nel fatto che non sia molto efficiente essendo un \textbf{one-time codepad}, dato che la stringa $S$ può essere utilizzata una volta sola. Per capirne il motivo supponiamo che Alice invii due messaggi $M_1$ e $M_2$: la composizione dei due messaggi  è $(M_1 \oplus S) \oplus (M_2 \oplus S) = M_1 \oplus M_2$, il quale è costituito da una sequenza di 0 e 1 abbastanza randomica. Supponiamo ora che i due messaggi vengano intercettati da qualcuno. Se costui è abbastanza abile e conosce almeno una parte del messaggio che Alice voleva inviare allora ci sono possibilità che riesca a decifrare $M_1$ e $M_2$ separatamente riconoscendo degli opportuni schemi in $M_1 \oplus M_2$; tuttavia non è detto che chi intercetti il messaggio sia sempre così abile!
+
+
+\subsection{Il protocollo BB84}
+La versione quantistica viene chiamata \textbf{protocollo BB84}, sviluppato da Charles H. Bennett e Gilles Brassard nel 1984, ed è abbastanza simile al caso classico, ma molto più potente: lo scopo è quello di creare un codepad $S$ che non possa essere in alcun modo (o quasi\footnote{Si sfrutta la natura probabilistica della QM quindi, se i qubit inviati da Alice sono in gran numero, è solo una questione di tempo prima che una terza persona venga scoperta intercettare i messaggi. Si veda la discussione di seguito per chiarimenti più espliciti.}) intercettato da una terza persona, che chiameremo Eve, la quale vuole rovinare i piani di Alice e Bob. Il protocollo funziona come segue: Alice possiede una serie di qubit che vorrebbe inviare a Bob tramite un canale sicuro; invia allora casualmente dei qubit che sono preparati nella base computazionale $C = \{ \ket{0}, \ket{1} \}$ oppure nella base di Hadamard $H = \{ \ket{+}, \ket{-} \}$ (si vedano le \eqref{basi_di_sigma_12}). Quindi Alice, prima di inviare i qubit, effettua due scelte: sceglie la base e poi sceglie uno stato di quella base da inviare. Nel frattempo, Bob riceve i qubit inviati e tiene attentamente conto dell'ordine di ricezione di questi qubit, dopodiché effettua una misurazione scegliendo randomicamente la base $C$ oppure la base $H$\footnote{Ad esempio, se Alice invia delle particelle dotate di spin, Bob può scegliere, mediante un apparato simile a quello dell'esperimento di Stern e Gerlach, di misurare lo spin lungo la direzione $z$ (base $C$) oppure lungo la direzione $x$ (base $H$).}. Dato che Bob sceglie una delle due basi, per ogni qubit che riceve ci sono due possibilità:
+\begin{itemize}
+    \item Sceglie la stessa base di Alice. Ad esempio se Alice avesse scelto $(C, \ket{0})$ allora necessariamente, dai postulati della QM, sappiamo che Bob misura obbligatoriamente $(C, \ket{0})$ con probabilità 1 (nel caso in cui nessuno abbia intercettato il messaggio).
+    
+    \item Sceglie una base differente da quella di Alice. Ad esempio se Alice invia $(C, \ket{0})$ e Bob sceglie la base $H$ allora sappiamo che ha il 50\% di possibilità di trovare $\ket{0}$ nella propria misurazione. 
+\end{itemize}
+
+\noindent Notiamo che i risultati ottenuti da Bob nelle proprie misurazioni non sono in alcun modo correlati con le informazioni che Alice vuole inviare. Riassumendo, gli step necessari sono i seguenti:
+\begin{enumerate}
+    \item Alice sceglie una base e invia casualmente i qubit.
+    
+    \item Bob riceve i qubit tenendo conto dell'ordine di arrivo e misura con il proprio apparato scegliendo casualmente una delle due basi. 
+    
+    \item Alice e Bob comparano \textbf{solamente le basi} di un numero arbitrario di qubit concordato a priori dai due (alcuni e non tutti perché in generale Alice potrebbe inviare un numero altissimo di qubit) tramite una linea non sicura (ossia che può essere intercettata da Eve). Questo significa che per ogni qubit che confrontano, i due si scambiano la base in cui è stata effettuata la preparazione e la misura, non lo stato misurato.
+    
+    \item La parte dei qubit  che Bob ha misurato nella stessa base in cui sono stati preparati da Alice,  viene usata per costruire un codepad comune (si veda  l'Esempio \ref{BB84_example}).
+    
+    \item Confrontando ulteriormente una \textbf{frazione sacrificabile} dei qubit che compongono il codepad, Alice e Bob possono  stabilire se qualcuno ha intercettato i qubit inviati (si veda la discussione dopo l'Esempio \ref{BB84_example}). 
+\end{enumerate}
+
+\noindent Per capire al meglio il funzionamento di questo meccanismo illustriamolo con un esempio.
+
+\begin{esempio}\label{BB84_example}
+    Immaginiamo che le basi scelte e i risultati delle misurazioni effettuate da Alice e Bob siano quelli mostrati nella Tabella \ref{tab:BB84}. 
+    
+\begin{table}[!ht]
+	\centering
+    \begin{tabular}{c | c c c >{\columncolor[gray]{0.8}} c >{\columncolor[gray]{0.8}} c c >{\columncolor[gray]{0.8}} c >{\columncolor[gray]{0.8}} c c c >{\columncolor[gray]{0.8}} c}
+        \toprule
+        \text{Alice} & \text{base} & $\rightarrow$ & $C$ & $H$ & $H$ & $C$ & $C$ & $H$ & $C$ & $H$ & $C$ \\
+        \text{} & \text{qubit} & $\rightarrow$ & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 1 \\
+        \midrule
+        \text{Bob} & \text{base} & $\rightarrow$ & $H$ & $H$ & $H$ & $H$ & $C$ & $H$ & $H$ & $C$ & $C$ \\
+        \text{} & \text{qubit} & $\rightarrow$ & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+        \bottomrule
+    \end{tabular}\\
+    \caption{Basi scelte e rispettive misurazioni effettuate da Alice e Bob. Si noti che nelle righe dei qubit misurati si è indicato solamente il bit di informazione inviato da Alice o ottenuto da Bob, ossia: $\ket{0}, \, \ket{+} \rightarrow 0$ e $\ket{1}, \ket{-} \rightarrow 1$. Nella tabella sono state colorate in grigio le colonne corrispondenti alle misurazioni effettuate nella medesima base.}
+    \label{tab:BB84}
+\end{table}
+
+\noindent Una volta che Alice ha terminato\footnote{In generale esistono varie versioni di questa procedura perché dal punto di vista pratico è molto difficile accumulare una sequenza di qubit mantenendoli tutti inalterati. Una versione alternativa più conveniente e realistica prevede Alice che invia il suo qubit e subito dopo comunica immediatamente la base che ha scelto, in maniera tale che una volta che Bob abbia ricevuto il qubit possa scartare quelli misurati in basi differenti.} la sequenza di qubit che voleva inviare, comunica a Bob, mediante un canale classico, la sequenza di basi scelte, ossia la prima riga della tabella: dalle regole della QM sappiamo che ogniqualvolta che Bob sceglie (per coincidenza) la medesima base di Alice, il risultato della misurazione che ottiene è obbligatoriamente il medesimo qubit che Alice ha scelto di inviare (a tal proposito si vedano infatti le colonne colorate). Notiamo che per una coincidenza fortuita le misurazioni nelle colonne 4 e 7 sono le medesime sebbene la base scelta fosse differente: in questa situazione, ossia quando i due sperimentatori scelgono una base diversa, Bob ottiene casualmente 0 o 1 con probabilità $1/2$. Una volta effettuata la chiamata, i due decidono di tenere solamente i risultati in cui hanno scelto le stesse basi e formano con tali misure un codepad comune: nella situazione della Tabella \ref{tab:BB84}, solo le colonne colorate hanno la stessa base, quindi il codepad non è altro che $S = 10001$. Ovviamente questo codepad è comune perché Alice e Bob si sono scambiati, oltre alle basi, anche i qubit delle misure effettuate nella stessa base.
+\end{esempio}
+
+\noindent Per quale ragione il codepad comune formato da Alice e Bob è più protetto di quello classico? Come interviene Eve nella trasmissione delle informazioni per capire ciò che è stato inviato? Eve può semplicemente intercettare il qubit durante il transito: dalla QM sappiamo che è obbligata ad effettuare una misurazione, la quale disturba inevitabilmente il sistema. Dato che Eve non conosce la base in cui il qubit è stato preparato è costretta a fare una scelta! Nel caso in cui sia fortunata, scegliendo cioè la stessa base di Alice, Eve vede il qubit inviato senza modificare lo stato, tuttavia quando sceglie la base opposta ottiene un numero casuale 0 o 1 con probabilità $1/2$ e causa il collasso dello stato in uno dei due stati della base utilizzata. 
+
+\noindent Capiamo meglio questo discorso con un esempio.
+
+\begin{esempio}
+    Supponiamo che Alice abbia scelto di inviare $(C, \ket{0})$ e che Eve scelga di misurare nella base $H$ ottenendo $\ket{+}$: lo stato è ora collassato in $\ket{+}$, quindi se Bob effettua una misurazione in $C$, egli può ottenere sia $\ket{0}$ sia $\ket{1}$ con probabilità $1/2$, nonostante Alice avesse inviato $(C, \ket{0})$. Se dovesse succedere che Bob misuri $(C,\ket{1})$, allora Alice e Bob concludono che hanno misurato due stati differenti, nonostante abbiano scelto la medesima base, ma questo è impossibile dalla QM se nessuno è intervenuto sullo stato!
+\end{esempio}
+
+\noindent A seguito del collasso dello stato in uno stato di una base differente da quella scelta da Alice, può accadere che nelle colonne colorate della Tabella \ref{tab:BB84} (misurazioni con stesse basi) i due sperimentatori ottengano uno stato differente: se nessuno sta intercettando gli stati in transito questo è impossibile per le leggi della QM! In questo modo, una volta comunicati i qubit misurati nelle stesse basi, Bob capisce che qualcuno ha interferito con i qubit che Alice sta inviando. 
+
+\noindent Statisticamente, quante volte Eve sta ascoltando sistematicamente il messaggio e vi è una possibilità che Alice e Bob non concordino su una misura effettuata nella stessa base? Tipicamente per $1/4$ delle volte. Il motivo è dato dal fatto che Eve può essere fortunata e misurare nella stessa base di Alice (probabilità $1/2$ per questa scelta) e inoltre anche se Eve sceglie la base sbagliata, Bob deve effettuare una misurazione in cui ottiene lo stesso qubit di Alice il 50\% delle volte: quindi $\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$, dove il primo $1/2$ deriva dalla scelta di Eve e il secondo dalla misura di Bob.  
+
+\noindent La quantit\`a di qubit che devono venire sacrificati per verificare se Eve sta ascoltando, comunicando attraverso una linea non sicura il risultato delle misurazioni,  dipender\`a dal grado di sicurezza richiesto. Per maggior efficienza, si potr\`a anche usare una linea classica criptata.   
+
+\subsection{Quantum nondemolition measurement}
+Chiaramente ci si potrebbe domandare se Eve possa fare di meglio. Esiste una possibilità in cui possa misurare senza recare alcun disturbo allo stato? Delle volte queste misure vengono chiamate in letteratura \textbf{quantum nondemolition measurement}: si trattano di particolari misure in cui Eve effettua la misurazione senza disturbare lo stato oppure disturba lo stato, ma è in grado di resettarlo all'originale inviato da Alice. La risposta alla domanda precedente è no per un motivo simile alla dimostrazione del teorema di no-cloning.
+
+\noindent Supponiamo che Alice stia inviando l'insieme di stati $\ket{\phi_\mu} = \{ \ket{0}, \ket{1}, \ket{+}, \ket{-} \}$, dove $\mu = 0, 1,2,3$, e inoltre assumiamo che Eve possieda un proprio computer quantistico sul quale può effettuare operazioni. Nell'intercettare il messaggio, Eve osserva lo stato $\ket{\phi_\mu} \otimes \ket{\phi}$, dove $\ket{\phi}$ si trova nel suo computer. Supponiamo inoltre che nel suo computer ci sia un altro insieme di stati $\ket{\psi_\mu}$, con $\mu = 0,1,2,3$, tale che possa essere distinto da una misura effettuata da Eve stessa. La domanda è: esiste qualche sorta di processo quantistico (gate unitario $U$) che agisce come
+\begin{equation}\label{U_non_demolition_measure}
+    U \left( \ket{\phi_\mu} \otimes \ket{\phi} \right) = \ket{\phi_\mu} \otimes \ket{\psi_\mu} \, ,
+\end{equation}
+ossia tale che quando Eve misura $\ket{\psi_\mu}$ e legge il valore $\mu$ allora con probabilità 1 legge anche lo stesso $\mu$ che Alice sta inviando, senza però disturbare $\ket{\phi_\mu}$? La risposta è no, similmente al teorema di no-cloning. Per dimostrare questo fatto calcoliamo il prodotto scalare di ambo i membri della \eqref{U_non_demolition_measure}, il quale, come sappiamo a seguito dell'unitarietà di $U$, deve rimanere preservato:
+\begin{align*}
+    \left( \bra{\phi_\mu} \otimes \bra{\phi} \right) \left( \ket{\phi_\nu} \otimes \ket{\phi} \right) &\overset{?}{=} \left( \bra{\phi_\mu} \otimes \bra{\psi_\mu} \right) \left( \ket{\phi_\nu} \otimes \ket{\psi_\nu} \right) \, , \; \text{ con } \mu \neq \nu \, \text{ in generale.} \\
+    \Rightarrow \qquad \braket{\phi_\mu}{\phi_\nu} \underbrace{\braket{\phi}}_1 &\overset{?}{=} \braket{\phi_\mu}{\phi_\nu} \braket{\psi_\mu}{\psi_\nu} \, , \; \forall \text{ paia di indici } (\mu,\nu) \, .
+\end{align*}
+Analizziamo i casi in cui $\mu \neq \nu$. Quando $(\mu = 2, \nu = 3)$ e $(\mu = 0, \nu = 1)$ (o viceversa) si ha l'identità $0 = 0$, che non è interessante (ricordare sopra gli stati $\ket{\phi_\mu}$ di Alice). Nei casi invece $(\mu = 0, \nu = 2)$, $(\mu = 0, \nu = 3)$, $(\mu = 1, \nu = 2)$ oppure $(\mu = 1, \nu = 3)$ (o viceversa) i prodotti scalari $\braket{\phi_\mu}{\phi_\nu}$ non sono nulli e possono essere semplificati ad entrambi i membri. Per queste scelte otteniamo quindi che $\braket{\psi_\mu}{\psi_\nu} = 1$, ossia $\ket{\psi_\mu} = \ket{\psi_\nu}$ a meno di una fase. Ma questo significa allora che $\ket{\psi_0} = \ket{\psi_1} = \ket{\psi_2} = \ket{\psi_3}$ e quindi, non essendo stati differenti, Eve non può in alcun modo distinguere ciò che ha inviato Alice. 
+
+\noindent La conclusione è che non esiste alcun modo di effettuare una misura con operazioni unitarie che distingua il qubit inviato da Alice senza necessariamente disturbare il sistema. \\
+Per comprendere al meglio il protocollo BB84 si può provare dal punto di vista pratico a realizzare la situazione di Alice e Bob (ed eventualmente di Eve) tramite una simulazione presente a \href{https://www.st-andrews.ac.uk/physics/quvis/simulations_html5/sims/cryptography-bb84/Quantum_Cryptography.html}{questo indirizzo}.
+
+\section{Proprietà dei gate}\label{sec:gate_properties}
+Nella Sezione \ref{sec:gate} abbiamo introdotto alcuni concetti preliminari riguardanti i gate, i circuiti e i computer quantistici. In molti casi nei computer si hanno degli algoritmi, ossia una ben precisa sequenza di istruzioni, che permettono di calcolare risultati desiderati. Approfondiamo le analogie e differenze dei gate classici e quantistici.
+
+\subsection{Gate classici: il Toffoli-gate}
+In CC si hanno i bit 0 e 1 e le funzioni classiche sono tali che $f: \; \{ 0,1 \}^{\otimes n} \rightarrow \{ 0,1 \}^{\otimes m}$, sono cioè mappe da $n$ a $m$ bit classici. Quindi in generale abbiamo una collezione di $m$ funzioni a valori in un bit
+\begin{equation*}
+    f_i(x_1, x_2, \ldots, x_n) = \{ 0, 1 \} \, , \; \text{ dove } i = 1, \ldots , m \, , \; \text{ e } x_j = 0, 1 \, .
+\end{equation*}
+Si vorrebbe che il computer sia in grado di calcolare tali funzioni e che inoltre gli strumenti a disposizione siano sufficientemente efficienti per farlo: quello che uno vorrebbe è poter calcolare funzioni generali con l'ausilio di solamente pochi gate. In CC si ha che con le seguenti operazioni è possibile calcolare quasi tutti i conti di algebra e aritmetica: \texttt{NOT}, $a \rightarrow -a$; \texttt{AND}, indicato con $a \land b$ e \texttt{OR}, indicato con $a \lor b$. Questo insieme di operazioni è detto \textbf{universale} perché utilizzando questi pochi gate è possibile calcolare tutte le operazioni di aritmetica di interesse. 
+
+\noindent Sempre nella Sezione \ref{sec:gate} abbiamo osservato che il CC \textbf{non} è \textbf{reversibile}\footnote{Si pensi ad esempio al fatto che le operazioni non reversibili dissipino calore all'interno della macchina. Si tratta di tutte quelle situazioni in cui si parte con molta informazione e si giunge alla fine ad un singolo risultato, creando nel frattempo numerosi risultati di scarto.} (in generale). Si pensi ad esempio all'\texttt{AND-gate}. Nel corso degli anni si sono studiati numerosi metodi per implementare operazioni reversibili: questo è possibile mediante il cosiddetto \textbf{Toffoli gate} o \texttt{Control-Control-NOT}. Il circuito classico è
+\begin{center}
+    \mbox
+    {
+        \Qcircuit @C=2em @R=1.35em 
+        {
+            \lstick{x} & \ctrl{1} & \rstick{x} \qw \\
+            \lstick{y} & \ctrl{1} & \rstick{y} \qw \\
+            \lstick{z} & \targ & \rstick{z \oplus xy} \qw 
+        }
+    }
+\end{center}
+Quando uno dei due tra $x$ e $y$ è 0, allora $xy$ è 0 e niente succede all'output di $z$. L'output si modifica solamente quando sono $1$ perché controllano entrambi il risultato di $z$: quando $xy = 1$ allora $z \oplus 1$ inverte il valore iniziale di $z$. 
+
+\begin{esempio}[Azione Toffoli gate]
+    In pratica il \texttt{TOFFOLI-gate} agisce come mostrato in Tabella \ref{tab:Toffoli}:
+    \begin{table}[!ht]
+	    \centering
+        \begin{tabular}{ccc|ccc}
+            \toprule
+            $\qquad$ & \text{Bit iniziali} & $\qquad \quad$ & $\qquad \quad$ & \text{Bit finali} & \text{} \\
+            \midrule
+            $x$ & $y$ & $z$ & $x$ & $y$ & $z \oplus xy$ \\
+            \midrule
+            0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 0 & 0 & 1 \\
+            0 & 1 & 0 & 0 & 1 & 0 \\
+            0 & 1 & 1 & 0 & 1 & 1 \\
+            1 & 0 & 0 & 1 & 0 & 0 \\
+            1 & 0 & 1 & 1 & 0 & 1 \\
+            1 & 1 & 0 & 1 & 1 & 1 \\
+            1 & 1 & 1 & 1 & 1 & 0 \\
+            \bottomrule
+        \end{tabular}\\
+        \caption{Azione del \texttt{TOFFOLI-gate} su tutti i possibili bit.}
+        \label{tab:Toffoli}
+    \end{table}
+\end{esempio}
+
+\noindent È possibile dimostrare che mediante l'uso del \texttt{TOFFOLI-gate} si possono realizzare tutte le operazioni base, quindi è universale e reversibile. Notiamo che è reversibile poiché, come evidenziato nelle ultime due righe della Tabella \ref{tab:Toffoli}, esso agisce sulle stringhe facendo una \textbf{permutazione}, la quale è invertibile. 
+
+
+\subsection{Gate quantistici: reversibili e continui}\label{subsec:quantum_gates}
+Consideriamo ora il caso dei gate quantistici. Per definizione, essendo implementati da operatori unitari, sono sempre dei gate \textbf{reversibili}. Questo significa ad esempio che
+\begin{center}
+    \mbox
+    {
+        \Qcircuit @C=2em @R=1.35em 
+        {
+            \lstick{\ket{\psi}} & \gate{U} & \gate{U^\dag} & \rstick{\ket{\psi}} \qw
+        }
+    }
+\end{center}
+dato che $U U^\dag = \mathbb{I}$. È possibile implementare il \texttt{TOFFOLI-gate} anche in un computer quantistico? La risposta è sì: consideriamo una base di stati per 3 qubit 
+\begin{equation*}
+    \{ \ket{000}, \ket{001}, \ket{010}, \ket{100}, \ket{101}, \ket{011}, \ket{110},  \ket{111} \} \, .
+\end{equation*}
+La matrice unitaria $U_T$ $8 \times 8$ che agisce sul vettore contenenti gli stati della base è
+\begin{equation*}
+    \begin{pmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+    \end{pmatrix}
+    \begin{pmatrix}
+        \ket{000} \\ \ket{001} \\ \ket{010} \\ \ket{100} \\ \ket{101} \\ \ket{011} \\ \ket{110} \\ \ket{111}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \ket{000} \\ \ket{001} \\ \ket{010} \\ \ket{100} \\ \ket{101} \\ \ket{011} \\ \ket{111} \\ \ket{110}
+    \end{pmatrix} \, .
+\end{equation*}
+Notiamo infatti che $U_T$ è unitaria ($U_T U_T^\dag = \mathbb{I}$). Tramite $U_T$ possiamo realizzare su un computer quantistico le stesse operazioni che faremmo su un computer classico. Fino ad ora non abbiamo ancora detto se effettivamente queste operazioni possano essere eseguite in maniera più efficiente su un QC. 
+
+\noindent Il secondo fatto importante dei gate quantistici è che sono \textbf{continui}: matrici unitarie possono dipendere da parametri reali continui. Ad esempio, per un sistema di 1 qubit abbiamo visto nella \eqref{general_2by2_matrix} come si scrive la più generale matrice $2 \times 2$ unitaria (gruppo $U(2)$) tramite l'implementazione delle rotazioni di angolo $\lambda$ sulla sfera di Bloch e lungo la direzione generica $\vec{n}$ (si veda la \eqref{rotation_n_lambda}). Abbiamo visto che la \eqref{general_2by2_matrix} dipende in generale da 4 parametri reali arbitrari, quindi persino per un singolo qubit si ha un insieme continuo di gate! Il problema è che le cose si complicano notevolmente se si passa ad un sistema generico di $n$-qubit. In tale situazione lo spazio di Hilbert associato ha dimensione $2^n$, quindi le matrici unitarie che agiscono su tale spazio sono $2^n \times 2^n$, le quali formano il gruppo $U(2^n)$. Ognuna di queste matrici contiene in generale $2^{2n}$ parametri reali! Il problema è quindi dato dal fatto che il numero di parametri cresce esponenzialmente con il numero di qubit: il numero di gate è estremamente grande e non vogliamo un QC in cui possiamo implementare qualsiasi trasformazione con $2^{2n}$ parametri reali. Una tale situazione è troppo difficile da realizzare, tuttavia preferiamo considerare un numero limitato di gate e costruire le operazioni desiderate tramite composizione. Si noti inoltre che un insieme continuo di operazioni è impossibile per la memoria limitata di un computer. 
+
+\noindent Il meglio che possiamo fare è introdurre una nozione di \textbf{universalità} e approssimare abbastanza bene una generica trasformazione unitaria utilizzando solamente un insieme finito di gate. Qual è il significato di tale approssimazione? Dobbiamo definire un'opportuna nozione di \textbf{distanza} tra matrici:
+
+\begin{definizione}[\textbf{Distanza tra matrici}]
+    Date due matrici $U$ e $V$, definiamo la seguente funzione \textbf{distanza}
+    \begin{equation*}
+        E(U,V) = \max\limits_{\ket{\psi}} \norm{(U-V) \ket{\psi}} \, ,
+    \end{equation*}
+    dove $\ket{\psi}$ è un vettore arbitrario.
+\end{definizione}
+
+\noindent È possibile trovare un insieme discreto di matrici tale che tutte le possibili matrici unitarie possano essere realizzate a partire da tale insieme a meno di un errore $\varepsilon$ arbitrario? La risposta è sì: un possibile insieme di gate che soddisfa la precedente nozione di "approssimazione universale" è dato dai seguenti 4
+\begin{center}
+    \mbox{
+        \Qcircuit @C=2em @R=2em {
+            & \gate{H} & \qw \\
+        }
+    } 
+    , \ \ \ \ 
+    \mbox{
+        \Qcircuit @C=2em @R=2em {
+            & \gate{S} & \qw \\
+        }
+    }
+    , \ \ \ \ 
+    \mbox{
+        \Qcircuit @C=2em @R=2em {
+            & \gate{T} & \qw \\
+        }
+    }
+    , \ \ \ \
+    \mbox{
+        \Qcircuit @C=2em @R=1em {
+            & \ctrl{1} & \qw \\
+            & \targ & \qw
+        }
+    }
+\end{center}
+Si vedano esplicitamente le matrici in \eqref{Hadamard_matrix} e \eqref{S_T_matrices}. Questi gate prendono il nome di \texttt{H-gate} $H$ (Hadamard gate), \texttt{Phase-gate} $S$, \texttt{$\pi/8$-gate} $T$ e il già noto \texttt{CNOT-gate}. Si noti che il nome della matrice $T$ deriva dal fatto che
+\begin{equation*}
+    T = e^{i \frac{\pi}{8}} 
+    \begin{pmatrix}
+        e^{-i \frac{\pi}{8}} & 0 \\ 0 & e^{i \frac{\pi}{8}}
+    \end{pmatrix} \, .
+\end{equation*}
+Non lo dimostriamo esplicitamente, ma l'insieme di questi 4 gate è universale. È importante sottolineare che $H, S$ e $T$ sono gate agenti sui singoli qubit, mentre il \texttt{CNOT-gate} agisce sempre su almeno 2 qubit. Dato che avevamo visto che $T^2 = S$ potrebbe sorgere spontanea la domanda: perché è necessario considerare entrambi $T$ e $S$? Di solito si preferisce tenere anche $S$ per la cosiddetta \textbf{fault tolerance computation}, che approfondiremo quando parleremo di propagazione degli errori nei circuiti quantistici. 
+
+\noindent Alcune importanti proprietà che ci servirà sapere sui gate quantistici sono le seguenti:
+\begin{enumerate}
+    \item \textit{Tutti i gate agenti su $n$ qubit possono essere scritti come  prodotto di un opportuno numero di gate agenti su $2$ qubit}. 
+    
+    \noindent Chiaramente il numero di gate agenti su 2 qubit deve essere sufficientemente grande per ricostruire una matrice $2^n \times 2^n$ (matrice agente su $n$ qubit). Per capire il significato di questa affermazione si pensi al circuito seguente di 6 qubit:
+    \vspace{-1.2cm}
+    \begin{center}
+        \mbox{
+            \Qcircuit @C=2em @R=0.12em {
+                & \multigate{5}{U} & \qw \\
+                & \ghost{U} & \qw \\
+                & \ghost{U} & \qw \\
+                & \ghost{U} & \qw \\
+                & \ghost{U} & \qw \\
+                & \ghost{U} & \qw \\
+            }
+            $
+            \quad
+            \begin{matrix}
+                \\
+                \\
+                \\
+                \\
+                \simeq \\
+            \end{matrix}
+            \quad
+            $
+            \Qcircuit @C=2em @R=0.12em {
+                & \multigate{1}{U_1} & \qw \\
+                & \ghost{U_1} & \qw \\
+                & \multigate{1}{U_2} & \qw \\
+                & \ghost{U_2} & \qw \\
+                & \multigate{1}{U_3} & \qw \\
+                & \ghost{U_3} & \qw \\
+            }
+        }
+    \end{center}
+    In questo esempio il gate originale $U$ è stato approssimato fattorizzandolo in 3 gate agenti ciascuno localmente solo su 2 qubit: il numero di operazioni per ricostruire la matrice $2^n \times 2^n$ del circuito a LHS è di ordine $\order{2^{2n}}$. Chiaramente si tratta solamente di algebra: questo non è un modo molto efficiente di approssimare un gate agente su $n$ qubit perché tipicamente si hanno comunque $2^{2n}$ fattori da tenere in considerazione. 
+    
+    \item \textit{I gate agenti su 2 qubit possono essere scritti come prodotti di un certo  numero di  \texttt{CNOT-gate} e di  gate agenti su un singolo qubit}.
+    
+    \noindent  In termini di circuiti stiamo dicendo che la generica matrice $U_4 \in U(4)$ pu\`o essere decomposta in prodotti di operazioni pi\`u semplici, \texttt{CNOT-gate} e matrici $U_2 \in U(2)$ 
+    \begin{center}
+        \mbox{
+            \Qcircuit @C=2em @R=0.12em {
+                & \multigate{1}{U_4} & \qw \\
+                & \ghost{U_4} & \qw \\
+            }
+            $
+            \quad
+            \begin{matrix}
+                \\
+                = \\
+            \end{matrix}
+            \quad
+            $
+            \Qcircuit @C=2em @R=0.5em {
+                & \ctrl{1} & \qw \\
+                & \targ & \qw \\
+            }
+            $
+            \quad
+            \begin{matrix}
+                \\
+                + \\
+            \end{matrix}
+            \quad
+            $
+            \raisebox{-.4em}{
+                \Qcircuit @C=2em @R=0.12em {
+                    & \gate{U_2} & \qw \\
+                }
+            }
+        }
+    \end{center}
+     Notiamo che questa proprietà, come la precedente,  è esatta e può essere svolta senza alcuna approssimazione. In generale potrebbe essere pi\`u efficiente approssimare un gate piuttosto che usare una rappresentazione esatta come prodotto di un numero di elementi che potrebbe essere grande. In questo contesto è possibile dimostrare che si pu\`o approssimare  ogni matrice di $SU(4)$ come prodotto di generiche matrici $A, B \in SU(4)$ con  $\comm{A}{B} \neq 0$ (la propriet\`a pu\`o essere falsa per coppie speciali di matrici), in analogia con la discussione della propriet\`a seguente. 
+    
+    \item \textit{I gate agenti sui singoli qubit possono essere approssimati come prodotto di matrici $H$ e $T$ con un errore, il quale può essere arbitrariamente scelto più piccolo di $\varepsilon$}.
+    
+    Questo significa che data $V$ la generica matrice unitaria $2 \times 2$ da approssimare (ricordare che contiene $2^2 = 4$ parametri reali) possiamo scrivere un'opportuna sequenza di prodotti tra $H$ e $T$ tali che
+    \begin{equation*}
+        E(V, \ldots H H T H \ldots T \ldots H \ldots) < \varepsilon \, .
+    \end{equation*}
+    Chiaramente più lunga è la sequenza più piccolo sarà l'errore entro il quale si può approssimare $V$. In realtà $H$ e $T$ non sono matrici speciali: questo argomento funziona con una coppia generica di matrici $A, B \in SU(2)$ tali che $\comm{A}{B} \neq 0$. Matematicamente questa proprietà è dovuta al fatto che il sottogruppo generato dai prodotti di $H$ e $T$ è \textbf{denso} in $SU(2)$. Notiamo l'importanza di usare $T$: la coppia $H, S$ \`e non generica; il sottogruppo generato dai prodotti di $H$ e $S$ \`e infatti  un sottogruppo discreto che non è denso in $SU(2)$.
+    
+    \noindent Ci si può chiedere se un'approssimazione mediante prodotti di $H$ e $T$ possa essere efficiente. Ancora una volta, fortunatamente la risposta è sì: esiste un teorema, chiamato \textbf{teorema di Solovay-Kitaev}, che stabilisce che il numero di prodotti tra $H$ e $T$ per approssimare una generica matrice di $U(2)$ è dell'ordine di $\order{\log_{10}^c(1/\varepsilon)}$ dove $c \sim 2$. 
+    
+\end{enumerate}

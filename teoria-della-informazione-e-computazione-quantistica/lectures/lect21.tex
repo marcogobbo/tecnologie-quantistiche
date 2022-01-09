@@ -1,0 +1,321 @@
+%%%%%%%%%%%%%%
+% LECTURE 21 %
+%%%%%%%%%%%%%%
+\vspace{0.5cm}
+
+\noindent \lecture{21}{20/12/2021}
+
+\vspace{0.5cm}
+
+\noindent Vediamo alcuni esempi di gate che possono essere realizzati a partire da sistemi superconduttivi. Prima di farlo, riassumiamo velocemente i risultati ottenuti nel corso di questa Sezione.
+
+\noindent L'idea è quella di codificare un qubit nei livelli energetici $(\ket 0, \ket{1})$ di un circuito superconduttivo che presenta una giunzione Josephson (Figura \ref{subfig:J-effect}): quest'ultima permette di dare una descrizione quantistica al sistema e introduce dell'anarmonicità nello spettro energetico (vedi Figura \ref{fig:energy-difference-transmon}); l'hamiltoniana del sistema risultante è riportata nella \eqref{final_H_transmon}. Trascurando il livello energetico $\ket{2}$ ci si riduce alla nota all'hamiltoniana in \eqref{usual_H_qubit}, tipica di un sistema a due livelli; la rappresentazione matriciale degli operatori sugli stati del sistema è riportata nelle relazioni in \eqref{a_adag_matrices} e \eqref{sigma12_aadag}. 
+
+\noindent Vediamo come possiamo esplicitamente realizzare su un sistema superconduttivo le tipiche operazioni di un qubit: \textit{misura del sistema}, \textit{codifica di gate agenti su singoli qubit con le oscillazioni di Rabi} e \textit{codifica di gate agenti su più qubit}. 
+
+\noindent Per effettuare questo tipo di operazioni è necessario in generale applicare al circuito dei segnali esterni $V(t)$ (tipicamente dell'ordine del GHz) e dei risonatori del tipo CQED, come nel circuito seguente
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw
+        (0,0)   to[C=$C$] ++ (0, 2) -- ++ ( 2,0) 
+                to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+        %
+        (0.5,2) |- ++ (-1.5,0.5) node[left, draw] {V(t)}
+        (1.5,2) |- ++ ( 1.5,0.5) node[right,draw, align=center] {Cavity/Resonator}
+        (1,0)node[ground]{};
+    \end{circuitikz}
+\end{figure}
+\subsubsection{Misura su un qubit}
+\noindent Supponiamo ad esempio di partire con un transmon qubit di frequenza $\omega_q$: una tipica misurazione viene effettuata con un risonatore di frequenza $\omega_r$ in un apparato della forma seguente
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw
+        (0,0)   to[C=$C$] ++ (0, 2) -- ++ ( 2,0) 
+                to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+        %
+        (1,2) |- ++ (1,0.5) to[C=$C$] ++ (2,0)
+        (0,2) ++ (4,0.5) node[right,draw, align=center] {Cavity/Resonator}
+        (1,0)node[ground]{};
+    \end{circuitikz}
+\end{figure}
+
+\noindent Dato che la fisica del qubit risulta in questo caso accoppiata alla CQED, sappiamo che l'hamiltoniana del sistema risultante è descritta dall'hamiltoniana di Jaynes-Cummings in \eqref{eq:ham-jaynes-cummings}
+\begin{equation*}
+    \hat{H} = - \frac{\omega_q}{2} \hat{\sigma}_3 + \omega_r \left( \hat{a}^\dag_r \hat{a}_r + \frac{1}{2} \right) + g \left( \hat{a}_r \hat{\sigma}_+ + \hat{a}^\dag_r \hat{\sigma}_- \right) \, ;
+\end{equation*}
+come già visto nella Sezione \ref{sec:int_qubit_CQED}, la misura può essere effettuata nel regime dispersivo dove $\frac{g}{\Delta} \ll 1$ ($\Delta = \omega_q - \omega_r$): in tal caso l'hamiltoniana precedente viene modificata in
+\begin{equation}\label{H_measure_transmon}
+    \hat{H} = -\frac{\tilde{\omega}_q}{2} \hat{\sigma}_3 + \left( \omega_r - \chi \hat{\sigma}_3 \right) \hat{a}^\dag_r \hat{a}_r \, ,
+\end{equation}
+dove la frequenza del qubit è shiftata in $\tilde{\omega}_q$ a seguito del \textbf{Lamb shift} e $\chi = \frac{g^2}{\Delta}$. Cosa succede nel caso di un qubit superconduttivo? Nell'approssimazione che abbiamo considerato si trascurava il livello energetico $\ket{2}$: dato che il suo peso relativo rispetto a $\hbar \tilde{\omega}_q$ è del 10\% circa, per svolgere una trattazione più precisa e completa è necessario considerare l'intera hamiltoniana in \eqref{final_H_transmon} accoppiata alla CQED. L'inclusione di queste correzioni si traduce nella seguente modifica di $\chi$
+\begin{equation*}
+    \chi = \frac{g^2}{\Delta \left( 1 + \frac{\Delta}{\alpha} \right)} \, ;
+\end{equation*}
+dato che vi è un esplicita dipendenza da $\alpha$, se quest'ultimo non è grande a tal punto da rendere la correzione trascurabile allora è necessario includerlo nella trattazione. Dalla \eqref{H_measure_transmon} è evidente che la frequenza della cavità viene modificata dallo stato in cui si trova il qubit! Per misurare il qubit basta quindi misurare la frequenza del risonatore. 
+
+
+\subsubsection{Controllare lo stato di un singolo qubit}
+Per ottenere questo scopo è necessario accoppiare il qubit ad un campo elettromagnetico esterno oscillante nel tempo e "guidarlo" mediante le oscillazioni di Rabi (si veda la Sezione \ref{sec:qubit_campo_em_classico}). Esistono diversi modi: ad esempio si può costruire il circuito 
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw
+        (0,0)   to[C=$C$] ++ (0, 2) -- ++ ( 2,0) 
+                to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+        %
+        (1,2) |- ++ (1,0.5) to[C=$C_g$] ++ (2,0)
+        (0,2) ++ (4,0.5) node[right,draw, align=center] {$V(t)$}
+        (1,0)node[ground]{};
+    \end{circuitikz}
+\end{figure}
+\noindent dove la sorgente $V(t)$ fornisce un segnale e.m.  oscillante dipendente dal tempo e con frequenza circa uguale a quella del qubit. Come funziona questo apparato? I gradi di libertà del circuito (carica, corrente, ecc.) sono legati al comportamento dell'oscillatore (vedi Tabella \ref{tab:oa-lc}), il quale è controllato dagli operatori $\hat{a}$, $\hat{a}^\dag$ e $\hat{\sigma}_i$. Questo significa che l'energia del circuito è regolata dalle differenze di potenziale delle due differenti componenti del circuito: $E_C = \frac{1}{2} C V^2 \to C_g V_1 V_2$ dove $V_1 = \frac{Q}{C}$ e $V_2 = V(t)$; ma allora
+\begin{equation*}
+    E_C = \frac{C_g}{C} Q V(t) \, ;
+\end{equation*}
+dal punto di vista del qubit le identificazioni da fare sono
+\begin{equation}\label{ID_xp_PhiQ}
+\begin{aligned}
+    \hat{x} &\longleftrightarrow \hat{\Phi} \sim \left( \hat{a} + \hat{a}^\dag \right) \sim \hat{\sigma}_1 \, , \\
+    \hat{p} &\longleftrightarrow \hat{Q} \sim -i \left( \hat{a} - \hat{a}^\dag \right) \sim \hat{\sigma}_2 \, ;
+\end{aligned}
+\end{equation}
+quindi l'hamiltoniana del sistema diventa 
+\begin{equation*}
+    \hat{H} = -\frac{\omega_q}{2} \hat{\sigma}_3 - i g \left( \hat{a} - \hat{a}^\dag \right) V(t) = -\frac{\omega_q}{2} \hat{\sigma}_3 +  g \hat{\sigma}_2 V(t) \, ,
+\end{equation*}
+dove il potenziale oscillante controlla il qubit con una frequenza esterna $\omega_d$, ed è quindi della forma
+\begin{equation*}
+    V(t) = V_0 \cos \! \left( \omega_d t + \phi_0 \right) \, .
+\end{equation*}
+Questo non è altro che il problema delle oscillazioni di Rabi affrontato nella Sezione \ref{sec:qubit_campo_em_classico}. Come ben sappiamo, dopo la rotazione l'hamiltoniana è scrivibile come
+\begin{equation*}
+    \hat{\tilde{H}} = -\frac{1}{2} \left( \Delta \hat{\sigma}_3 + A \cos(\phi) \hat{\sigma}_1 - A \sin (\phi) \hat{\sigma}_2 \right) \, ,
+\end{equation*}
+dove $\Delta = \omega_q - \omega_d$ e $\phi = \phi_0 + \phi_1$. Se poniamo $A e^{-i \phi_1} \equiv - i g V_0$ allora otteniamo che $A = g V_0$ e $\phi_1 = \frac{\pi}{2}$. Con una tale hamiltoniana possiamo agire con l'evoluzione temporale
+\begin{equation*}
+    \hat{U}_{\text{ev}}(t) = e^{-i \hat{\tilde{H}} t} \, ;
+\end{equation*}
+la miglior situazione possibile accade in corrispondenza della risonanza ($\Delta = 0$): scegliendo $\phi = 0$ sopravvive solamente il contributo di $\hat{\sigma}_1$, perciò l'evoluzione temporale non è altro che una tipica trasformazione agente sulla sfera di Bloch
+\begin{equation*}
+    \hat{U}_{\text{ev}}(t) = e^{\frac{i}{2} A \hat{\sigma}_1 t} = R_x(-At) \, ;
+\end{equation*}
+similmente per $\phi = -\frac{\pi}{2}$
+\begin{equation*}
+    \hat{U}_{\text{ev}}(t) = e^{-\frac{i}{2} A \hat{\sigma}_2 t} = R_y(At) \, .
+\end{equation*}
+Scegliendo opportunamente $t$ è quindi possibile ottenere qualsiasi matrice di $SU(2)$, ossia qualsiasi gate agente su singoli qubit. 
+
+\noindent In realtà bisogna prestare attenzione: come già mostrato nella Figura \ref{subfig:Bloch_Rabi2}, partendo da $\ket{0}$, se si vuole avere la certezza che ad un certo istante ci si ritroverà in $\ket{1}$ è necessario effettuare una rotazione lungo l'asse $x$; in realtà questo è vero solamente se l'hamiltoniana del sistema superconduttivo non è approssimata e considera anche lo stato $\ket{2}$. Il motivo è dato dal fatto che nelle realizzazioni pratiche la differenza tra $E_2 - E_1$ non è così più piccola rispetto a $E_1-E_0$! Questo vuol dire che sperimentalmente è necessario ricalcolare l'oscillazione di Rabi includendo l'effetto di $\ket{2}$ e in seguito rimpiazzare l'ampiezza $A$ della perturbazione con un'opportuna funzione dipendente dal tempo scelta appositamente per avere la certezza di raggiungere lo stato $\ket{1}$. 
+
+
+\subsubsection{Creare entanglement tra due qubit}
+Nella Sezione \ref{sec:gate_properties} abbiamo visto che è necessario possedere almeno un gate agente su due qubit (che produce entanglement) per poter costruire un qualsiasi gate. Utilizzare un \texttt{CNOT-gate} sarebbe perfetto, tuttavia non è l'unica scelta possibile perché, come vedremo tra poco, utilizzando un sistema superconduttivo è possibile realizzare un cosiddetto \texttt{iSWAP-gate}. 
+
+\noindent Innanzitutto, per mettere in contatto tra loro differenti qubit superconduttivi esistono diversi modi:
+\begin{itemize}
+    \item Il primo modo è quello di combinare due circuiti superconduttivi con un extra capacità $C_g$, come ad esempio nel circuito
+    \begin{figure}[H]
+        \centering
+        \begin{circuitikz}
+            \draw
+            (0,0)   to[C=$C_1$] ++ (0, 2) -\- ++ ( 2,0) 
+                    to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+            %
+            (1,2) |- ++ (1,0.5) to[C=$C_g$] ++ (2,0) -- ++ (1,0) -- ++ (0,-0.5)
+            (4,0)   to[C=$C_2$] ++ (0, 2) -- ++ ( 2,0) 
+                    to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+            (1,0)node[ground]{}
+            (5,0)node[ground]{};
+        \end{circuitikz}
+    \end{figure}
+    
+    \noindent In tal caso notiamo che le due componenti del circuito presentano due capacità $C_1$ e $C_2$: utilizzando l'identificazione in \eqref{ID_xp_PhiQ} e gli operatori in \eqref{sigma12_aadag}, possiamo scrivere l'hamiltoniana di un tale sistema come
+    \begin{equation}\label{C_coupling}
+        \hat{H}_{\text{int}} = C_g V_1 V_2 = \frac{C_g}{C_1 C_2} \hat{Q}_1 \hat{Q}_2 \sim \left( \hat{a}_1 - \hat{a}^\dag_1 \right) \left( \hat{a}_2 - \hat{a}^\dag_2 \right) \sim \hat{\sigma}_2^{(1)} \otimes \hat{\sigma}_2^{(2)} \, ,
+    \end{equation}
+    dove gli apici "$^{(j)}$" indicano il qubit $j$-esimo. 
+    
+    \item Nel secondo caso possiamo combinare due circuiti tramite l'induttanza, ossia utilizzando due giunzioni Josephson tali che si possano scambiare la corrente prodotta dalle coppie di Cooper:
+    \begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw
+        (0,0)   to[C=$C$] ++ (0, 2) -- ++ ( 2,0) 
+                to[josephson=$L_1$] ++ (0,-2) -- ++ (-2,0)
+        %
+        (4,0)   to[josephson=$L_2$] ++ (0, 2) -- ++ ( 2,0) 
+                to[C=$C$] ++ (0,-2) -- ++ (-2,0)
+        (1,0)node[ground]{}
+        (5,0)node[ground]{};
+    \end{circuitikz}
+    \end{figure}
+    
+    \noindent È un caso molto simile al precedente in cui bisogna tenere in considerazione il fatto che questa volta l'hamiltoniana si scrive a partire dalle correnti nei due circuiti:
+    \begin{equation*}
+        \hat{H}_{\text{int}} = M_{12} I_1 I_2 = \frac{M_{12}}{L_1 L_2} \hat{\Phi}_1 \hat{\Phi}_2 \sim \left( \hat{a}_1 + \hat{a}^\dag_1 \right) \left( \hat{a}_2 + \hat{a}^\dag_2 \right) \sim \hat{\sigma}_1^{(1)} \otimes \hat{\sigma}_1^{(2)} \, ,
+    \end{equation*}
+    dove $M_{12}$ è il coefficiente di mutua induzione. 
+    
+    \item L'ultima opzione è quella di mediare l'interazione dei circuiti con una cavità/risonatore:
+    \begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw
+        (0,0)   to[C=$C$] ++ (0, 2) -- ++ ( 2,0) 
+                to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+        %
+        (1,2) |- ++ (1,0.5) node[right,draw, align=center] {Resonator} (4.10,2.5) -- ++ (1.07,0) -- ++ (0,-0.5)
+        (4.15,0)   to[C=$C$] ++ (0, 2) -- ++ (2,0) 
+                to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+        (1,0)node[ground]{}
+        (5.15,0)node[ground]{};
+    \end{circuitikz}
+    \end{figure}
+    
+    \noindent A differenza dei casi precedenti, questa situazione è più complessa perché l'accoppiamento coinvolge un'hamiltoniana di Jaynes-Cummings (i pedici "$_r$" stanno per "risonatore")
+    \begin{equation*}
+        \hat{H}_{\text{int}} = \omega_r \left( \hat{a}_r^\dag \hat{a}_r + \frac{1}{2} \right) + g_1 \left( \hat{a}_r \hat{\sigma}_+^{(1)} + \hat{a}_r^\dag \hat{\sigma}_-^{(1)} \right) + g_2 \left( \hat{a}_r \hat{\sigma}_+^{(2)} + \hat{a}_r^\dag \hat{\sigma}_-^{(2)} \right) \, ;
+    \end{equation*}
+    si noti che i due qubit interagiscono l'uno con l'altro per mezzo dei modi di oscillazione nel risonatore.
+\end{itemize}
+
+\noindent I diversi gate che si trovano in letteratura possono essere costruiti con delle opportune combinazioni dei circuiti precedenti. Discutiamo brevemente i casi più semplici, ossia le situazioni rappresentate nei primi due circuiti: gli operatori $\hat{\sigma}_1$ e $\hat{\sigma}_2$ sono detti \textbf{trasversi} perché al contrario $\hat{\sigma}_3$ è utilizzato per fissare la frequenza del qubit. 
+
+\noindent Consideriamo il circuito del primo caso (accoppiamento dato dalla capacità) e vediamo come può essere esplicitamente costruito un \texttt{iSWAP-gate} (la $i$ perché l'output è moltiplicato per l'unità immaginaria). Chiamiamo $\omega_q^{(1)}$ e $\omega_q^{(2)}$ le frequenze proprie dei due qubit: assumiamo che possiamo arbitrariamente variare queste frequenze usando transmon a frequenza regolabile\footnote{Si ricordi che questo scopo può essere raggiunto grazie all'inserimento di un'ulteriore giunzione Josephson (vedi Figura \ref{fig:split-transmon-qubit}) e alla variazione di un opportuno flusso magnetico esterno.}. Innanzitutto è bene notare che dobbiamo stare attenti alla forma dell'interazione in \eqref{C_coupling} perché abbiamo omesso numerosi termini: infatti in un sistema di riferimento ruotato mediante l'operatore $\hat{U}(t) = e^{i \hat{H}_0 t}$, sono gli operatori $\hat{\sigma}_{\pm}^{(j)}$ a trasformare prendendo una singola "fase", e non $\hat{\sigma}_{1,2}^{(j)}$:
+\begin{equation*}
+    \hat{\sigma}_{\pm}^{(j)} \longrightarrow \hat{\sigma}_{\pm}^{(j)} e^{\mp i \omega_q^{(j)} t} \, ;
+\end{equation*}
+scriviamo quindi esplicitamente l'interazione \eqref{C_coupling} in un frame ruotato:
+\begin{align*}
+    \hat{\sigma}_2^{(1)} \otimes \hat{\sigma}_2^{(2)} &= - \left( \hat{\sigma}_+^{(1)} - \hat{\sigma}_-^{(1)} \right) \otimes \left( \hat{\sigma}_+^{(2)} - \hat{\sigma}_-^{(2)} \right) \\
+    &\overset{\hat{U}(t)}{\longrightarrow} \hat{\sigma}_+^{(1)} \hat{\sigma}_-^{(2)} e^{-i \left( \omega_q^{(1)} - \omega_q^{(2)} \right) t} + \hat{\sigma}_-^{(1)} \hat{\sigma}_+^{(2)} e^{i \left( \omega_q^{(1)} - \omega_q^{(2)} \right) t} - \\
+    &\qquad - \hat{\sigma}_+^{(1)} \hat{\sigma}_+^{(2)} e^{-i \left( \omega_q^{(1)} + \omega_q^{(2)} \right) t} - \hat{\sigma}_-^{(1)} \hat{\sigma}_-^{(2)} e^{i \left( \omega_q^{(1)} + \omega_q^{(2)} \right) t} \, ;
+\end{align*}
+di solito nelle applicazioni sperimentali si preferisce lavorare in regime di risonanza dei due circuiti, quindi assumiamo che $\omega_q^{(1)} = \omega_q^{(2)}$ e utilizziamo la RWA:
+\begin{equation*}
+    \hat{\sigma}_2^{(1)} \otimes \hat{\sigma}_2^{(2)} \overset{\hat{U}(t)}{\longrightarrow} \hat{\sigma}_+^{(1)} \hat{\sigma}_-^{(2)} + \hat{\sigma}_-^{(1)} \hat{\sigma}_+^{(2)} \, ;
+\end{equation*}
+quest'ultima è proprio l'interazione che darà origine al gate, detta \textbf{accoppiamento trasverso in RWA}. Con questo accoppiamento possiamo scrivere, nel frame ruotato, la seguente hamiltoniana di interazione efficace 
+\begin{equation*}
+    \hat{\tilde{H}}_{\text{int}} = g \left( \hat{\sigma}_+^{(1)} \hat{\sigma}_-^{(2)} + \hat{\sigma}_-^{(1)} \hat{\sigma}_+^{(2)} \right) = g
+    \begin{pmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0
+    \end{pmatrix} \, ,
+\end{equation*}
+dove nell'ultimo passaggio abbiamo fatto uso del prodotto di Kronecker della definizione \ref{def:Kronecker} (è omesso il simbolo "$\otimes$" tra le due matrici dei due termini in parentesi). Il blocco centrale non è altro che la matrice $\sigma_1$, ricordando quindi che 
+\begin{equation}\label{matr_sigma1}
+    e^{-i g t \sigma_1} = R_x(2 g t) = \cos (gt)  - i \sigma_1 \sin (gt) =
+    \begin{pmatrix}
+        \cos (gt) & - i \sin (gt) \\
+        - i \sin (gt) & \cos (gt)
+    \end{pmatrix}
+     \, ,
+\end{equation}
+possiamo facilmente scrivere l'operatore di evoluzione temporale
+\begin{equation*}
+    \hat{U}_{\text{ev}}(t) = e^{-i \hat{\tilde{H}}_\text{int} t} = 
+    \begin{pmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & \cos(gt) & -i\sin(gt) & 0 \\
+        0 & -i\sin(gt) & \cos(gt) & 0 \\
+        0 & 0 & 0 & 1
+    \end{pmatrix} 
+    \begin{matrix}
+        \ket{00} \\ \ket{01} \\ \ket{10} \\ \ket{11}
+    \end{matrix} \, .
+\end{equation*}
+Perciò l'evoluzione temporale del sistema ruota automaticamente gli stati $\ket{01}$ e $\ket{10}$. Scegliendo il tempo $t = \frac{3 \pi}{2 g}$ otteniamo esattamente un \texttt{iSWAP-gate}
+\begin{equation*}
+    \hat{U}_{\text{ev}} \! \left( \frac{3 \pi}{2 g} \right) = \begin{pmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 0 & i & 0 \\
+        0 & i & 0 & 0 \\
+        0 & 0 & 0 & 1
+    \end{pmatrix} \equiv \texttt{iSWAP} \, .
+\end{equation*}
+
+\noindent Come accennato sopra, è possibile dimostrare che l'\texttt{iSWAP-gate} e i gate agenti sui singoli qubit formano un insieme universale di gate: la seguente combinazione permette infatti di ricostruire, a meno di una fase globale, un \texttt{CNOT-gate}
+\begin{center}
+    \mbox{
+        \Qcircuit @C=1em @R=2.2em {
+            & \ctrl{1} & \qw \\
+            & \targ & \qw
+        }
+    }
+    \raisebox{-1.6em}{$=e^{i\frac \pi 4}$}
+    \mbox{
+        \Qcircuit @C=1em @R=1em {
+            & \gate{R_z(-\frac \pi 2)} & \qw & \multigate{1}{\texttt{iSWAP}} & \gate{R_x(\frac \pi 2)} & \multigate{1}{\texttt{iSWAP}} & \qw & \qw\\
+            & \gate{R_x(\frac \pi 2)} & \gate{R_z(\frac \pi 2)} & \ghost{\texttt{iSWAP}} & \qw & \ghost{\texttt{iSWAP}} & \gate{R_z(\frac \pi 2)} & \qw
+        }
+    }
+\end{center}
+È importante sottolineare che per la presenza di due \texttt{iSWAP-gate}, un \texttt{CNOT-gate} così costruito non risulta in realtà molto efficiente: si preferirebbe lavorare con un singolo \texttt{iSWAP-gate}. 
+
+\noindent Per costruire gate agenti su più qubit in maniera più efficiente si pu\`o anche  sfruttare il fatto che esistano degli stati eccitati nel transmon: una volta costruito un qubit superconduttivo con frequenza regolabile e una volta identificati i livelli energetici $(\ket{0}, \ket{1}, \ket{2})$, è possibile dimostrare che esiste una situazione in cui gli stati eccitati $(\ket{11}, \ket{20})$ sono indistinguibili (coincidenti) per un opportuno valore di $\Delta = \omega_q^{(1)} - \omega_q^{(2)}$ (per $\Delta = 0$ sono distinguibili). Una volta trovato tale valore si possono effettuare delle oscillazioni di Rabi per mandare $\ket{11} \to -\ket{11}$ e $\ket{20} \to \ket{20}$.  
+
+\noindent Nella situazione appena analizzata abbiamo impiegato un accoppiamento trasverso della forma in \eqref{C_coupling}, la cui evoluzione temporale produceva un \texttt{iSWAP-gate}. In realtà sarebbe meglio se potessimo usare un'interazione della forma
+\begin{equation}\label{H_for_CRgate}
+    \hat{\tilde{H}}_{\text{int}} = \frac{g}{2} \hat{\sigma}_3^{(1)} \otimes \hat{\sigma}_1^{(2)} = \frac{g}{2}
+    \begin{pmatrix}
+        \sigma_1 & 0 \\ 0 & -\sigma_1
+    \end{pmatrix}
+    = \frac{g}{2}
+    \begin{pmatrix}
+        0 & 1 & 0 & 0 \\
+        1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & -1 \\
+        0 & 0 & -1 & 0
+    \end{pmatrix}
+    \, ;
+\end{equation}
+il motivo è dato dal fatto che la sua evoluzione temporale produce il cosiddetto \textbf{Cross-Resonant gate} (\texttt{CR-gate})
+\begin{equation*}
+    \hat{U}_{\text{ev}}(t) = e^{-i \hat{\tilde{H}}_\text{int} t} = 
+    \begin{pmatrix}
+        \cos \! \left( \frac{gt}{2} \right) & -i \sin \! \left( \frac{gt}{2} \right) & 0 & 0 \\
+        -i \sin \! \left( \frac{gt}{2} \right) & \cos \! \left( \frac{gt}{2} \right) & 0 & 0 \\
+        0 & 0 & \cos \! \left( \frac{gt}{2} \right) & i \sin \! \left( \frac{gt}{2} \right) \\
+        0 & 0 & i \sin \! \left( \frac{gt}{2} \right) & \cos \! \left( \frac{gt}{2} \right)
+    \end{pmatrix} \equiv \texttt{CR-gate} \, ,
+\end{equation*}
+dove abbiamo fatto uso due volte della \eqref{matr_sigma1} nell'esponenziazione. Il motivo per cui tale gate è in un certo senso migliore dell'\texttt{iSWAP-gate} è dato dal fatto che permetta di costruire un \texttt{CNOT-gate} più efficientemente mediante un solo impiego:
+\begin{center}
+    \mbox{
+        \Qcircuit @C=1em @R=2.2em {
+            & \ctrl{1} & \qw \\
+            & \targ & \qw
+        }
+    }
+    \raisebox{-1.6em}{$=e^{i\frac \pi 4}$}
+    \mbox{
+        \Qcircuit @C=1em @R=1em {
+            & \gate{R_z(\frac \pi 2)} & \multigate{1}{\text{CR}(t=-\frac \pi 2)} & \qw\\
+            & \gate{R_z(\frac \pi 2)} & \ghost{\text{CR}(t=-\frac \pi 2)} & \qw
+        }
+    }
+\end{center}
+
+\noindent Chiaramente può sorgere spontanea la domanda: come si realizza un'interazione della forma in \eqref{H_for_CRgate}? Si tratta di un modo con cui IBM costruisce i propri computer quantistici superconduttivi. Questo può essere fatto mediante il seguente trucco: si realizza un circuito 
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw
+        (0,0)   to[C=$C$] ++ (0, 2) -- ++ ( 2,0) 
+                to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+        %
+        (1,2) |- ++ (1,0.5) to[C=$C_g$] ++ (2,0) -- ++ (1,0) -- ++ (0,-0.5)
+        (0,0.4) -- ++ (-1,0) node[left,draw, align=center] {$V_1(t)$}
+        (4,0)   to[C=$C$] ++ (0, 2) -- ++ ( 2,0) 
+                to[josephson=$L$] ++ (0,-2) -- ++ (-2,0)
+        (1,0)node[ground]{}
+        (5,0)node[ground]{};
+    \end{circuitikz}
+\end{figure}
+
+\noindent dove si regola la frequenza di drive del primo circuito (mediante $V_1(t)$) utilizzando esattamente la frequenza propria del secondo qubit, ossia $\omega_d = \omega_q^{(2)}$. In una tale situazione è possibile dimostrare che per $\Delta = \omega_q^{(1)} - \omega_q^{(2)} \gg g$ l'unico contributo che sopravvive nell'interazione è della forma desiderata, ossia come in \eqref{H_for_CRgate}.
