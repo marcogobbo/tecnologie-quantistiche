@@ -4,10 +4,10 @@ Raccolte di appunti presi a lezione, integrati con dispense, libri e approfondim
 
 ## Dispense in costruzione
 
-* [Laboratorio di stato solido e tecnologie quantistiche I](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/laboratorio-di-stato-solido-e-tecnologie-quantistiche-I)
-* [Tecnologie quantistiche applicate](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/tecnologie-quantistiche-applicate)
-* [Teoria della informazione e computazione quantistica](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/teoria-della-informazione-e-della-computazione-quantistica)
-* [Teoria della materica condensata I](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/teoria-della-materia-condensata-I)
+* [Laboratorio di Stato Solido e Tecnologie Quantistiche I](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/laboratorio-di-stato-solido-e-tecnologie-quantistiche-I)
+* [Tecnologie Quantistiche Applicate](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/tecnologie-quantistiche-applicate)
+* [Teoria della Informazione e Computazione Quantistica](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/teoria-della-informazione-e-della-computazione-quantistica)
+* [Teoria della Materica Condensata I](https://github.com/marcogobbo/tecnologie-quantistiche/tree/main/teoria-della-materia-condensata-I)
 
 
 ## Contribuisci al progetto
