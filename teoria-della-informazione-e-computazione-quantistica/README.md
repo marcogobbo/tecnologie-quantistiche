@@ -1,5 +1,5 @@
 # Teoria della Informazione e Computazione Quantistica
-Corso tenuto dal professore Alberto Zaffaroni nell'anno accademico 2021-2022.
+Corso tenuto dal professore Alberto Zaffaroni nell'anno accademico 2021-2022. Gli appunti sono stati revisionati dal docente stesso.
 
 ## Argomenti trattati
 1. Meccanica quantistica
