@@ -32,7 +32,7 @@ decomponendo $\mathcal{H}$ in questo modo, ogni qualvolta che si agisce con i te
         -\frac{\omega_q}2 & & & \\
         & \begin{pmatrix}
             \omega_c - \frac{\omega_q}2 & g \\
-            g & \omega_c + \frac{\omega_q}2
+            g & \frac{\omega_q}2
           \end{pmatrix} & & \\
         & & \ddots & \\
         & & & \begin{pmatrix}
@@ -171,9 +171,9 @@ Precisiamo che $\ket{e}$ e $\ket{g}$ sono accoppiati con la cavità, mentre $\ke
 \begin{equation*}
     \mathcal{H}=\left\{\ket{\gamma 0}, \ket{\gamma 1}, \ket{g0}, \ket{g1}\right\} \, .
 \end{equation*}
-L'interazione sarà descritta dall'hamiltoniana \eqref{eq:effective-hamiltonian}: lo stato $\ket{e}$ è irrilevante in questa descrizione, mentre l'accoppiamento qubit-cavità è dato dagli ultimi due termini interagenti (quelli con $g$). Consideriamo l'evoluzione temporale del sistema del qubit: gli operatori $\hat{\sigma}_3$ e $\mathbb{I}$ agiscono solamente su $\ket{e}$ e $\ket{g}$ perché $\ket{\gamma}$ è disaccoppiato. Per tale motivo, dal momento che $\hat \sigma_3\ket{\gamma}=\mathbb{I}\ket{\gamma}=0$ e $\hat \sigma_3\ket{g}=\ket{g}$, la parte interagente di $\hat{H}$ agisce come
+L'interazione sarà descritta dall'hamiltoniana \eqref{eq:effective-hamiltonian}: lo stato $\ket{e}$ è irrilevante in questa descrizione, mentre l'accoppiamento qubit-cavità è dato dagli ultimi due termini interagenti (quelli con $g$). Consideriamo l'evoluzione temporale del sistema del qubit: gli operatori $\hat{\sigma}_3$ e $\mathbb{I}$ agiscono solamente su $\ket{e}$ e $\ket{g}$ perché $\ket{\gamma}$ è disaccoppiato. Per tale motivo, dal momento che $\hat \sigma_3\ket{\gamma}=\mathbb{I}\ket{\gamma}=0$ e $\hat \sigma_3\ket{g}=\ket{g}$, la parte interagente di $\hat{H}^{(2)}$ agisce come
 \begin{equation*}
-    e^{-i \hat H_It}=e^{i\frac{g^2}{\Delta}\hat a^\dagger \hat a \hat \sigma_3 t + i\frac{g^2}{2\Delta}(\hat \sigma_3 - \mathbb{I}_{2\times2})t}=\begin{pmatrix}
+    e^{-i \hat{H}_{I}^{(2)} t}=e^{i\frac{g^2}{\Delta}\hat a^\dagger \hat a \hat \sigma_3 t + i\frac{g^2}{2\Delta}(\hat \sigma_3 - \mathbb{I}_{2\times2})t}=\begin{pmatrix}
         1 & & & \\
         & 1 & & \\
         & & 1 & \\
@@ -201,7 +201,7 @@ Questa tipologia di gate include il caso $\eta = \pi$, ovvero
         & & & -1
     \end{pmatrix} \, ;
 \end{equation*}
-il gate precedente potrebbe sembrare banale ma non lo è perché, usando operazioni a singolo gate su $\ket{\gamma}$, $\ket{g}$, può essere convertito in un \texttt{CZ-gate} (Controlled-$Z$)
+il gate precedente potrebbe sembrare banale ma non lo è perché, usando operazioni a singolo gate su $\ket{\gamma}$ e $\ket{g}$, esso può essere convertito in un \texttt{CZ-gate} (Controlled-$Z$)
 \begin{center}
     \mbox{
         \Qcircuit @C=1em @R=1em {
@@ -242,7 +242,7 @@ Questo significa che con delle singole operazioni possiamo trasformare un QPG in
     \underbrace{
     \begin{pmatrix}
         1 & 0\\
-        0 & e^{i\omega_c t}
+        0 & e^{-i\omega_c t}
     \end{pmatrix}
     }_{\{\ket 0, \ket 1\}} \, .
 \end{equation*}

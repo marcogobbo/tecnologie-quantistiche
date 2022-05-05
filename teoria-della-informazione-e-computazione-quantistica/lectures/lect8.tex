@@ -30,7 +30,7 @@ Dal momento che l'algoritmo quantistico del period finding di Shor è spesso des
         notiamo inoltre che $x-1\neq 0\pmod N$ perché se non fosse così allora $a^\frac r2 =1 \pmod N$ e quindi l'ordine non sarebbe più $r$, ma $r/2$.
     \item Supponiamo di essere fortunati e che anche $x+1\neq 0 \pmod N$.
 \end{enumerate}
-Ora, dato che $0 = (x-1)(x+1) \pmod N$, allora il prodotto $(x-1)(x+1)$ è un multiplo di $N$, ma i singoli fattori non sono un multiplo di $N$, in quanto $x+1 \neq 0 \pmod N$ e $x+1  \neq 0 \pmod N$: si tratta di una situazione in cui il prodotto $(x-1)(x+1)$ è un multiplo di $N$, ma i singoli non lo sono. Essendo $N = pq$ allora $(x-1)$ è multiplo di $p$ e $(x+1)$ è multiplo di $q$ (o viceversa) e allora possiamo andare a calcolare classicamente $p$ e $q$ usando i massimi comun divisori ($\gcd = $ "greatest common divisor"): 
+Ora, dato che $0 = (x-1)(x+1) \pmod N$, allora il prodotto $(x-1)(x+1)$ è un multiplo di $N$, ma i singoli fattori non sono un multiplo di $N$, in quanto $x-1 \neq 0 \pmod N$ e $x+1  \neq 0 \pmod N$: si tratta di una situazione in cui il prodotto $(x-1)(x+1)$ è un multiplo di $N$, ma i singoli non lo sono. Essendo $N = pq$ allora $(x-1)$ è multiplo di $p$ e $(x+1)$ è multiplo di $q$ (o viceversa) e allora possiamo andare a calcolare classicamente $p$ e $q$ usando i massimi comun divisori ($\gcd = $ "greatest common divisor"): 
 \begin{equation*}
     p=\gcd{(x-1,N)} \, , \qquad q=\gcd{(x+1,N)} \, .
 \end{equation*}
@@ -85,7 +85,7 @@ Esistono molte situazioni in cui un algoritmo di questo tipo può essere applica
         }
     }
 \end{center}
-quindi come al solito il data register ha $n$ qubit inizializzati in $\ket{0}^{\otimes n}$ e l'output register è preparato in $\ket{1}$. Tale circuito produce lo stato
+quindi come al solito il data register ha $n$ qubit inizializzati in $\ket{0}^{\otimes n}$ e l'output register è preparato in $\ket{1}$. Dalla \eqref{dopo_U_f} sappiamo che tale circuito produce lo stato
 \begin{equation*}
     \frac{1}{2^{\frac n2}}\sum_{x=0}^{2^n-1}(-1)^{f(x)}\ket{x}\otimes \underbrace{\frac{\ket{0}-\ket{1}}{\sqrt 2}}_{\substack{\text{termine} \\ \text{irrilevante}}} \, .
 \end{equation*}
@@ -138,8 +138,8 @@ Si veda la Figura \ref{subfig:azioni_OG_2} per una semplice rappresentazione gra
 Consideriamo ora l'operazione seguente:
 \begin{equation}\label{operatore_incognito}
     \begin{cases}
-        \ket{0}^{\otimes n} \rightarrow \ket{0}^{\otimes n} \,  & \\
-        \ket{x} \rightarrow -\ket{x} \, , & x  \neq 0
+        \ket{0}^{\otimes n} &\rightarrow \ket{0}^{\otimes n} \, , \\
+        \ket{x} &\rightarrow -\ket{x} \, , \quad x  \neq 0
     \end{cases} \, ,
 \end{equation}
 il quale mantiene il "ground state" inalterato e inverte qualsiasi altro stato della base computazionale. Se supponiamo di poter trovare un circuito che implementi l'operazione precedente, allora l'operatore $G$ può essere costruito in termini di gate nel seguente modo
@@ -159,8 +159,8 @@ il quale mantiene il "ground state" inalterato e inverte qualsiasi altro stato d
             & \qw
             & \multigate{2}{
                 \begin{array}{ll}
-                    \ket{0}^{\otimes n} \rightarrow \ket{0}^{\otimes n} \\
-                    \ket{x}^{\otimes n} \rightarrow -\ket{x}^{\otimes n}
+                    \ket{0}^{\otimes n} &\rightarrow \ket{0}^{\otimes n} \\
+                    \ket{x} &\rightarrow -\ket{x}
                 \end{array}}
             & \qw
             & \multigate{2}{H^{\otimes n}}
@@ -172,8 +172,8 @@ il quale mantiene il "ground state" inalterato e inverte qualsiasi altro stato d
             & \raisebox{.3em}{\vdots}
             & \nghost{
                 \begin{array}{cc}
-                    \ket{0}^{\otimes n}\rightarrow \ket{0}^{\otimes n}\\
-                    \ket{x}^{\otimes n}\rightarrow -\ket{x}^{\otimes n}
+                    \ket{0}^{\otimes n} &\rightarrow \ket{0}^{\otimes n} \\
+                    \ket{x} &\rightarrow -\ket{x}
                 \end{array}}
             & \raisebox{.3em}{\vdots}
             & \nghost{H^{\otimes n}}
@@ -185,8 +185,8 @@ il quale mantiene il "ground state" inalterato e inverte qualsiasi altro stato d
             & \qw
             & \ghost{
                 \begin{array}{ll}
-                    \ket{0}^{\otimes n}\rightarrow \ket{0}^{\otimes n}\\
-                    \ket{x}^{\otimes n}\rightarrow -\ket{x}^{\otimes n}
+                    \ket{0}^{\otimes n} &\rightarrow \ket{0}^{\otimes n} \\
+                    \ket{x} &\rightarrow -\ket{x}
                 \end{array}}
             & \qw
             & \ghost{H^{\otimes n}}
@@ -254,7 +254,7 @@ Esiste un altro modo grafico per visualizzare il risultato dell'algoritmo di Gro
 \end{itemize}
 Ricordiamo che nell'algoritmo si parte dallo stato $\ket{\phi} = \frac{1}{\sqrt{N}} \sum_x \ket{x}$. Disegnando in ascissa i diversi stati e in ordinata l'ampiezza di ciascun stato, l'azione grafica ripetuta degli operatori $O$ e $G$ su $\ket{\phi}$ è mostrata nei diversi plot di Figura \ref{fig:plot_Grover}. È evidente come la continua applicazione di $O$ e $G$ ad ogni step faccia in modo che l'ampiezza di $\ket{a}$ aumenti sempre di più fino a 1 e le ampiezze degli stati rimanenti diminuiscano sempre di più tendendo a 0. 
 
-\noindent Questo modo di procedere per visualizzare l'azione dell'algoritmo di Glover è utile anche nel caso in cui si voglia effettuare una ricerca di $M$ numeri speciali all'interno degli $N$ oggetti del database. Come evidenziano i plot di Figura \ref{fig:2_special_Grover}, dopo un certo numero di applicazioni di $O$ e $G$, le $M$ ampiezze cercate tendono al valore $1/M$ e si isolano automaticamente rispetto a tutte le altre.
+\noindent Questo modo di procedere per visualizzare l'azione dell'algoritmo di Glover è utile anche nel caso in cui si voglia effettuare una ricerca di $M$ numeri speciali all'interno degli $N$ oggetti del database. Come evidenziano i plot di Figura \ref{fig:2_special_Grover}, dopo un certo numero di applicazioni di $O$ e $G$, le $M$ ampiezze cercate tendono al valore $1/\sqrt{M}$ e si isolano automaticamente rispetto a tutte le altre.
 
 \begin{figure}[!ht]
 	\centering	

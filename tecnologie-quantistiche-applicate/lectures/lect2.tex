@@ -1,4 +1,3 @@
-\vspace{1cm}
 \noindent \lecture{2}{12/10/2021}
 \vspace{0.5cm}
 
@@ -6,13 +5,13 @@
 \begin{enumerate}
     \item \textit{$\rho$ è hermitiana e positiva}. 
     \begin{proof}
-        Ricordando che $p_i \geqslant 0 \in \mathbb{R}$ allora
+        Ricordando che $p_i \geq 0 \in \mathbb{R}$ allora
         \begin{equation*}
             \left( \sum_i p_i \ketbra{\psi_i} \right)^\dag = \sum_i p_i \ketbra{\psi_i} \, .
         \end{equation*}
-        La positività di un operatore $A$ è data dalla proprietà $\expval{A}{\phi} \geqslant 0$ per ogni $\ket{\phi}$, quindi
+        La positività di un operatore $A$ è data dalla proprietà $\expval{A}{\phi} \geq 0$ per ogni $\ket{\phi}$, quindi
         \begin{equation*}
-            \expval{\rho}{\phi} = \bra{\phi} \sum_i p_i \ket{\psi_i} \braket{\psi_i}{\phi} = \sum_i p_i \braket{\phi}{\psi_i} \underbrace{\braket{\psi_i}{\phi}}_{\braket{\phi}{\psi_i}^\ast} = \sum_i p_i \abs{\braket{\phi}{\psi_i}}^2 \geqslant 0 \, .
+            \expval{\rho}{\phi} = \bra{\phi} \sum_i p_i \ket{\psi_i} \braket{\psi_i}{\phi} = \sum_i p_i \braket{\phi}{\psi_i} \underbrace{\braket{\psi_i}{\phi}}_{\braket{\phi}{\psi_i}^\ast} = \sum_i p_i \abs{\braket{\phi}{\psi_i}}^2 \geq 0 \, .
         \end{equation*}
     \end{proof}
     
@@ -23,15 +22,15 @@
         \end{equation*}
     \end{proof}
     
-    \item \textit{$\Tr \rho^2 \leqslant 1$ e $\Tr \rho^2 = 1$ solo per gli stati puri}.
+    \item \textit{$\Tr \rho^2 \leq 1$ e $\Tr \rho^2 = 1$ solo per gli stati puri}.
     \begin{proof}
         Dato che $\rho$ è hermitiana allora può essere diagonalizzata, quindi $\rho \ket{n} = \rho_n \ket{n}$. In particolare avremo
         \begin{equation}\label{diagonalization_rho}
             \rho = \sum_i p_i \ketbra{\psi_i} \equiv \sum_n \rho_n \ketbra{n} \, ;
         \end{equation}
-        quindi la matrice densità è scrivibile come somma del prodotto tra i proiettori in direzione degli autospazi e dei corrispondenti autovalori. Notiamo che la formula precedente consiste di fatto nella diagonalizzazione in notazione di Dirac. Chiaramente in generale $p_i \neq \rho_i$! Dato che $\Tr \rho = 1$ allora dalla precedente si ha che $\sum_n \rho_n = 1$. Cerchiamo di valutare $\Tr \rho^2 = \sum_n \rho_n^2$: dato che la matrice densità è hermitiana allora $\rho_n \geqslant 0 \in \mathbb{R}$, ma al tempo stesso si deve avere $0 \leqslant \rho_n \leqslant 1$ poiché $\sum_n \rho_n = 1$. Ma allora
+        quindi la matrice densità è scrivibile come somma del prodotto tra i proiettori in direzione degli autospazi e dei corrispondenti autovalori. Notiamo che la formula precedente consiste di fatto nella diagonalizzazione in notazione di Dirac. Chiaramente in generale $p_i \neq \rho_i$! Dato che $\Tr \rho = 1$ allora dalla precedente si ha che $\sum_n \rho_n = 1$. Cerchiamo di valutare $\Tr \rho^2 = \sum_n \rho_n^2$: dato che la matrice densità è hermitiana allora $\rho_n \geq 0 \in \mathbb{R}$, ma al tempo stesso si deve avere $0 \leq \rho_n \leq 1$ poiché $\sum_n \rho_n = 1$. Ma allora
         \begin{equation*}
-            0 \leqslant \rho_n^2 \leqslant \rho_n \leqslant 1 \, , \quad \Rightarrow \quad \sum_n \rho_n^2 \leqslant \sum_n \rho_n = 1 \, .
+            0 \leq \rho_n^2 \leq \rho_n \leq 1 \, , \quad \Rightarrow \quad \sum_n \rho_n^2 \leq \sum_n \rho_n = 1 \, .
         \end{equation*}
         Il caso limite è dato da
         \begin{equation*}
@@ -39,10 +38,10 @@
         \end{equation*}
         ma per numeri tra 0 e 1 questo è vero solamente per $\rho_n = 1 \lor \rho_n = 0$: solamente un valore è diverso da 0 (uguale a 1) mentre tutti gli altri sono 0, quindi $\rho = \ketbra{n}$ per un particolare $n$, ossia si tratta di uno stato puro. 
     \end{proof}
-    Si noti che la formula $\Tr \rho^2 = 1 \Leftrightarrow $ stato puro è un criterio per stabilire se effettivamente uno stato è puro. Inoltre, essendo $\rho$ è hermitiana, può sempre essere diagonalizzata secondo la \eqref{diagonalization_rho} e quindi la sua forma non è unica.
+    Si noti che la formula $\Tr \rho^2 = 1 \Leftrightarrow $ stato puro è un criterio per stabilire se effettivamente uno stato è puro. Inoltre, essendo $\rho$ hermitiana, può sempre essere diagonalizzata secondo la \eqref{diagonalization_rho} e quindi la sua forma non è unica.
 \end{enumerate}
 
-\noindent Alla luce della definizione della matrice densità, cerchiamo di comprendere come alcuni postulati della meccanica quantistica possano essere riscritti in termini di $\hat \rho$. In particolare iniziamo dal
+\noindent Alla luce della definizione di matrice densità, cerchiamo di comprendere come alcuni postulati della meccanica quantistica possano essere riscritti in termini di $\hat \rho$. In particolare iniziamo dal
 \begin{itemize}
     \item \textbf{IV Postulato (Evoluzione temporale)}: Cosa succede nel momento in cui il nostro sistema quantistico evolve? Se è descritto da una funzione d'onda $\ket \psi$, dopo un certo intervallo di tempo $t$, il nostro stato evolverà nel seguente modo
     \begin{equation*}
@@ -57,14 +56,14 @@
 \end{itemize}
 Osserviamo che se il nostro stato iniziale è uno stato puro, la matrice densità che possiamo costruire è anch'essa uno stato puro. Se il nostro sistema è chiuso, cioè non interagisce con l'ambiente e quindi l'evoluzione dello stato puro rimane uno stato puro, allora anche l'evoluto della matrice densità rimane uno stato puro.
 
-\section{Misurazioni}
-Prima di addentrarci nella discussioni sulle misurazioni, che saranno uno degli argomenti chiave del corso, introduciamo il postulato della meccanica quantistica relativo alle osservabili.
+\section{Misurazioni}\label{misurazioni_proiettive}
+Prima di addentrarci nella discussione sulle misurazioni, che saranno uno degli argomenti chiave del corso, introduciamo il postulato della meccanica quantistica relativo alle osservabili.
 \begin{itemize}
-    \item \textbf{II Postulato} (\textbf{Osservabili}): Che cosa si può misurare in meccanica quantistica? Vengono misurate le \textbf{osservabili}, ossia \textbf{operatori autoaggiunti} (o \textbf{hermitiani}) $\hat{A}$ tali che
+    \item \textbf{II Postulato} (\textbf{Osservabili}): Che cosa si può misurare in meccanica quantistica? Vengono misurate le \textbf{osservabili} rappresentate da \textbf{operatori autoaggiunti} (o \textbf{hermitiani}) $\hat{A}$ tali che
     \begin{equation*}
         \hat{A}: \mathcal{H}\rightarrow \mathcal{H} \, \text{ con } \, \hat{A}^\dagger = \hat{A} \, ,
     \end{equation*}
-    dove più precisamente $\hat{A}^\dagger \equiv (\hat{A}^t)^\ast$. Dal punto di vista degli elementi di matrice, calcolare l'aggiunto di $A_{ij}$ significa $A^\dagger_{ij} = A^\ast_{ji}$. Dunque le matrici autoaggiunte (hermitiane) sono tali che $A^\dagger \equiv (A^t)^\ast = A$.
+    dove più precisamente $\hat{A}^\dagger \equiv (\hat{A}^t)^\ast$. Dal punto di vista degli elementi di matrice, calcolare l'aggiunto di $A_{ij}$ significa $A^\dagger_{ij} = A^\ast_{ji}$.
 \end{itemize}
 
 \noindent Focalizzando la nostra attenzione sugli operatori hermitiani, richiamiamo un importante teorema dell'algebra lineare:
@@ -75,9 +74,9 @@ Prima di addentrarci nella discussioni sulle misurazioni, che saranno uno degli 
 \begin{itemize}
     \item \textbf{III Postulato} (\textbf{Regola di Born}):
     \begin{enumerate}
-        \item \textbf{Misurazione}: sia $\hat{A}$ un osservabile con autostati $\ket{a_i}$, ossia $\hat{A} \ket{a_i} = a_i \ket{a_i}$. Prendiamo per semplicità $a_i \neq a_j \ \forall i \neq j$ (osservabile con autovalori distinti). Consideriamo uno stato generico espanso sugli autostati precedenti: $\ket \psi = \sum_i \alpha_i \ket a_i$. Allora una misura dell'osservabile $\hat{A}$ produce il valore $a_i$ con probabilità data da $\abs{\alpha_i}^2$ (assumendo lo stato correttamente normalizzato).
+        \item \textbf{Misurazione}: Sia $\hat{A}$ un osservabile con autostati $\ket{a_i}$, ossia $\hat{A} \ket{a_i} = a_i \ket{a_i}$. Prendiamo per semplicità $a_i \neq a_j \ \forall i \neq j$ (osservabile con autovalori distinti). Consideriamo uno stato generico espanso sugli autostati precedenti: $\ket \psi = \sum_i \alpha_i \ket a_i$. Allora una misura dell'osservabile $\hat{A}$ produce il valore $a_i$ con probabilità data da $\abs{\alpha_i}^2$ (assumendo lo stato correttamente normalizzato).
         
-        \item \textbf{Collasso dello stato}: cosa succede allo stato del sistema dopo la misurazione? Istantaneamente lo stato $\ket \psi$ collassa sull'autostato associato all'autovalore risultante dalla misura. Ad esempio se misurando otteniamo $a_i$ allora $\ket{\psi} \rightarrow \ket{a_i}$. Effettuando delle misure successive sullo stato si ottiene sempre $\ket{a_i}$ con probabilità esattamente uguale a 1.  
+        \item \textbf{Collasso dello stato}: Cosa succede allo stato del sistema dopo la misurazione? Istantaneamente lo stato $\ket \psi$ collassa sull'autostato associato all'autovalore risultante dalla misura. Ad esempio se misurando otteniamo $a_i$ allora $\ket{\psi} \rightarrow \ket{a_i}$. Effettuando delle misure successive sullo stato si ottiene sempre $\ket{a_i}$ con probabilità esattamente uguale a 1.  
     \end{enumerate}
 \end{itemize}
 Soffermiamoci su questo postulato e analizziamone bene il contenuto. Questo tipo di misurazione prende il nome di \textbf{Von Neumann measurement} o \textbf{projective measurement}. Il motivo di quest'ultimo nome è che se noi abbiamo un'osservabile $\hat A$ e $a_i$ è l'autovalore associato allo stato $\ket{a_i}$, allora possiamo definire un operatore $\hat P_i$ che prende il nome di \textbf{proiettore} relativo allo stato $\ket{a_i}$, definito come
@@ -114,8 +113,8 @@ Affinché sia uno stato, deve essere necessariamente normalizzato: $\ket \psi'=\
     \Delta A = \expval{ A^2}-\expval{A}^2
 \end{equation*}
 \subsection{Misurazioni della matrice densità}
-Consideriamo il nostro insieme di stati ${p_i, \ket{\psi_i}}$, dove $\hat \rho = \sum_i p_i \op{\psi_i}{\psi_i}$. Abbiamo un'osservabile $\hat A$ con i suoi autostati $\ket{a_n}$, autovalori $a_n$ e possiamo definire i proiettori $\hat P_n = \op{a_n}{a_n}$.\\
-Se prendiamo uno stato $\ket{\psi_i}$ dall'insieme di stati e valutiamo la probabilità di ottenere lo stato $a_n$ dato lo stato $\psi_i$ otteniamo
+Consideriamo il nostro insieme di stati $\{p_i, \ket{\psi_i}\}$, dove $\hat \rho = \sum_i p_i \op{\psi_i}{\psi_i}$. Abbiamo un'osservabile $\hat A$ con i suoi autostati $\ket{a_n}$, autovalori $a_n$ e possiamo definire i proiettori $\hat P_n = \op{a_n}{a_n}$.\\
+Se prendiamo uno stato $\ket{\psi_i}$ dall'insieme di stati e valutiamo la probabilità di ottenere lo stato $\ket{a_n}$ dato lo stato $\ket{\psi_i}$ otteniamo
 \begin{equation*}
     p(a_n|i)=\mel{\psi_i}{P_n}{\psi_i}=\Tr\left(\hat P_n \op{\psi_i}{\psi_i}\right)
 \end{equation*}
@@ -133,7 +132,7 @@ Dopo aver eseguito la misura di $a_n$, otteniamo lo stato $\ket{a_n}$ che in ter
 \begin{equation}\label{dm-meas2}
     \hat \rho_n = \frac{\hat P_n \hat \rho \hat P_n}{\Tr \left(\hat P_n \hat \rho \right)}
 \end{equation}
-Possiamo dimsotrare che si tratta di uno stato puro.
+Possiamo dimostrare che si tratta di uno stato puro.
 \begin{proof}
     \begin{equation*}
         \begin{aligned}
@@ -145,4 +144,4 @@ Possiamo dimsotrare che si tratta di uno stato puro.
         \end{aligned}
     \end{equation*}
 \end{proof}
-\noindent I risultati ottenuti dalle equazioni \eqref{dm-meas1} e \eqref{dm-meas1} rappresentano l'equivalente del \textbf{III Postulato} per $\hat \rho$.
+\noindent I risultati ottenuti dalle equazioni \eqref{dm-meas1} e \eqref{dm-meas2} rappresentano l'equivalente del \textbf{III Postulato} per $\hat \rho$. 

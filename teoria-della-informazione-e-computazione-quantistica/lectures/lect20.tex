@@ -222,7 +222,7 @@ Questa hamiltoniana è caratterizzata da due operatori che non fanno altro che e
     \end{equation*}
     e definendo inoltre un operatore corrente $\hat{I}$ tale che
     \begin{equation*}
-        \hat{I} = 2 e \dv{\hat{n}}{t} = \frac{2 i e}{\hbar} \comm{\hat{H}}{\hat{n}} -i\frac{e}{\hbar}E_J\sum_m\op{m}{m+1}-\op{m+1}{m} \, ,
+        \hat{I} = 2 e \dv{\hat{n}}{t} = \frac{2 i e}{\hbar} \comm{\hat{H}}{\hat{n}} =  -i\frac{e}{\hbar}E_J\sum_m \left( \op{m}{m+1}-\op{m+1}{m} \right) \, ,
     \end{equation*}
     allora è possibile ottenere la prima legge di Josephson della \eqref{1_Josephson_law}
     \begin{equation*}
@@ -247,7 +247,7 @@ Questa hamiltoniana è caratterizzata da due operatori che non fanno altro che e
 \noindent Per riassumere, ciò di cui abbiamo bisogno sono le seguenti informazioni: la natura quantistica del sistema è data dallo stato fondamentale, il quale è l'unico che importa nella superconduttività; la corrente che si origina è dovuta al tunneling delle coppie di Cooper, le quali sono frutto di una particolare condensazione di bosoni; l'oscillatore risultante è quantistico, ma non armonico perché l'hamiltoniana associata è data dalla relazione \eqref{eq:ham-jj}. 
 
 \subsection{Transmon qubit}
-Discutiamo come codificare un qubit in un circuito come quello di Figura \ref{subfig:J-effect}. Tra tutte le varie tipologie di qubit superconduttivi, quello più popolare e largamente utilizzato è il regime del cosiddetto \textbf{transmon qubit}. Consideriamo l'hamiltoniana ottenuta in \eqref{eq:ham-jj} a cui aggiungiamo un termine costante $E_J$ (questo porta a una variazione nei livelli energetici, ma non sulla dinamica del sistema)
+Discutiamo come codificare un qubit in un circuito come quello di Figura \ref{subfig:JJ-circuit}. Tra tutte le varie tipologie di qubit superconduttivi, quello più popolare e largamente utilizzato è il regime del cosiddetto \textbf{transmon qubit}. Consideriamo l'hamiltoniana ottenuta in \eqref{eq:ham-jj} a cui aggiungiamo un termine costante $E_J$ (questo porta a una variazione nei livelli energetici, ma non sulla dinamica del sistema)
 \begin{equation*}
     \hat H = 4E_C\hat n^2 + E_J(1-\cos\hat\phi) \, .
 \end{equation*}
@@ -289,7 +289,7 @@ dove si è indicato con $\hat{H}_0$ la corrispondente hamiltoniana di oscillator
 \begin{align*}
     \hat \phi = \frac{2\pi}{\Phi_0}\Phi = \frac{2e}{\hbar}\Phi = \frac{2e}{\hbar}\sqrt{\frac{\hbar}{2C\omega}}\left(\hat a + \hat a^\dagger\right) = 2\left(\frac{E_C}{8E_J}\right)^{\frac 14}\left(\hat a + \hat a^\dagger\right) \, ;
 \end{align*}
-(abbiamo utilizzato le definizioni di $E_C$ e $E_J$). Inserendo questo risultato all'interno dell'hamiltoniana in \eqref{eq:ham-transmon} otteniamo
+(abbiamo utilizzato le definizioni di $E_C$ e $E_J$). Inserendo questo risultato all'interno dell'hamiltoniana in \eqref{eq:ham-transmon} e esplicitando l'operatore $\hat{n}$ in termini di $\hat{Q}$ otteniamo
 \begin{equation}\label{H_sviluppare_quartico}
     \hat H = \underbrace{\hbar\omega\left(\hat a^\dagger\hat a+\frac 12\right)}_{\hat{H}_0}-\frac{E_C}{12}\left(\hat a + \hat a^\dagger\right)^4 \, .
 \end{equation}
@@ -355,9 +355,7 @@ In maniera del tutto simile possiamo anche notare che
     \hat \sigma_1=\left(\hat a + \hat a^\dagger\right) \, , \qquad \hat \sigma_2=-i\left(\hat a - \hat a^\dagger\right) \, .
 \end{equation}
 
-\noindent Precisiamo che vi sono altre tipologie di transmon qubit: ad esempio, molto diffusi, sono quelli in cui si aggiungono nel circuito di Figura \ref{subfig:J-effect} due giunzioni Josephson in maniera tale che $\tilde{\omega}$ possa essere regolata sperimentalmente mediante una variazione di un flusso magnetico esterno $\phi_e$. Una rappresentazione schematica di questo tipo di qubit è data dalla Figura \ref{fig:split-transmon-qubit}.
-
-\begin{figure}[!ht]
+\begin{figure}[H]
     \centering
     \begin{circuitikz}
         \draw
@@ -371,3 +369,6 @@ In maniera del tutto simile possiamo anche notare che
     \caption{Transmon qubit caratterizzato da due giunzioni Josephson. La frequenza del qubit è regolata attraverso la variazione di un campo magnetico esterno $\phi_e$.}
     \label{fig:split-transmon-qubit}
 \end{figure}
+
+\noindent Precisiamo che vi sono altre tipologie di transmon qubit: ad esempio, molto diffusi, sono quelli in cui si aggiungono nel circuito di Figura \ref{subfig:JJ-circuit} due giunzioni Josephson in maniera tale che $\tilde{\omega}$ possa essere regolata sperimentalmente mediante una variazione di un flusso magnetico esterno $\phi_e$. Una rappresentazione schematica di questo tipo di qubit è data dalla Figura \ref{fig:split-transmon-qubit}.
+

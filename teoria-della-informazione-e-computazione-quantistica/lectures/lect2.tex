@@ -268,7 +268,7 @@ Il postulato successivo riguarda l'evoluzione temporale degli stati:
 \end{center}
 
 \noindent Si ricordi che $\hat{U}$ è sempre un operatore unitario: ad esempio per un'hamiltoniana indipendente dal tempo si ha semplicemente $\hat{U}(t) = e^{-\frac{i}{\hbar}\hat H t}$. \\
-\noindent Consideriamo le matrici di Pauli: sappiamo che sono hermitiane ($\sigma^\dagger_i = \sigma_i$) e che soddisfano la proprietà $\sigma_i^2 = \mathbb{I}$, ma questo significa che sono anche matrici unitarie. Questo fatto ci permette di costruire\footnote{Un tale sistema in natura è abbastanza semplice da implementare poiché, essendo $\hat{H} = \vec{\sigma} \cdot \vec B$ l'accoppiamento tra spin e campo magnetico, è facile costruire una tale evoluzione temporale.} dei gate in cui $\hat{U} = \hat{\sigma}_i$.  Ad esempio è possibile implementare dei gate come $\mathbb{I}$, $\sigma_1 \equiv X$, $\sigma_2 \equiv Y$ e $\sigma_3 \equiv Z$. Ricordando che $\sigma_i \sigma_j = 2i \varepsilon_{ijk} \sigma_k$, notiamo che $XZ = - i Y$ e inoltre anche la matrice $-iY$ è unitaria. Per tale ragione molto spesso, al posto di considerare i gate $\lbrace \mathbb{I}, X, Y, Z \rbrace$ si sceglie la base $\lbrace \mathbb{I}, X, Z, XZ \rbrace$: questo significa che possiamo implementare i gate seguenti
+\noindent Consideriamo le matrici di Pauli: sappiamo che sono hermitiane ($\sigma^\dagger_i = \sigma_i$) e che soddisfano la proprietà $\sigma_i^2 = \mathbb{I}$, ma questo significa che sono anche matrici unitarie. Questo fatto ci permette di costruire\footnote{Un tale sistema in natura è abbastanza semplice da implementare poiché, essendo $\hat{H} = \vec{\sigma} \cdot \vec B$ l'accoppiamento tra spin e campo magnetico, è facile costruire una tale evoluzione temporale.} dei gate in cui $\hat{U} = \hat{\sigma}_i$.  Ad esempio è possibile implementare dei gate come $\mathbb{I}$, $\sigma_1 \equiv X$, $\sigma_2 \equiv Y$ e $\sigma_3 \equiv Z$. Ricordando che $\sigma_i \sigma_j = i \varepsilon_{ijk} \sigma_k$ per $i \neq j$, notiamo che $XZ = - i Y$ e inoltre anche la matrice $-iY$ è unitaria. Per tale ragione molto spesso, al posto di considerare i gate $\lbrace \mathbb{I}, X, Y, Z \rbrace$ si sceglie la base $\lbrace \mathbb{I}, X, Z, XZ \rbrace$: questo significa che possiamo implementare i gate seguenti
 \begin{center}
     \mbox{
         \Qcircuit @C=2em @R=2em {
@@ -305,7 +305,7 @@ Il postulato successivo riguarda l'evoluzione temporale degli stati:
     }
 \end{center}
 
-\noindent Consideriamo ora lo \texttt{Z-gate}: gli stati della base computazionale sono autovettori con autovalori 0 e 1 di $\sigma_3$, quindi questo gate inverte semplicemente il segno
+\noindent Consideriamo ora lo \texttt{Z-gate}: gli stati della base computazionale sono autovettori con autovalori 1 e $-1$ di $\sigma_3$, quindi questo gate inverte semplicemente il segno
 \begin{center}
     \mbox{
         \Qcircuit @C=2em @R=2em {
@@ -372,11 +372,11 @@ T \equiv \sqrt{S} =
 \end{pmatrix} \, ,
 \end{equation}
 
-\noindent Le matrici introdotte in precedenza costituiscono gli oggetti base con cui andremo a implementare diversi gate e circuiti durante tutto il corso. Per costruire il gate più generale possiamo esponenziare scrivendo $U = e^{-\frac{i}{\hbar} H t}$ dove $H = a \mathbb{I} + b_i \sigma_i$ e $a, b_i \in \mathbb{R}$ con $i = 1,2,3$. In particolare esiste una particolare classe di operatori che utilizzeremo molto
+\noindent Le matrici introdotte in precedenza costituiscono gli oggetti base con cui andremo a implementare diversi gate e circuiti durante tutto il corso. Per costruire il gate più generale possiamo esponenziare scrivendo $U = e^{-\frac{i}{\hbar} H t}$ dove $H = a \mathbb{I} + b_i \sigma_i$ e $a, b_i \in \mathbb{R}$ con $i = 1,2,3$. Esiste una particolare classe di operatori che utilizzeremo molto dati da
 \begin{equation*}
-    R_{\vec{n}} = e^{-i \frac{\lambda}{2} (\vec n \cdot \vec \sigma)} \, ;
+    R_{\vec{n}}(\lambda) = e^{-i \frac{\lambda}{2} (\vec n \cdot \vec \sigma)} \, ;
 \end{equation*}
-si tratta di un caso particolare dell'esponenziazione precedente in cui $a = 0$ e i coefficienti $b_i$ sono scelti lungo un particolare versore $\vec n$. Questo operatore unitario implementa una rotazione di angolo $\lambda$ attorno ad una direzione particolare individuata da $\vec n$:
+si tratta di un caso particolare dell'esponenziazione precedente in cui $a = 0$ e i coefficienti $b_i$ sono scelti lungo un particolare versore $\vec n$. Questo operatore unitario implementa una rotazione di angolo $\lambda$ attorno alla direzione individuata da $\vec n$:
 
 \begin{equation}\label{rotation_n_lambda}
     R_{\vec{n}}(\lambda) = e^{-i \frac{\lambda}{2} (\vec n \cdot \vec \sigma)} = \cos \! \left( \frac{\lambda}{2} \right) \mathbb{I} - i \sin \! \left( \frac{\lambda}{2} \right) \vec \sigma \cdot \vec n \, ;

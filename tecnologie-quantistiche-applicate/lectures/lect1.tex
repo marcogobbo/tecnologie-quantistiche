@@ -8,13 +8,13 @@
 \section{Stati e qubit}
 Prima di addentrarci nello studio delle tecnologie quantistiche, risulta opportuno fare alcuni richiami di meccanica quantistica implementando alcuni concetti che ci saranno poi utili in futuro. In particolare iniziamo velocemente ricordando il primo postulato della meccanica quantistica
 \begin{itemize}
-    \item \textbf{I Postulato} (\textbf{Stato}): Che cos'è uno stato? Utilizziamo la notazione di Dirac per rappresentare un vettore $\ket{\psi}$ di uno spazio di Hilbert $\mathcal{H}$ (molto spesso uno spazio vettoriale finito dimensionale) e diremo che $\ket{\psi} \in \mathcal{H}$. Uno stato è un \textbf{raggio} tale che $\norm{\ket{\psi}} = 1$ (per la conservazione della probabilità) e $\ket{\psi} \cong e^{i \alpha} \ket{\psi}$ con\footnote{La notazione $\cong$ significa "equivalente a".} $\alpha \in \mathbb{R}$. Dato che la fase globale è irrilevante, quando due stati differiscono per una fase hanno il medesimo effetto fisco. 
+    \item \textbf{I Postulato} (\textbf{Stato}): Che cos'è uno stato? Utilizziamo la notazione di Dirac per rappresentare un vettore $\ket{\psi}$ di uno spazio di Hilbert $\mathcal{H}$ (molto spesso uno spazio vettoriale finito dimensionale) e diremo che $\ket{\psi} \in \mathcal{H}$. Uno stato è un \textbf{raggio} tale che $\norm{\ket{\psi}} = 1$ (per la conservazione della probabilità) e $\ket{\psi} \cong e^{i \alpha} \ket{\psi}$ \footnote{La notazione $\cong$ significa "equivalente a".} con $\alpha \in \mathbb{R}$. Dato che la fase globale è irrilevante, quando due stati differiscono per una fase hanno il medesimo effetto fisico. 
 \end{itemize}
 Procediamo ora con il definire cosa sia un qubit
 \begin{definizione}[\textbf{Qubit}]
     Un qubit è un qualsiasi sistema a due livelli. Ogni sistema quantomeccanico può essere un qubit, ad esempio si può creare utilizzando le due differenti polarizzazioni del fotone, utilizzando l’allineamento dello spin di un nucleo immerso in un campo magnetico uniforme, utilizzando la tecnica della trappola ionica, sistemi superconduttivi, \dots
 \end{definizione}
-\noindent Davide di Vincenzo, nel 2000, ha indicato cinque criteri necessari per la scelta di un sistema fisico adatto per la computazione quantistica
+\noindent Davide di Vincenzo, nel 2000, ha indicato cinque criteri necessari per la scelta di un sistema fisico adatto per la computazione quantistica:
 \begin{enumerate}
     \item Un sistema fisico scalabile con qubit ben caratterizzati;
     \item La capacità di inizializzare lo stato dei qubit a un semplice stato fiduciale;
@@ -22,7 +22,7 @@ Procediamo ora con il definire cosa sia un qubit
     \item Un insieme "universale" di porte quantistiche;
     \item Una capacità di misurazione specifica per qubit.
 \end{enumerate}
-La meccanica quantistica si occupa di descrivere il comportamento del nostro sistema a due livelli mediante una hamiltoniana. Per fare ciò lavoriamo in spazi di Hilbert bidimensionali $\mathcal{H}=\mathbb{C}^2$, quindi le hamiltoniane di questi sistemi sono degli operatori definiti su $\mathbb{C}^2 \rightarrow \mathbb{C}^2$. Gli stati in cui si trova il nostro sistema sono descritti da funzioni d'onda generiche $\psi \in \mathbb{C}^2$, in particolar modo possono essere decomposti sulla base computazionale $\{\ket 0, \ket 1\}$. Avremo quindi che 
+La meccanica quantistica si occupa di descrivere il comportamento del nostro sistema a due livelli mediante una hamiltoniana. Per fare ciò lavoriamo in spazi di Hilbert bidimensionali $\mathcal{H}=\mathbb{C}^2$, quindi le hamiltoniane di questi sistemi sono degli operatori definiti su $\mathbb{C}^2 \rightarrow \mathbb{C}^2$. Gli stati in cui si trova il nostro sistema sono descritti da funzioni d'onda generiche $\psi \in \mathbb{C}^2$, in particolar modo possono essere decomposte sulla base computazionale $\{\ket 0, \ket 1\}$. Avremo quindi che 
 \begin{equation*}
     \begin{array}{l}
         \hat H \ket 0 = E_0 \ket 0 \\
@@ -44,8 +44,8 @@ con $a,b \in \mathbb{C}$ e soddisfacenti la condizione di conservazione di proba
 \begin{equation*}
     \abs{a}^2+\abs{b}^2=1 \, .
 \end{equation*}
-Osserviamo che, per come è definito, $\ket \psi$ è uno \textbf{stato puro}, ci dà la massima conoscenza che possiamo ottenere da questo sistema. Infatti abbiamo una probabilità pari a $\abs{a}^2$ di ottenere $\ket 0$ e una probabilità pari a $\abs{b}^2$ di ottenere $\ket 1$. Dobbiamo misurare un numero infinito di volte per poter ottenere queste distribuzioni di probabilità, tuttavia non possiamo eseguire una misura successiva per estrarre ulteriori informazioni sul nostro stato $\ket \psi$ poiché quest'ultimo sarà collassato in $\ket 0$ oppure $\ket 1$. Per determinare univocamente $\alpha$ e $\beta$ si necessiterebbero di un'infinità di esperimenti su un'infinità di stati tutti preparati nel medesimo stato $\ket \psi$. La massima conoscenza che possiamo estrarre non è molta, infatti questo è oggetto di discussione, in particolar modo se la meccanica quantistica sia una teoria completa o meno\footnote{Einstein, A., Podolsky, B., \& Rosen, N. (1935). Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?. Phys. Rev., 47, 777–780.}.\\
-Come abbiamo già accennato, $a,b$ sono coefficienti complessi, attraverso la notazione esponenziale possiamo scriverli come
+Osserviamo che, per come è definito, $\ket \psi$ è uno \textbf{stato puro}, ci dà la massima conoscenza che possiamo ottenere da questo sistema. Infatti abbiamo una probabilità pari a $\abs{a}^2$ di ottenere $\ket 0$ e una probabilità pari a $\abs{b}^2$ di ottenere $\ket 1$. Dobbiamo misurare un numero infinito di volte per poter ottenere queste distribuzioni di probabilità, tuttavia non possiamo eseguire una misura successiva per estrarre ulteriori informazioni sul nostro stato $\ket \psi$ poiché quest'ultimo sarà collassato in $\ket 0$ oppure $\ket 1$. Per determinare univocamente $\alpha$ e $\beta$ si necessiterebbe un'infinità di esperimenti su un'infinità di stati tutti preparati nel medesimo stato $\ket \psi$. La massima conoscenza che possiamo estrarre non è molta, questo fatto è stato oggetto di discussione per molti anni. In particolar modo ci si è chiesti se la teoria meccanica quantistica fosse una teoria completa o meno\footnote{Einstein, A., Podolsky, B., \& Rosen, N. (1935). Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?. Phys. Rev., 47, 777–780.}.\\
+Come abbiamo già accennato, $a$ e $b$ sono coefficienti complessi, attraverso la notazione esponenziale possiamo scriverli come
 \begin{equation*}
     a=\abs{a}e^{i\theta_0} \qquad b=\abs{b}e^{i\theta_1}\, ,
 \end{equation*}
@@ -53,28 +53,28 @@ in questo modo
 \begin{equation*}
     \begin{aligned}
         \ket \psi &= \abs{a}e^{i\theta_0}\ket 0 + \abs{b}e^{i\theta_1}\ket 1 \\
-                  &= \underbrace{e^{i\theta_0}}_{\mathclap{\text{Fase globale}}}(\abs{a}\ket 0 + \abs{b}\underbrace{e^{i\left(\theta_1-\theta_0\right)}}_{\mathclap{\text{Fase relativa}}}\ket 1) \, .
+                  &= \underbrace{e^{i\theta_0}}_{\mathclap{\text{Fase globale}}}\Big(\abs{a}\ket 0 + \abs{b}\underbrace{e^{i\left(\theta_1-\theta_0\right)}}_{\mathclap{\text{Fase relativa}}}\ket 1\Big) \, .
     \end{aligned}
 \end{equation*}
 Quando misuriamo uno stato, la \textit{fase globale} risulta essere irrilevante, ciò che conta è la \textit{fase relativa} perché può dar luogo a fenomeni come l'interferenza.
 \begin{esempio}[Fase relativa]
-    Consideriamo gli stati $\ket 0, \ket 1$, che formano la base computazionale, per scrivere i seguenti stati
+    Consideriamo gli stati $\ket 0 e \ket 1$, per scrivere i seguenti stati
     \begin{equation*}
-        \ket{\psi_1}=\frac{\ket 0 + \ket 1}{\sqrt 2} \qquad \ket{\psi_2}=\frac{\ket 0 - \ket 1}{\sqrt 2}\, ,
+        \ket{\psi_1}=\frac{\ket 0 + \ket 1}{\sqrt 2}\, \qquad \ket{\psi_2}=\frac{\ket 0 - \ket 1}{\sqrt 2} 
     \end{equation*}
-    in questo caso, il segno meno proviene dalla fase relativa. $\ket{\psi_1}$ e $\ket{\psi_2}$ descrivono lo stesso stato, tuttavia si comportano in maniera diversa durante un'operazione di misura in meccanica quantistica. Ad esempio possiamo considerare la matrice di Pauli
+    In questo caso il segno meno proviene dalla fase relativa. $\ket{\psi_1}$ e $\ket{\psi_2}$ forniscono lo stesso risultato per una misura di energia (lo si può verificare calcolando $\mel{\psi_i}{\hat H}{\psi_i}$), tuttavia riusciamo a distinguerli se facciamo una misura diversa. Ad esempio possiamo considerare la matrice di Pauli
     \begin{equation*}
         \sigma_x = \begin{pmatrix}
                     0 & 1 \\
                     1 & 0
                    \end{pmatrix}\, ,
     \end{equation*}
-    $\ket{\psi_1}$ e $\ket{\psi_2}$ sono autostati di $\sigma_x$, con autovalori, rispettivamente, $1$ e $-1$.
+    $\ket{\psi_1}$ e $\ket{\psi_2}$ sono autostati di $\sigma_x$ con autovalori, rispettivamente, $1$ e $-1$.
 \end{esempio}
-\noindent Uno dei problemi principali nell'aver a che fare con sistemi quantistici è trovare l'evoluto temporale di un certo estato, perché abbiamo delle hamiltoniane che descrivono ad esempio il rumore degli strumenti, la temperatura dell'ambiente, \dots L'equazione di Schrödinger si comporta bene nel descrivere l'evoluzione di \textbf{sistemi chiusi}, ma un qubit è, in generale, un \textbf{sistema aperto} che si lega a sistemi esterni e quindi la conoscenza sul suo stato tende a diminuire, finché non perdiamo completamente l'informazione che possedeva all'inizio. Questo fatto è noto come \textbf{tempo di coerenza}. Ci sono vari modi per tenere conto di queste interazioni così da poter descrivere al meglio il nostro sistema a due livelli.\\
+\noindent Uno dei problemi principali nell'aver a che fare con sistemi quantistici è trovare l'evoluto temporale di un certo stato, perché abbiamo delle hamiltoniane che descrivono ad esempio il rumore degli strumenti, la temperatura dell'ambiente, \dots L'equazione di Schrödinger si comporta bene nel descrivere l'evoluzione di \textbf{sistemi chiusi}, ma un qubit è, in generale, un \textbf{sistema aperto} che si lega a sistemi esterni e quindi la conoscenza sul suo stato tende a diminuire, finché non perdiamo completamente l'informazione che possedeva all'inizio. Questo fatto è legato al \textbf{tempo di coerenza}. Ci sono vari modi per tenere conto di queste interazioni così da poter descrivere al meglio il nostro sistema a due livelli.\\
 Supponiamo di avere un sistema chiuso che evolve secondo l'equazione di Schrödinger
 \begin{equation*}
-    \hat H \ket{\psi(t)}=i\hbar \partialderivative{\ket{\psi(t)}}{t}\, ,
+    \hat H \ket{\psi(t)}=i\hbar \partialderivative{t}\ket{\psi(t)}\, ,
 \end{equation*}
 dove $\ket{\psi(t)}=\hat U(t)\ket{\psi(0)}$. $\hat U$ in questo caso è un operatore unitario che può essere espresso, se l'hamiltoniana è costante nel tempo, come
 \begin{equation*}
@@ -84,7 +84,7 @@ Pertanto, considerando gli autostati dell'hamiltoniana
 \begin{equation*}
     \hat H \ket{i}=E_i\ket{i}\, ,
 \end{equation*}
-e riscrivendo il nostro stato inziale in termini di autostati dell'hamiltoniana
+e riscrivendo il nostro stato iniziale in termini di autostati dell'hamiltoniana
 \begin{equation*}
     \ket{\psi(0)}=\sum_i a_i\ket i\, ,
 \end{equation*}
@@ -92,7 +92,7 @@ possiamo valutare il nostro stato al tempo generico $t$ come
 \begin{equation*}
     \ket{\psi(t)}=\sum_i a_ie^{-\frac i \hbar \hat H t}\ket i=\sum_i a_i e^{-\frac i \hbar E_i t}\ket i \qquad \text{dove} \quad a_i(t)=a_i(0)e^{-\frac i \hbar E_i t}\, .
 \end{equation*}
-Da questo caso generale possiamo trattare il nostro sistema a due livelli, in questo caso come l'hamiltoniana sarà
+Da questo caso generale possiamo trattare il nostro sistema a due livelli, in questo caso l'hamiltoniana sarà
 \begin{equation*}
     \hat H = \begin{pmatrix}
         E_0 & 0 \\
@@ -108,17 +108,17 @@ applicando l'equazione di Schrödinger sui coefficienti
 \end{equation*}
 troviamo che il nostro stato finale al tempo generico $t$ sarà
 \begin{equation*}
-    \ket{\psi(t)}=\underbrace{e^{-\frac{i}{\hbar}E_0t}}_{\text{Fase globale}}(a_0(0)\ket 0 +\underbrace{e^{-\frac{i}{\hbar}(E_1-E_0)t}a_1(0)}_{\text{Fase relativa}}\ket 1)\, .
+    \ket{\psi(t)}=\underbrace{e^{-\frac{i}{\hbar}E_0t}}_{\text{Fase globale}}\Big(a_0(0)\ket 0 +\underbrace{e^{-\frac{i}{\hbar}(E_1-E_0)t}a_1(0)}_{\text{Fase relativa}}\ket 1\Big)\, .
 \end{equation*}
-Ancora una volta, la fase globale non produce alcun effetto, ciò che notiamo è che l'evoluzione temporale cambia la fase relativa tra gli stati $\ket 0$ e $\ket 1$. Questo spiega il perché se abbiamo una interazione che disturba il nostro sistema possiamo avere un cambio nella fase relativa poiché abbiamo un cambio in termini energetici. Questo disturbo è generato da tutto ciò che è esterno al sistema a due livelli. Se perdiamo il controllo su questa fase, perdiamo tutta l'informazione che abbiamo su $\ket{\psi(t)}$, e se questo accade, non abbiamo più uno stato puro. Per questo motivo necessitiamo qualcosa che vada oltre al concetto di funzione d'onda generica $\psi$.
+Ancora una volta, la fase globale non produce alcun effetto, ciò che notiamo è che l'evoluzione temporale cambia la fase relativa tra gli stati $\ket 0$ e $\ket 1$. Questo spiega perché se abbiamo una interazione che disturba il nostro sistema possiamo avere un cambio nella fase relativa, questo è dato dal fatto che abbiamo una variazione in termini energetici. Questo disturbo è generato da tutto ciò che è esterno al sistema a due livelli. Se perdiamo il controllo su questa fase, perdiamo tutta l'informazione che abbiamo su $\ket{\psi(t)}$, e se questo accade, non abbiamo più uno stato puro. Per questo motivo necessitiamo qualcosa che vada oltre al concetto di funzione d'onda generica $\psi$.
 
 \section{Matrice densità}
 Vogliamo realizzare uno stato puro $\ket \psi$ che sia una combinazione pura di stati $\ket 0$ e $\ket 1$:
 \begin{equation*}
     \ket \psi = a\ket 0 + b \ket 1\, ,
 \end{equation*}
-nella realtà quando cerchiamo di realizzare questo stato, abbiamo un'indeterminazione classica rappresentata da una distribuzione di ottenere lo stato esatto oppure uno stato simile. Supponiamo di avere un insieme di stati che indichiamo con $\{p_i, \ket{\psi_i}\}$, dove $p_i$ è la probabilità classica di ottenere un generico stato. Questi stati $\ket{\psi_i}$ sono tutti stati puri, ma non sappiamo quale sia quello giusto e la sua conoscenza p persa. Tutte queste informazioni sono contenute nella \textbf{matrice densità} che rappresenta una distribuzione classica di probabilità.\\
-Dal punto di vista della teoria della meccanica quantistica, esiste un'altro modo per introdurre la teoria anziché sfruttare gli stati $\psi$. Quello che si fa è sfruttare la matrice densità che è un operatore che agisce nel seguente modo
+nella realtà quando cerchiamo di realizzare questo stato, abbiamo un'indeterminazione classica rappresentata da una distribuzione di probabilità di ottenere lo stato esatto oppure uno stato simile. Supponiamo di avere un insieme di stati che indichiamo con $\{p_i, \ket{\psi_i}\}$, dove $p_i$ è la probabilità classica di ottenere un generico stato. Questi stati $\ket{\psi_i}$ sono tutti stati puri, ma non sappiamo quale sia quello giusto e la sua conoscenza è persa. Tutte queste informazioni sono contenute nella \textbf{matrice densità} che rappresenta una distribuzione classica di probabilità.\\
+Dal punto di vista della teoria della meccanica quantistica, esiste un altro modo per introdurre la teoria anziché sfruttare gli stati $\psi$. Quello che si fa è sfruttare la matrice densità che è un operatore che agisce nel seguente modo
 \begin{equation*}
     \hat \rho \ket{\psi_i}=p_i\ket{\psi_i}\, ,
 \end{equation*}
@@ -133,15 +133,22 @@ e descrive la mancanza di conoscenza sui sistemi quantistici che avevamo precede
 \begin{equation*}
     \hat U \hat \rho \hat U^\dagger = \hat \rho ' \, .
 \end{equation*}
-Vediamo se le distribuzioni di probabilità classiche vengono conservate.
-\begin{proof}
+Vediamo se le distribuzioni di probabilità classiche, nel caso di stati ortonormali, vengono conservate:
+\begin{proof}\mbox{}\\*
+    \noindent A $t=0$ :
+    \begin{equation*}
+          \hat \rho \ket{\psi_i (0)} = p_i \ket{\psi_i (0)} \\
+    \end{equation*}
+    A $t>0$ :
     \begin{equation*}
         \begin{aligned}
-            \hat \rho' \hat U \ket{\psi_i} &=\hat U \hat \rho \hat U^\dagger \hat U \ket{\psi_i} \\
-                                           &=\hat U \hat \rho \ket{\psi_i} \\
-                                           &=\hat U p_i \ket{\psi_i} \\
-                                           &=p_i U \ket{\psi_i} \\
-                                           &=p_i\ket{\psi_i(t)}
+            \hat \rho' \ket{\psi_i (t)} &= \hat U \hat \rho \hat U^\dagger \hat U \ket{\psi_i (0)} \\      
+                                        &=\hat U \hat \rho \ket{\psi_i (0)} \\
+                                        &=\hat U p_i \ket{\psi_i (0)} \\
+                                        &=p_i U \ket{\psi_i (0)} \\
+                                        &=p_i\ket{\psi_i (t)}
         \end{aligned}
     \end{equation*}
+
+    \noindent La probabilità $p_i$ non è cambiata nel tempo, ma lo stato sì perché ora è $\ket{\psi_i (t)}$ che non è uguale a $\ket{\psi_i (0)}$.
 \end{proof}

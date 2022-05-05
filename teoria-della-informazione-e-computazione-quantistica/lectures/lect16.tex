@@ -36,9 +36,9 @@ dove "c.c." sta per complesso coniugato. Notiamo che abbiamo considerato una sov
 
 \noindent La somma precedente è costituita nient'altro che da oscillatori perché ogni parentesi è un oscillatore: se scriviamo infatti
 \begin{equation*}
-    \mathcal{A}_{\vec{k}\,}(\vec{x}, t) \equiv \left( A_{k,i} e^{i \vec{k} \cdot \vec{x}} \right) e^{-i \omega_k t} \, ,
+    \mathcal{A}_{\vec{k},i}(\vec{x}, t) \equiv \left( A_{k,i} e^{i \vec{k} \cdot \vec{x}} \right) e^{-i \omega_k t} \, ,
 \end{equation*}
-allora $\mathcal{A}_{\vec{k}\,}(\vec{x}, t)$ soddisfa l'equazione del moto \eqref{EOM_HO} di un oscillatore armonico di frequenza $\omega_k$ (pedice $k$ per ricordare che la frequenza soddisfa una relazione di dispersione)
+allora $\mathcal{A}_{\vec{k},i}(\vec{x}, t)$ soddisfa l'equazione del moto \eqref{EOM_HO} di un oscillatore armonico di frequenza $\omega_k$ (pedice $k$ per ricordare che la frequenza soddisfa una relazione di dispersione)
 \begin{equation*}
     \ddot{\mathcal{A}}_{\vec{k},i} + \omega_k^2 \mathcal{A}_{\vec{k},i} = 0 \, .
 \end{equation*}
@@ -74,8 +74,8 @@ in questo modo ciascun oscillatore presenterà livelli energetici equispaziati c
 
 \noindent Ricordando dalle \eqref{a_adag_action_states} l'azione di $(a,a^\dag)$ sugli stati dell'oscillatore armonico, possiamo interpretare gli operatori $(a_{\vec{k},i}, a^\dag_{\vec{k},i})$ di distruzione e creazione alla luce delle particelle del campo elettromagnetico:
 \begin{align*}
-    a^\dag_{\vec{k},i} &= \text{Operatore che crea un fotone di momento } \vec{k} \, \text{e polarizzazione} \, \vec{\varepsilon}_i \, , \\
-    a_{\vec{k},i} &= \text{Operatore che distrugge un fotone di momento } \vec{k}\, \text{e polarizzazione} \, \vec{\varepsilon}_i \, .
+    a^\dag_{\vec{k},i} &= \text{Operatore che crea un fotone di momento } \hbar \vec{k} \, \text{e polarizzazione} \, \vec{\varepsilon}_i \, , \\
+    a_{\vec{k},i} &= \text{Operatore che distrugge un fotone di momento } \hbar \vec{k}\, \text{e polarizzazione} \, \vec{\varepsilon}_i \, .
 \end{align*}
 Per tale ragione il generico stato 
 \begin{equation*}
@@ -104,7 +104,7 @@ Non utilizziamo in questo contesto tutti i tecnicismi della QM perché stiamo ut
 \begin{equation*}
     \hat{E} = i \hat{a} \omega A_0 e^{i \left( \vec{k} \cdot \vec{x} - \omega t \right)} - i \hat{a}^\dag \omega A_0^\ast e^{-i \left( \vec{k} \cdot \vec{x} - \omega t \right)} \, ;
 \end{equation*}
-chiaramente la parte operatoriale risiede negli operatori $a$ e $a^\dag$.\\
+chiaramente la parte operatoriale risiede negli operatori $\hat{a}$ e $\hat{a}^\dag$.\\
 A seconda della scelta che si può fare su $A_0$, si utilizzano differenti convenzioni:
 \begin{itemize}
     \item Se $A_0 \in \mathbb{R}$ allora si scrive

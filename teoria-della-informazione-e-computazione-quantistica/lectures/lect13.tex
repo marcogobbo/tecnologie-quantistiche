@@ -93,7 +93,7 @@ Questa tipologia di misurazioni vengono definite \textbf{syndrome measurements}.
 
 \begin{esempio}[\textbf{Errori sul primo qubit}]
 Consideriamo la Tabella \ref{tab:Shor_first_qubit_errors}: supponiamo di considerare separatamente tutti i possibili tre tipi di errori discreti che possono avvenire sul primo qubit
-    \begin{table}[!hb]
+    \begin{table}[!ht]
 	\centering
         \begin{tabular}{lcccc}
             \toprule
@@ -119,7 +119,7 @@ Consideriamo la Tabella \ref{tab:Shor_first_qubit_errors}: supponiamo di conside
 
 \noindent In effetti, il codice Shor protegge da molto più di semplici errori di bit e phase flip su un singolo qubit: ora mostriamo che protegge da errori completamente arbitrari, a condizione che influiscano solo su un singolo qubit! La cosa interessante è che non è necessario eseguire alcun lavoro aggiuntivo per proteggersi da errori arbitrari: la procedura già descritta funziona perfettamente. Questo è un esempio del fatto straordinario che l'apparente continuum di errori che può verificarsi su un singolo qubit può essere corretto correggendo solo un sottoinsieme discreto di quegli errori; tutti gli altri possibili errori vengono corretti automaticamente da questa procedura! La procedura di discretizzazione degli errori è fondamentale per il motivo per cui la correzione degli errori quantistica funziona e dovrebbe essere considerata in contrasto con la correzione degli errori classica per i sistemi analogici, dove tale discretizzazione degli errori non è possibile. 
 
-\noindent Che cosa produce un generico errore? Immaginiamo di avere un sistema quantistico descritto da una matrice densità $\rho=\op{\psi}{\psi}$ e di considerare solamente il nostro qubit tracciando $\rho$ sull'ambiente descritto dallo spazio di Hilbert $\mathcal{H}_E$:
+\noindent Che cosa produce un generico errore? Immaginiamo di avere un sistema quantistico descritto da una matrice densità $\rho=\op{\psi}{\psi}$ e di considerare solamente il nostro qubit tracciando $\rho$ sull'ambiente, il quale è descritto dallo spazio di Hilbert $\mathcal{H}_E$:
 \begin{equation*}
     \rho =\op{\psi}{\psi} \rightarrow \mathcal{E}(\rho) = \sum_k E_k \rho E_k^\dagger \, .
 \end{equation*}
@@ -188,7 +188,7 @@ in totale ci sono quindi $3 \times 7 = 21$ possibili errori da distinguere: il $
         \midrule
         $N_0$      & $\bullet$ &           &           &           & $\bullet$ & $\bullet$ & $\bullet$ \\
         $N_1$      &           & $\bullet$ &           & $\bullet$ &           & $\bullet$ & $\bullet$ \\
-        $N_2$      &           &           & $\bullet$ & $\bullet$ & $\bullet$ &           &           \\
+        $N_2$      &           &           & $\bullet$ & $\bullet$ & $\bullet$ &           & $\bullet$          \\
         \bottomrule
     \end{tabular}\\
     \caption{I 6 error-syndrome operators $M_i$ e $N_i$ ($i = 0, 1, 2$) per il codice di Steane a 7 qubit. Un punto ($\bullet$) indica se un dato operatore $X_i$ appare in $M_j$ e se un dato operatore $Z_i$ appare in $N_j$.}

@@ -9,7 +9,7 @@
 
 \noindent Vediamo alcuni esempi di gate che possono essere realizzati a partire da sistemi superconduttivi. Prima di farlo, riassumiamo velocemente i risultati ottenuti nel corso di questa Sezione.
 
-\noindent L'idea è quella di codificare un qubit nei livelli energetici $(\ket 0, \ket{1})$ di un circuito superconduttivo che presenta una giunzione Josephson (Figura \ref{subfig:J-effect}): quest'ultima permette di dare una descrizione quantistica al sistema e introduce dell'anarmonicità nello spettro energetico (vedi Figura \ref{fig:energy-difference-transmon}); l'hamiltoniana del sistema risultante è riportata nella \eqref{final_H_transmon}. Trascurando il livello energetico $\ket{2}$ ci si riduce alla nota all'hamiltoniana in \eqref{usual_H_qubit}, tipica di un sistema a due livelli; la rappresentazione matriciale degli operatori sugli stati del sistema è riportata nelle relazioni in \eqref{a_adag_matrices} e \eqref{sigma12_aadag}. 
+\noindent L'idea è quella di codificare un qubit nei livelli energetici $(\ket 0, \ket{1})$ di un circuito superconduttivo che presenta una giunzione Josephson (Figura \ref{subfig:JJ-circuit}): quest'ultima permette di dare una descrizione quantistica al sistema e introduce dell'anarmonicità nello spettro energetico (vedi Figura \ref{fig:energy-difference-transmon}); l'hamiltoniana del sistema risultante è riportata nella \eqref{final_H_transmon}. Trascurando il livello energetico $\ket{2}$ ci si riduce alla nota all'hamiltoniana in \eqref{usual_H_qubit}, tipica di un sistema a due livelli; la rappresentazione matriciale degli operatori sugli stati del sistema è riportata nelle relazioni in \eqref{a_adag_matrices} e \eqref{sigma12_aadag}. 
 
 \noindent Vediamo come possiamo esplicitamente realizzare su un sistema superconduttivo le tipiche operazioni di un qubit: \textit{misura del sistema}, \textit{codifica di gate agenti su singoli qubit con le oscillazioni di Rabi} e \textit{codifica di gate agenti su più qubit}. 
 
@@ -43,7 +43,7 @@
 
 \noindent Dato che la fisica del qubit risulta in questo caso accoppiata alla CQED, sappiamo che l'hamiltoniana del sistema risultante è descritta dall'hamiltoniana di Jaynes-Cummings in \eqref{eq:ham-jaynes-cummings}
 \begin{equation*}
-    \hat{H} = - \frac{\omega_q}{2} \hat{\sigma}_3 + \omega_r \left( \hat{a}^\dag_r \hat{a}_r + \frac{1}{2} \right) + g \left( \hat{a}_r \hat{\sigma}_+ + \hat{a}^\dag_r \hat{\sigma}_- \right) \, ;
+    \hat{H} = - \frac{\omega_q}{2} \hat{\sigma}_3 + \omega_r \left( \hat{a}^\dag_r \hat{a}_r + \frac{1}{2} \right) + g \left( \hat{a}_r^\dag \hat{\sigma}_+ + \hat{a} \hat{\sigma}_- \right) \, ;
 \end{equation*}
 come già visto nella Sezione \ref{sec:int_qubit_CQED}, la misura può essere effettuata nel regime dispersivo dove $\frac{g}{\Delta} \ll 1$ ($\Delta = \omega_q - \omega_r$): in tal caso l'hamiltoniana precedente viene modificata in
 \begin{equation}\label{H_measure_transmon}
@@ -101,7 +101,7 @@ la miglior situazione possibile accade in corrispondenza della risonanza ($\Delt
 \begin{equation*}
     \hat{U}_{\text{ev}}(t) = e^{\frac{i}{2} A \hat{\sigma}_1 t} = R_x(-At) \, ;
 \end{equation*}
-similmente per $\phi = -\frac{\pi}{2}$
+similmente per $\phi = \frac{\pi}{2}$
 \begin{equation*}
     \hat{U}_{\text{ev}}(t) = e^{-\frac{i}{2} A \hat{\sigma}_2 t} = R_y(At) \, .
 \end{equation*}
@@ -176,7 +176,7 @@ Nella Sezione \ref{sec:gate_properties} abbiamo visto che è necessario posseder
     
     \noindent A differenza dei casi precedenti, questa situazione è più complessa perché l'accoppiamento coinvolge un'hamiltoniana di Jaynes-Cummings (i pedici "$_r$" stanno per "risonatore")
     \begin{equation*}
-        \hat{H}_{\text{int}} = \omega_r \left( \hat{a}_r^\dag \hat{a}_r + \frac{1}{2} \right) + g_1 \left( \hat{a}_r \hat{\sigma}_+^{(1)} + \hat{a}_r^\dag \hat{\sigma}_-^{(1)} \right) + g_2 \left( \hat{a}_r \hat{\sigma}_+^{(2)} + \hat{a}_r^\dag \hat{\sigma}_-^{(2)} \right) \, ;
+        \hat{H}_{\text{int}} = \omega_r \left( \hat{a}_r^\dag \hat{a}_r + \frac{1}{2} \right) + g_1 \left( \hat{a}_r^\dag \hat{\sigma}_+^{(1)} + \hat{a}_r \hat{\sigma}_-^{(1)} \right) + g_2 \left( \hat{a}_r^\dag \hat{\sigma}_+^{(2)} + \hat{a}_r \hat{\sigma}_-^{(2)} \right) \, ;
     \end{equation*}
     si noti che i due qubit interagiscono l'uno con l'altro per mezzo dei modi di oscillazione nel risonatore.
 \end{itemize}

@@ -2,11 +2,11 @@
 \newline
 \lecture{3}{14/10/2021}
 \vspace{0.5cm}
-\noindent Abbiamo visto come sia possibile calcolare il valore di aspettazione di $\expval{A}$ a partire dalle funzioni d'onda. Vogliamo vedere come sia possibile sfruttare la matrice densità per ottenere il medesimo risultato. Cominciamo con il considerare il generico insieme di stati $\{p_i, \ket{\psi_i}\}$ e la matrice densità corrispondente $\hat \rho=\sum_i p_i\op{\psi_i}{\psi_i}$. Per il singolo stato $\ket{\psi_i}$ avevamo visto che
+\noindent Abbiamo visto come sia possibile calcolare il valore di aspettazione di $\expval{A}$ a partire dalle funzioni d'onda. Vogliamo vedere come sia possibile sfruttare la matrice densità per ottenere il medesimo risultato. Cominciamo considerando il generico insieme di stati $\{p_i, \ket{\psi_i}\}$ e la matrice densità corrispondente $\hat \rho=\sum_i p_i\op{\psi_i}{\psi_i}$. Per il singolo stato $\ket{\psi_i}$ avevamo visto che
 \begin{equation*}
     \begin{aligned}
         \expval{A}_{\psi_i} &= \sum_k p_k a_k \\
-                            &= \sum_k \op{\psi_i}{a_k}\op{a_k}{\psi_i}a_k \\
+                            &= \sum_k \ip{\psi_i}{a_k}\ip{a_k}{\psi_i}a_k \\
                             &= \bra{\psi_i}\sum_k a_k \ket{a_k}\ip{a_k}{\psi_i} \\
                             &= \expval{A}{\psi_i}
     \end{aligned}
@@ -22,11 +22,11 @@ Tuttavia, nel caso della matrice densità, abbiamo un insieme di funzioni d'onda
 \end{equation*}
 
 \subsection*{Equazione di von-Neumann - Liouville}
-Per il \textbf{IV Postulato}, riguardante l'evoluzione temporale, la matrice densità evolve come $\hat U \hat \rho \hat U^\dagger$, ci chiediamo se sia possibile realizzare un'equazione analoga a quella di Schrödinger per la matrice densità. La risposta è affermativa infatti
+Per il \textbf{IV Postulato}, riguardante l'evoluzione temporale, la matrice densità evolve come $\hat U \hat \rho \hat U^\dagger$, ci chiediamo se sia possibile realizzare un'equazione analoga a quella di Schrödinger per la matrice densità. La risposta è affermativa, infatti
 \begin{equation*}
     \begin{aligned}
         \derivative{\hat \rho}{t} &= \sum_i p_i\left(\derivative{\ket{\psi_i}}{t}\bra{\psi_i}+\ket{\psi_i}\derivative{\bra{\psi_i}}{t}\right) \\
-                                  &= \sum_i \frac{p_i}{i\hbar}\left(\hat H \op{\psi_i}{\psi_i-\op{\psi_i}{\psi_i}}\hat H\right) \\
+                                  &= \sum_i \frac{p_i}{i\hbar}\left(\hat H \op{\psi_i}{\psi_i}-\op{\psi_i}{\psi_i}\hat H\right) \\
                                   &= \frac{1}{i\hbar}\comm{\hat H}{\hat \rho}
     \end{aligned}
 \end{equation*}
@@ -85,7 +85,7 @@ Per il \textbf{IV Postulato}, riguardante l'evoluzione temporale, la matrice den
 \end{equation*}
 dove 
 \begin{equation*}
-    \{\omega_k, \ket{\psi_k}\} \quad \text{e} \quad \ket{\psi_k}=\sum_j a_k^k \ket{a_j} \, .
+    \{\omega_k, \ket{\psi_k}\} \quad \text{e} \quad \ket{\psi_k}=\sum_j a_j^k \ket{a_j} \, .
 \end{equation*}
 Nella nuova base, la matrice densità sarà
 \begin{equation*}
@@ -97,23 +97,23 @@ Nella nuova base, la matrice densità sarà
 per cui gli elementi di matrice saranno
 \begin{equation*}
     \begin{aligned}
-        \rho_{mn} &= \mel{a_m}{\hat rho}{a_n} \\
+        \rho_{mn} &= \mel{a_m}{\hat \rho}{a_n} \\
                        &= \sum_k \omega_k a_m^ka_n^{*k}
     \end{aligned}
 \end{equation*}
 e gli elementi sulla diagonale
 \begin{equation*}
-    \rho_{nn}=\sum_k\omega k \abs{a_n^k}^2
+    \rho_{nn}=\sum_k\omega_k \abs{a_n^k}^2
 \end{equation*}
 
 \subsection{POVM: Misura a valori operatoriali positivi}
-Molte tipe di misurazioni non possono essere viste come proiezioni, ad esempio la rivelazione della posizione di un fotone non può essere eseguita poiché quando misuriamo il fotone, esso viene assorbito dal rivelatore e il fotone non esiste più. La proiezione non permette inoltre di distinguere in maniera esatta due stati non ortogonali, ad esempio se abbiamo due stati $\ket \psi$ e $\ket \phi$, se sono tra loro ortogonali sarà facile distinguerli con i proiettori, ma se non sono ortogonali non posso distinguerli e gli unici risultati che possiamo dare sono:
+Molti tipi di misurazione, come ad esempio la rivelazione della posizione di un fotone, non possono essere visti come proiezioni perché lo stato dopo la misura viene distrutto. Nel caso considerato, quando misuriamo il fotone esso viene assorbito dal rivelatore e non esiste più. A differenza delle misure proiettive non posso effettuare un'ulteriore misura sullo stesso stato. La proiezione non permette inoltre di distinguere in maniera esatta due stati non ortogonali. Ad esempio presi due stati $\ket \psi$ e $\ket \phi$, se sono tra loro ortogonali sarà facile distinguerli con i proiettori, ma se non sono ortogonali non possiamo distinguerli e gli unici risultati che possiamo dare sono:
 \begin{itemize}
     \item È nello stato $\ket \psi$;
     \item È nello stato $\ket \phi$;
     \item O in qualcos'altro.
 \end{itemize}
-Una misura a valori operatoriali positivi (POVM) è una misura i cui valori sono operatori semi-definiti positivi su uno spazio di Hilbert, che non richiedono ortogonalità, cioè non soddisfano la terza proprietà che abbiamo visto quando abbiamo introdotto i proiettori: $\hat P_i \hat P_j = \hat P_i\delta_{ij}$. La POVM può essere utile per classificare uno stato con 3 possibili identificazioni (come $\ket \psi$, $\ket \phi$ o "non so") dove invece una misura proiettiva è inutile.
+Una misura a valori operatoriali positivi (POVM) è una misura i cui valori sono operatori semi-definiti positivi su uno spazio di Hilbert che non richiedono ortogonalità, cioè non soddisfano la terza proprietà che abbiamo visto quando abbiamo introdotto i proiettori: $\hat P_i \hat P_j = \hat P_i\delta_{ij}$. La POVM può essere utile per classificare uno stato con 3 possibili identificazioni (come $\ket \psi$, $\ket \phi$ o "non so") dove invece una misura proiettiva è inutile.
 
 \subsection{Cambi di base: stati puri e miscele}
 
@@ -127,7 +127,7 @@ Una misura a valori operatoriali positivi (POVM) è una misura i cui valori sono
                    &= \sum_k\rho_{kk}a_k
     \end{aligned}
 \end{equation*}
-Quindi, solo i $\rho_{kk}=\mel{a_k}{\rho}{a_k}$ sono necessari per calcolare il valore di aspettazione e gli elementi fuori diagonale nella nostra rappresentazione sono apparentemente inutili. Tuttavia, gli elementi off-diagonal spesso ci dicono se la matrice corrisponde a uno stato puro o meno. Se abbiamo una matrice di densità non diagonale in base a un osservabile, anche se il valore di aspettazione dell'osservabile stessa è dato solo dagli elementi diagonali, se gli elementi fuori diagonale sono diversi da zero allora lo stato può essere puro, poiché la matrice diagonalizzata può avere tutte le voci uguali a $0$, tranne una uguale a $1$. Questi elementi fuori diagonale sono chiamati coerenza della matrice densità. Per esempio, consideriamo la seguente matrice $2\times 2$
+Quindi, solo i $\rho_{kk}=\mel{a_k}{\rho}{a_k}$ sono necessari per calcolare il valore di aspettazione e gli elementi off-diagonal nella nostra rappresentazione sono apparentemente inutili. Tuttavia, gli elementi off-diagonal spesso ci dicono se la matrice corrisponde a uno stato puro o meno. Se abbiamo una matrice di densità non diagonale in una base di un'osservabile, anche se il valore di aspettazione dell'osservabile stessa è dato solo dagli elementi diagonali, se gli elementi off-diagonal sono diversi da zero allora lo stato può essere puro, poiché la matrice diagonalizzata può avere tutte le voci uguali a $0$, tranne una uguale a $1$. Questi elementi fuori diagonale sono chiamati coerenza della matrice densità. Per esempio, consideriamo la seguente matrice $2\times 2$
 \begin{equation*}
     \begin{pmatrix}
         a & c \\
@@ -137,7 +137,7 @@ Quindi, solo i $\rho_{kk}=\mel{a_k}{\rho}{a_k}$ sono necessari per calcolare il 
 I coefficienti $c$ e $c^*$ prendono il nome di \textbf{coerenze}, questo perché:
 \begin{itemize}
     \item Se $c=c^*=0$, allora abbiamo una miscela di stati;
-    \item Se $c=c^*\neq 0$, allora possiamo avere uno stato puro, in quanto la matrice può essere diagonalizzata nella forma
+    \item Se $c,c^*\neq 0$, allora possiamo avere uno stato puro, in quanto la matrice può essere diagonalizzata nella forma
         \begin{equation*}
             \begin{pmatrix}
                 1 & 0 \\
