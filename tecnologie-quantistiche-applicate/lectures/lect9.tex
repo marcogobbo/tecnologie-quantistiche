@@ -1,0 +1,150 @@
+\chapter{Superconduttività}
+
+\section{Introduzione alla superconduttività}
+La realizzazione di un dispositivo quantistico controllabile è notevolmente facilitata dall'esistenza di particolari fenomeni caratterizzati dall'estensione su scala macroscopica di effetti quantistici. Il più importante di questi, su cui si basa una delle tipologie più diffuse di computer quantistici, è la superconduttività. Normalmente ci si aspetta che raffreddando un metallo la sua resistenza elettrica decresca continuamente, ma per alcuni di essi si annulla bruscamente ad una temperatura critica $T_c$. Ad esempio, per il niobio $T_c=9\text{ K}$, mentre per l'alluminio $T_c=1.7\text{ K}$. Una volta entrato nella fase superconduttiva $T<T_c$, il materiale può supportare corrente senza alcun fenomeno dissipativo, a patto che essa sia minore di un valore critico $I_c$. Gli elettroni di una corrente superconduttiva si muovono in un flusso macroscopicamente coerente, inoltre non contribuiscono più sia alla conduttività elettrica che a quella termica, ma solo alla prima, e gli unici conduttori di calore sono i fononi. L'esistenza della superconduttività è dovuta al fatto che, a temperature bassissime, l'interazione tra fononi ed elettroni crea una forza debolmente attrattiva tra gli elettroni, i quali si accoppiano in paia dette \textbf{coppie di Cooper}. Anche se la dimensione di queste strutture composite è generalmente maggiore della distanza media tra due elettroni in un metallo, le coppie di Cooper hanno spin totale nullo o intero, quindi sono bosoni e possono occupare macroscopicamente lo stesso stato, formando un condensato di Bose-Einstein.
+
+\subsection{Funzione d'onda e densità di corrente}
+Assumendo che tutti gli elettroni abbiano formato coppie di Cooper, che occupino lo stesso stato, la funzione d'onda del condensato $\ket{\psi(\vec r)}$ può essere considerata come descrivente la densità di particelle in una determinata posizione, invece della semplice probabilità di trovare una particella. Considerando una densità di elettroni $n_e(\vec{r})$, la densità di coppie di Cooper $n(\vec{r})$ descritta dalla funzione d'onda è data da:
+\begin{equation*}
+    \ip{\psi(\vec r)}{\psi(\vec r)} = n_e(\vec{r})/2=n(\vec{r})
+\end{equation*}
+Implicando quindi:
+\begin{equation*}
+    \ket{\psi(\vec r)} = \sqrt{\frac{n_e(\vec{r})}{2}}e^{-i\phi(\vec{r})}
+\end{equation*}
+La densità di carica è semplicemente $\rho(\vec r)=q\ip{\psi(\vec r)}{\psi(\vec r)}=2en(\vec{r})$. Lo stato è macroscopicamente coerente in quanto tutte le coppie di Cooper sono accomunate dalla stessa fase $\phi(\vec{r})$. Infine, siccome ognuna di esse è in uno stato legato, si definisce con $\Delta$ l'energia necessaria per ottenere due elettroni liberi, che in questo contesto vengono denominati quasiparticle.\\
+\\ \noindent
+\lecture{9}{4/11/2021}
+\noindent
+\\
+Vediamo ora come ricavare un'espressione per la densità di corrente superconduttiva $\vec J(\vec r)$. Come sempre, l'evoluzione della funzione d'onda è determinata dall'equazione di Schrödinger. Per particelle cariche di spin nullo in un potenziale elettromagnetico, si ottiene:
+\begin{equation*}
+    i\hbar\partialderivative{\psi}{t}=\hat H\psi=\left[\frac{1}{2m}(-i\hbar\grad-q\vec{A})(-i\hbar\grad-q\vec{A})+q\phi\right]\psi
+\end{equation*}
+dove $\vec{A}$ e $\phi$ sono rispettivamente il potenziale vettore e il potenziale scalare. Sostituendo l'equazione di continuità per la densità di corrente:
+\begin{equation*}
+    q\partialderivative{n(\vec r)}{t}= -\div \vec J
+\end{equation*}
+e l'espressione per la funzione d'onda nell'equazione di Schrödinger, si dimostra che:
+\begin{equation}
+    \vec J(\vec r)=\frac{\hbar}{m}(\grad\phi-\frac{q}{\hbar}\vec A)qn(\vec r)=\vec v(\vec r)\rho(\vec r)
+    \label{current_density}
+\end{equation}
+Se volessimo scrivere il momento
+\begin{equation*}
+    m\vec v_s(\vec r) = \frac{\vec J(\vec r) m}{qn_s}
+\end{equation*}
+A questo punto possiamo fare due considerazioni
+\begin{itemize}
+    \item Se $\vec A = 0$, $m\vec v_s(\vec r)=\hbar \grad \phi(\vec r)$, otteniamo il momento "classico", in cui tutte le coppie di Cooper si muovono coerentemente;
+    \item Se $\vec A \neq 0$, $m\vec v_s(\vec r)=\hbar \grad \phi(\vec r)-q\vec A$ il momento è noto come \textbf{momento dinamico}. La densità delle quasiparticle è quasi costante perché ci sono coppie di Cooper che sono libere di muoversi su un reticolo di cariche positive. Il movimento delle coppie di Cooper crea uno sbilanciamento di carica nello spazio che introduce delle forze. 
+\end{itemize}
+Da questo ultimo fatto possiamo analizzare un paio di effetti interessanti:
+
+\subsection{Effetto Meissner}
+Attraversare la temperatura critica implica una vera e propria transizione di fase per un superconduttore, che non può essere semplicemente descritto come un conduttore ideale. Se ciò fosse vero, applicando un campo magnetico, prima di raffreddare il materiale, permetterebbe di mantenere il campo al suo interno anche nel regime superconduttivo. In realtà, le linee di campo vengono sempre espulse dal corpo del materiale una volta superato il punto di transizione, tale fenomeno è denominato \textbf{effetto Meissner}. Si consideri ad esempio un materiale superconduttivo in regime stazionario, questo implica che la densità di carica $\rho$ sia praticamente uniforme e che $\div \vec J=0$. Inoltre, poiché lo stato stazionario del condensato corrisponde a quello fondamentale, la componente cinematica del suo momento è nulla, quindi anche $\laplacian \phi=0$. Considerando la divergenza di \eqref{current_density} si ottiene perciò:
+\begin{equation*}
+    \div \vec J=-\rho\frac q m \div \vec A
+\end{equation*}
+La divergenza di $\vec A$ può essere fissata scegliendo un gauge. In questo caso, si pone $\div \vec A=0$, ottenendo quindi:
+\begin{equation*}
+    \vec J=-\rho\frac q m \vec A=-n\frac {q^2} m \vec A
+\end{equation*}
+Questa espressione riassume le due equazioni di London, le relazioni costitutive più semplici per descrivere un superconduttore, a patto di aver scelto il gauge opportuno. Ora, le equazioni di Maxwell dicono che, in regime stazionario:
+\begin{equation*}
+    \laplacian \vec A=-\mu_0\vec J=\mu_0n\frac {q^2} m \vec A
+\end{equation*}
+Di conseguenza il potenziale vettore, quindi il campo magnetico e la densità di corrente, decrescono esponenzialmente addentrandosi nel superconduttore, rimanendo localizzati prevalentemente sulla superficie entro una distanza di penetrazione data da:
+\begin{equation*}
+    \lambda=\sqrt{\frac{m}{\mu_0nq^2}}
+\end{equation*}
+
+\subsection{Quantizzazione del flusso magnetico}
+Si supponga ora di avere un anello di materiale superconduttivo a $T>T_c$ immerso in un campo magnetico. Se la temperatura viene abbassata al di sotto del punto di transizione e il campo viene spento, si induce una corrente superficiale persistente, che genera a sua volta un flusso magnetico contrastante la diminuzione del campo concatenato con l'anello. Generalmente la corrente e il campo indotti verrebbero dissipati dopo un tempo caratteristico, ma in questo caso possono permanere indefinitamente. Si può dimostrare che il flusso concatenato non può assumere valori qualsiasi, ma solo multipli interi di una quantità fondamentale. Siccome per l'effetto Meissner in un superconduttore la densità di corrente è nulla, \eqref{current_density} implica che, considerando un percorso di integrazione al suo interno e compreso tra due punti ($a,b$):
+\begin{equation*}
+    \hbar\nabla\phi = q\vec A
+\end{equation*}
+\begin{equation*}
+    \delta=\phi_b-\phi_a = \frac{q}{\hbar}\int_a^b\vec A\cdot \dd{\vec l}
+\end{equation*}
+Per $b\rightarrow a$, l'integrale sarà uguale al flusso del campo magnetico concatenato con l'anello:
+\begin{equation*}
+    \int_a^b\vec A\cdot d\vec l\rightarrow\oint\vec A\cdot d\vec l=\int \vec B \cdot d\vec s=\Phi 
+\end{equation*}
+La funzione d'onda deve ovviamente tornare uguale a sé stessa se gli estremi di integrazione si sovrappongono, ma ciò è sempre vero a meno di una fase $\delta=\phi_b-\phi_a=2\pi n$, questo implica che:
+\begin{equation*}
+    \delta=2\pi n=\frac{q}{\hbar}\Phi
+\end{equation*}
+Si definisce quindi il quanto di flusso magnetico $\Phi_0=2\pi\frac\hbar q$
+\begin{equation*}
+    \Phi=n\Phi_0 \quad \Phi_0\sim 10^{-15}\text{ Wb}
+\end{equation*}
+Infine, indicando l'induttanza dell'anello come $L$, la corrente superficiale che sostiene il flusso magnetico (corrente schermante) è
+$I_{sc}=\frac{\Phi}{L}$.
+
+\section{La giunzione Josephson}
+Il materiale superconduttivo può presentare zone particolarmente assottigliate o strutture, come giunzioni e punti di contatto con altri superconduttori, in corrispondenza delle quali la corrente critica è notevolmente ridotta. In questi casi si parla di superconduttività debole, una condizione che presenta fenomeni di origine quantistica molto interessanti. In particolare, una giunzione Josephson è ottenuta sovrapponendo tra due lamine superconduttrici uno strato isolante, il quale, se è abbastanza sottile, potrà essere attraversato per effetto tunnel dalle coppie di Cooper o da quasiparticle.
+
+\subsection{Le equazioni di Josephson}
+Si supponga di applicare una differenza di potenziale V ai capi della giunzione, per ciascuno dei quali le coppie di Cooper sono descritte dalla funzione $\psi_j=\sqrt{n_{j}/2}\exp(i\phi_j)$. Considerando di introdurre il termine di tunnelling al primo ordine con una costante K, l'hamiltoniana che descrive questo sistema è:
+\begin{equation*}
+    \hat H = \begin{pmatrix}
+            \frac{qV}{2} & K \\
+            K & -\frac{qV}{2}
+    \end{pmatrix}
+\end{equation*}
+Per l'equazione di Schrödinger, l'evoluzione delle funzioni d'onda sarà data da:
+\begin{equation}
+    \label{Josephson_eq}
+    \begin{cases}
+        i\hbar\partialderivative{\psi_1}{t}=\frac{qV}{2}\psi_1+K\psi_2\\
+        i\hbar\partialderivative{\psi_2}{t}=-\frac{qV}{2}\psi_2+K\psi_1
+    \end{cases}
+\end{equation}
+Sostituendo le espressioni per i due stati e separando le espressioni per la parte reale da quella immaginaria, si possono ottenere le due equazioni di Josephson, che riassumono il comportamento essenziale di questo componente. Considerando la parte reale si ha:
+\begin{equation*}
+    \dot{n}_1=-\dot{n}_2=\frac{2}{\hbar}K\sqrt{n_1n_2}\sin\delta=\frac{2}{\hbar}Kn_0\sin\delta
+\end{equation*}
+Siccome $\dot n_i$ è semplicemente il rate di passaggio di elettroni superconduttivi da un lato all'altro, la corrente che attraversa la giunzione sarà proporzionale ad esso, mentre $n_0$ è la loro densità in assenza di tunnelling, uguale per entrambi i terminali. Si ottiene quindi la prima equazione di Josephson, descrivente l'\textbf{effetto DC Josephson}:
+\begin{equation*}
+    I=I_0\sin\delta
+\end{equation*}
+Una corrente superconduttiva può quindi attraversare la giunzione senza applicarvi una differenza di potenziale, dipendendo solo dalla differenza tra le fasi delle funzioni d'onda agli estremi, a patto che sia minore di un valore critico $I_0\ll I_c$, dove $I_c$ è la corrente critica del bulk del superconduttore. Allo stesso tempo, la parte immaginaria delle espressioni \eqref{Josephson_eq} è invece pari a:
+\begin{equation*}
+    \begin{cases}
+        \dot{\phi}_1=\frac{k}{\hbar}\sqrt{\frac{n_2}{n_1}}\cos\delta-\frac{qV}{\hbar} \\
+        \dot{\phi}_2=\frac{k}{\hbar}\sqrt{\frac{n_1}{n_2}}\cos\delta+\frac{qV}{\hbar}
+    \end{cases}
+\end{equation*}
+Che possono essere riassunte nella seconda equazione di Josephson:
+\begin{equation*}
+    \dot{\delta}=\frac{q}{\hbar}V(t)
+\end{equation*}
+La particolarità di questa caratteristica, denominata anche \textbf{effetto AC Josephson}, è data dal fatto che la fase, quindi la corrente, rimangano costanti solo se $V$ è nullo. Considerando $V\neq0$ costante, siccome $\frac q \hbar\sim 10^{15}\text{ }V^{-1}s^{-1}$  la fase evolverà linearmente molto velocemente. Per la prima equazione di Josephson, la corrente attraverso la giunzione oscillerà rapidamente, assumendo un valore medio nullo.
+
+\subsection{Induttanza Josephson}
+La giunzione Josephson presenta un comportamento induttivo non lineare. Infatti, ricordando che la caratteristica di un componente induttivo è definita da:
+\begin{equation*}
+    V(t)=L\dv{I}{t}
+\end{equation*}
+Considerando che la corrente attraverso la giunzione rimanga nel regime superconduttivo $I<I_0$, dalle due equazioni di Josephson e dall'espressione per il quanto di flusso $\Phi_0$ si ottiene:
+\begin{equation*}
+    \dv{I}{t}=I_0\Dot\delta\cos\delta
+            =I_0\frac{q}{\hbar}V(t)\cos\delta
+            =2\pi\frac{I_0}{\Phi_0}V(t)\cos\delta 
+\end{equation*}
+È quindi possibile definire:
+\begin{equation*}
+    L(I)=\frac{\Phi_0}{2\pi I_0\cos\delta}
+        =\frac{L_0}{\cos\delta}
+        =\frac{L_0}{\sqrt{1-\sin^2\delta}}
+        =\frac{L_0}{\sqrt{1-(\frac{I}{I_0})^2}}
+\end{equation*}
+In cui $L(0)=L_0=\frac{\Phi_0}{2\pi I_0}$ è un parametro caratteristico della giunzione, chiamato \textbf{induttanza Josephson}. Si può anche calcolare l'energia accumulata da questo tipo di induttore, data da:
+\begin{equation*}
+    E = \int_{-\infty}^t I(t')Vdt'
+        = \frac{I_0\Phi_0}{2\pi}\int_{0}^{\delta(t')}\sin\delta d\delta
+        = L_0I_0^2(1-\cos\delta)
+        = E_J(1-\cos\delta)
+\end{equation*}
+Dove $E_J=L_0I_0^2$ è denominata \textbf{energia Josephson}. Diversamente da un induttore classico, il cui funzionamento è determinato dalla creazione di un campo magnetico variabile in cui è accumulata l'energia, la supercorrente che attraversa una giunzione non genera campo magnetico. L'origine di questo comportamento dinamico è invece dovuto all'inerzia dei portatori di carica, che si oppongono a variazioni del loro moto, il che diventa particolarmente evidente se la forzante oscilla molto velocemente. Si parla quindi di induttanza cinetica, e il fatto che questo fenomeno sia dipendente dalla stessa corrente che attraversa la giunzione ne determina la caratteristica non lineare. Ad esempio, inserendo una giunzione Josephson come induttore in un circuito LC si otterranno oscillazioni anarmoniche. 

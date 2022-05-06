@@ -1,0 +1,142 @@
+\vspace{0.5cm}
+
+\noindent  \lecture{6}{26/10/2021}
+
+\section{Limiti quantistici standard}
+
+Il punto fondamentale dell'esperimento del microscopio di Heisenberg è che l'azione stessa di misurare un sistema quantistico finisce per perturbarlo irrimediabilmente (si sottolinea che una \textit{back action} è sempre non reversibile). 
+Cerchiamo adesso di studiare quale possa essere la massima precisione raggiungibile in una misura.
+
+\begin{definizione}[\textbf{Limiti quantistici}]
+    Per limite quantistico si intende generalmente un qualsiasi limite nella precisione di una misura. Si parla di \textbf{limiti assoluti} nel caso siano espressione del principio di indeterminazione di Heisenberg: solo questi sono i limiti ultimi codificati nei postulati della Meccanica Quantistica. 
+    
+    \noindent Si parla, invece, di \textbf{limiti quantistici standard} nel caso che le limitazioni siano legate agli effettivi metodi usati nella preparazione del sistema e nella sua misurazione.
+\end{definizione}
+\noindent Deve essere chiaro che è talvolta possibile migliorare i limiti quantistici standard, mentre è impossibile migliorare i limiti quantistici assoluti.
+\noindent Allo stesso tempo possiamo usare i limiti standard come limite (per lo meno come ordine di grandezza) al quale un sistema macroscopico inizia a mostrare la sua natura quantistica; è chiaro che per raggiungerli dovremo diminuire il più possibile ogni fluttuazione di tutte le forze classiche (in particolare saranno problematiche quelle relative all'energia termica).
+Vediamo ora qualche esempio di limiti quantistici standard.
+\begin{esempio}[Misura di un momento con un microscopio di Heisenberg]
+
+    Volendo misurare il momento di una particella in moto (o la sua velocità o la sua traiettoria) dobbiamo effettuare una misura in due differenti istanti temporali. Ad ogni misura corrisponderà una necessaria \textit{back action}.
+    
+    \noindent A tempo t=0 misuriamo la posizione della particella con errore $\Delta x_{m_1}$ e con una corrispondente perturbazione del momento:
+    \begin{equation*}
+        \Delta P_1 = \frac{\hbar}{2(\Delta x_{m_1})}
+    \end{equation*}
+    Dopo un certo tempo $\tau$ misuriamo nuovamente la posizione della particella con un'incertezza intrinseca $\Delta x_{m_2}$. A questa incertezza si aggiunge quanto deriva dalla perturbazione precedentemente calcolata:
+    \begin{equation*}
+        \Delta x_{add} = \frac{\Delta P_1\tau}{m}
+    \end{equation*}
+    Siccome il calcolo del momento è effettuato tramite $P=m\frac{x_2 - x_1 }{\tau}$, ne risulta un errore derivante da tutte e tre le componenti di incertezza calcolate:
+    \begin{equation*}
+        \Delta P = \frac{m}{\tau} \left[  \left( \Delta x_{m_1}\right)^2 + \left( \Delta x_{m_2}\right)^2 +\left( \Delta x_{add}\right)^2   \right]^{\frac{1}{2}}
+    \end{equation*}
+    
+    \noindent Se si vuole raggiungere la migliore precisione possibile è evidente che non è sufficiente minimizzare $\Delta x_{m_1}$ perché in tal modo aumenteremo $\Delta x_{add}$. Si può facilmente ricavare che la scelta ottimale dei parametri è quella che permette l'uguaglianza $\Delta x _{m_1} = \Delta x_{add}$. Questa scelta porta, comunque a:
+    \begin{equation*}
+        \Delta P \ge \Delta p_{SQL} \equiv \sqrt{\frac{\hbar m}{2\tau}}
+    \end{equation*}
+
+    Allo stesso modo posso ricavare:
+    \begin{equation*}
+        \Delta x_{SQL} = \sqrt{\frac{\hbar \tau }{2m}}
+    \end{equation*}
+
+\end{esempio}
+
+\begin{esempio}[Energia di un oscillatore armonico]
+    
+    Per un oscillatore armonico quantistico si può calcolare il limite quantistico (\textbf{E} è l'energia media, $m$ la massa e $\omega_m$ è l'auto-frequenza dell'oscillatore:
+    \begin{align*}
+        \Delta X_{SQL} &= \sqrt{\frac{\hbar}{2m \omega_m}} \\
+        \Delta \mathbf{E}_{SQL} &= \sqrt{\hbar \omega_m \mathbf{E}}
+    \end{align*}
+    
+    \noindent Generalmente per studiare la quantizzazione di un oscillatore armonico scriviamo il limite termico in relazione  all'energia di punto zero dell'oscillatore:
+    \begin{equation}\label{eq_stdlimit_harmonic}
+        Kb T \le \frac{\hbar \omega}{2}
+    \end{equation}
+    Quest'equazione è valida nel caso in cui stiamo considerando tempi di misura $\tau$ molto maggiori del tempo di rilassamento $\tau^\star$, ma nel caso in cui $\tau \ll \tau^\star$ il sistema e l'ambiente scambiano casualmente energie molto minori di $KbT$ perciò il limite espresso nell'equazione \ref{eq_stdlimit_harmonic} è da correggere. Un'analisi classica delle forze casuali legate all'ambiente dell'oscillatore (\textit{Nyquist forces}) ci permette di scrivere: 
+    \begin{equation*}
+        \Delta X_{th} = \sqrt{\frac{Kb T \tau}{m\omega^2 \tau^\star}} 
+    \end{equation*}
+    E inserendo il limite quantistico standard si arriva a:
+    \begin{equation*}
+        \frac{2 K b T \tau}{\omega \tau^\star} \le \hbar
+    \end{equation*}
+    E quest'ultimo è un criterio soddisfatto a temperature ben maggiori che quelle espresse nel primo limite.
+\end{esempio}
+
+\noindent Dopo aver introdotto il concetto dei limiti quantistici standard, possiamo chiederci quali possono essere gli strumenti per avvicinarci a tali limiti ed eventualmente a superarli. Ci sono due possibilità:
+\begin{itemize}
+    \item migliorare i metodi di preparazione e misura del sistema quantistico, in modo da ridurre i limiti stessi;
+    \item utilizzare misure quantistiche senza demolizione.
+\end{itemize}
+Vediamo ora un esempio che vada ad analizzare il primo caso. Supponiamo di avere un oscillatore meccanico su cui viene applicata una forza esterna. Per il teorema dell'impulso abbiamo:
+\begin{equation*}
+    F \tau = \Delta P
+\end{equation*}
+Se F è sufficientemente piccola allora il sistema si comporterà come un oscillatore quantistico.
+
+\noindent Supponendo che il contributo termico all'energia sia dominante, avremo $\expval E = \frac{KbT}{2}$ e, affinché il momento possa essere rivelabile dovremo avere:
+\begin{equation*}
+    \frac{P^2}{2m}\ge \expval E \longleftrightarrow \tau F \ge P= \sqrt{mKbT}
+\end{equation*}
+
+\noindent Considerando il principio di indeterminazione di Heisenberg $\Delta x \Delta P \ge \frac{\hbar}{2}$ per il caso di un oscillatore armonico della forma $\expval E = \frac{\expval{P^2}}{2m}+k\frac{\expval{x^2}}{2}$, possiamo scrivere:
+\begin{equation}\label{eq_limit_mec_oscillator}
+    \expval E \ge \frac{(\Delta P)^2}{2m}+ k \frac{(\Delta x)^2}{2}= \frac{1}{2m}\left( \frac{\hbar }{2\Delta x}\right) ^2 + k \left( \frac{\Delta x}{2}\right)^2
+\end{equation}
+Dove abbiamo usato, per x e in modo analogo per p:
+\begin{equation*}
+    \expval{x^2} = \expval x ^2 + (\Delta x)^2 = 0 + (\Delta x)^2
+\end{equation*}
+E l'equazione \ref{eq_limit_mec_oscillator} è minimizzata per $\Delta x = \sqrt{\frac{k}{2m\omega}}$ che porta a un errore sull'energia: 
+\begin{equation*}
+    \Delta E = \frac{\hbar \omega}{2}
+\end{equation*}
+Tuttavia, se siamo interessanti a misurare il momento applicato dalla nostra forza esterna, non siamo interessati a minimizzare l'errore sull'energia: possiamo preparare il sistema in modo da minimizzare il più possibile $\Delta P$, trascurando $\Delta x$. 
+
+\noindent Generalmente, tuttavia, le sonde che usiamo per misurare sono sensibili a entrambe le variabili (che siano il momento e la posizione o altre): dovremo cercare di limitarci solo a un osservabile, in modo da sfruttare il principio di indeterminazione stesso per raggiungere un'alta precisione nella misura d'interesse.
+
+\begin{esempio}[\textbf{Limite Shot-Noise}]
+    Assumiamo di avere un interferometro di Michelson.
+    
+    \noindent Avremo una variazione della fase $\Delta \phi = 0$ in uno dei due rami, mentre nell'altro avremo $\Delta \phi = \pi$. Vorremmo poter contare il numero di fotoni nei due rami per misurare la differenza di fase di un flusso. Dal momento che stiamo considerando un esperimento di conteggio, l'incertezza è descritta dalla legge di Poisson e va come $\frac{1}{\sqrt N}$.
+    
+    \noindent Posso aumentare N per migliorare la mia precisione, ma solitamente non posso avere un numero infinito di fotoni e questo mi porta a un altro limite quantistico\footnote{Nel caso di esperimenti sulle onde gravitazionali, ad esempio, il problema dell'aumento del fotoni è estremamente rilevante poiché diventa necessaria un'eccessiva potenza per generarli.}.
+\end{esempio}
+
+\section{Misurazioni senza demolizione}
+
+\noindent Abbiamo introdotto in sezione \ref{misurazioni_proiettive} le misurazione proiettive di Von Neumann per cui, dato un osservabile A con autovalori e autovettori $a_n \, , \, \ket{a_n}$, la probabilità di ottenere un certo autovalore è:
+\begin{equation*}
+    p(a_n) = \Tr \left( \ket{a_n}\bra{a_n}\rho \right) = \bra{a_n}\rho \ket{a_n}
+\end{equation*}
+Equazione che porta a $\expval A = \Tr (\rho A)$.
+Una singola misurazione di A porta inevitabilmente al collasso della funzione d'onda che descrive lo stato e, per questo, ogni conseguente misurazione (eseguita immediatamente dopo la prima) non può che portare allo stesso risultato (è una \textbf{misura esatta}). Dunque, in questo caso possiamo ripetere la misura infinite volte, per lo meno idealmente: si parla di \textbf{quantum non demolition (QND) measurement} (misurazione senza demolizione). 
+Abbiamo visto, d'altra parte, che non tutti i sistemi permettono una misura simile, basti pensare all'esperimento del microscopio di Heisenberg dove la misura distrugge totalmente il sistema (poiché viene ceduto del momento all'elettrone).
+\begin{esempio}[\textbf{Misura non esatta}]
+    
+    Prendiamo ad esempio il famoso esperimento di Stern e Gerlach. Prima di applicare un campo magnetico lo stato è dato da:
+    \begin{equation*}
+        \ket{\psi_i}= \frac{1}{\sqrt 2} \left( \ket{\uparrow} + \ket{\downarrow} \right) \ket{\xi_0}
+    \end{equation*}
+    La funzione d'onda così scritta è, evidentemente, separabile nella sua parte spaziale ($\ket \xi$)e di spin. Tuttavia, dopo l'applicazione del campo magnetico, diventa:
+    \begin{equation*}
+        \ket{\psi_f} = \frac{1}{2}\left(\ket \uparrow \ket{\xi_+} +\ket \downarrow \ket{\xi_-} \right)
+    \end{equation*}
+    In questo stato, al contrario di prima, la parte di spin e di posizione sono intrecciate (\textit{entangled}).
+    
+    \noindent Possiamo avere, inizialmente:
+    \begin{equation*}
+        \bra{\psi_i}\sigma_x \ket{\psi_i} = 1
+    \end{equation*}
+    Se la distanza fra il magnete e lo schermo finale è sufficientemente alta allora le distribuzioni spaziali finali $\ket{\xi_+}$ e $\ket{\xi_-}$ saranno fra loro ortogonali e $\bra{\psi_f}\sigma_x \ket{\psi_f}=0$, ma nel caso generico avremo (il campo magnetico è orientato lungo l'asse z):
+    \begin{equation*}
+        \bra{\psi_f}\sigma_x \ket{\psi_f}= \frac{1}{2}\left( \braket{\xi_-}{\xi_+}+\braket{\xi_+}{\xi_-} \right)
+    \end{equation*}
+    
+    \noindent Nel caso limite ortogonale, dunque, la misura distrugge completamente la coerenza del sistema iniziale sullo spin. Nel caso generico, che è più realistico, il collasso è solo parziale e, dunque, una seconda misura non deve necessariamente avere lo stesso risultato della prima.
+    
+\end{esempio}

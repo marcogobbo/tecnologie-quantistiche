@@ -1,0 +1,101 @@
+\vspace{0.5cm}
+
+\noindent  \lecture{8}{2/11/2021}
+
+\section{Misurazioni indirette}\label{sec:mis_ind}
+
+Per ora abbiamo analizzato il problema di \textit{cosa} avviene al sistema successivamente a una misurazione. Tuttavia non abbiamo ancora cercato di spiegare \textit{come} avviene una misurazione.
+Generalmente, fra l'osservatore e il sistema quantistico, vi è un cosiddetto dispositivo classico di misura (\textit{classical measuring device})\footnote{Esempi di dispositivi di questo tipo sono le foto-emulsioni, la camera a nebbia di Wilson etc. etc.}. Le misurazioni in cui un dispositivo di misura classico interagisce propriamente con l'oggetto quantistico studiato vengono chiamate \textbf{misure dirette}. 
+Chiaramente, in una misura di questo genere, stiamo utilizzando un sistema a molti gradi di libertà che vanno inevitabilmente a perturbare fortemente il sistema (abbiamo perturbazioni ben più grandi di quelle previste dai limiti di Heisenberg). Inoltre è raro che il sistema modifichi unicamente il grado di libertà studiato: con ogni probabilità porterà a una grossa perturbazione su una vasta gamma di osservabili.
+Per questo si tende a preferire quelle che vengono chiamate \textbf{misure indirette}. Tali misurazioni sfruttano una sonda quantistica (\textit{quantum probe}) per mediare l'interazione sistema classico - sistema quantistico.
+Abbiamo un processo a due fasi:
+\begin{enumerate}
+    \item la sonda quantistica interagisce con l'oggetto da misurare e fra di essi si stabilisce una correlazione;
+    \item la sonda viene rilevata e misurata direttamente da un dispositivo classico.
+\end{enumerate}
+\noindent La sonda viene preparata in modo adeguato quando è ancora del tutto sconnessa al sistema e ha, in particolare, un osservabile detto \textbf{\textit{pointer observable}} che ha un legame con l'osservabile d'interesse nel sistema quantistico: ovvero c'è un rapporto (idealmente 1:1) fra i valori dei due osservabili.
+Durante l'interazione sonda - sistema, d'altro canto, dobbiamo aspettarci che i due sistemi diventino \textit{entangled} e questo limiterà parzialmente la nostra misura finale: benché possiamo pensare di avere alte perturbazioni nella seconda fase del processo (perché non ci interessa conservare la sonda) dovremo limitarci per non perturbare troppo il sistema originale.
+Per raggiungere un'alta precisione nel processo di misura cercheremo di rispettare sempre due semplici condizioni:
+\begin{itemize}
+    \item il secondo step della misurazione deve avvenire solo quando il primo risulta completato;
+    \item il secondo step non deve contribuire significativamente all'errore totale della misura.
+\end{itemize}
+Se seguiamo queste regole, dunque, le uniche fonti di errore nella misura e le sole perturbazioni del sistema saranno quelle relative a incertezze intrinseche al processo di preparazione della sonda\footnote{Non stiamo considerando interazioni coi gradi di libertà ambientali.}.
+\vspace{1cm}
+\noindent Analizziamo, dunque, il processo di misura.
+Abbiamo due differenti sistemi quantistici (la sonda e l'oggetto studiato) descritti dalle rispettive matrici densità $\hat \rho _P$ e $\hat \rho _{INIT}$. L'evoluzione di entrambe può essere descritta introducendo $\hat U (t) = e^{-\frac{i}{\hbar}\hat H t}$ dove $\hat H$ è l'hamiltoniana totale del sistema ($\hat H = \hat H_{probe} + \hat H _{obj} + \hat H _{interaction}$):
+\begin{equation*}
+    (\hat \rho_P \hat \rho_{init})'=\hat U (t) \hat \rho_P \hat \rho_{init} \hat U ^\dagger (t)
+\end{equation*}
+\noindent Abbiamo detto che il processo di misurazione non è unitario, ma a questo punto la non-unitarietà è tutta contenuta nella fase di interazione fra sonda e strumentazione di misura.
+Lo stato finale della sonda, dopo l'interazione, è dato dalla seguente formula:
+\begin{equation*}
+    \hat \rho_{probe}' = \Tr_{obj} \left( \hat U \hat \rho_{probe} \hat \rho_{int} \hat U ^\dagger \right)
+\end{equation*}
+\noindent Solo a questo punto utilizziamo una misura proiettiva sulla sonda. 
+Misuriamo il \textit{pointer observable} $P\tilde a$ nello spazio della sonda che è collegato con l'osservabile $A$ nello spazio dell'oggetto studiato. Avremo l'autostato dell'operatore puntatore: $\ket{\tilde a}$ che corrisponderà all'autovalore (e rispettivo autostato) $\tilde a$ per l'oggetto.
+La probabilità di avere un certo autovalore sarà:
+\begin{equation*}
+    P(\tilde a) = \Tr \left( \ket{\tilde a}\bra{\tilde a} \hat \rho_{probe}'\right)
+\end{equation*}
+E la traccia che scriviamo qui è una traccia totale che opera nello spazio della sonda.
+Possiamo riscrivere questa equazione:
+\begin{equation*}
+    P(\tilde a) = \Tr \left( \hat \Pi (\tilde a) \rho_{init} \right)
+\end{equation*}
+Dove, a questo punto, la traccia opera solo sullo spazio dell'oggetto e abbiamo introdotto l'operatore $\hat \Pi$ (anch'esso opera sullo spazio dell'oggetto)  che definiamo come:
+\begin{equation*}
+    \hat \Pi (\tilde a) = \Tr_{probe}\left( \hat U ^\dagger \ket{\tilde a}\bra{\tilde a}\hat U \hat \rho_{probe}  \right)
+\end{equation*}
+A questo punto l'operatore $\hat \Pi$ contiene lo stato in cui la sonda è preparata ($\hat \rho_{probe}$), lo stato finale della sonda ($\ket{\tilde a}\bra{\tilde a}$) e l'evoluzione temporale (che è l'unico operatore che operava sia sullo spazio della sonda, dipendenza eliminata dalla traccia parziale, che sullo spazio dell'oggetto).
+Abbiamo visto la misura dal punto di vista della sonda, ma cosa sta succedendo al nostro oggetto?
+Avevamo scritto l'equazione \ref{eq:prob_omega} rimandandone la dimostrazione che, però, vediamo ora.
+Possiamo scrivere la matrice finale dell'oggetto (post interazione):
+\begin{equation*}
+    \hat \rho_{fin} (\tilde a) = \frac{1}{P(\tilde a)}\bra{\tilde a}\hat U \hat \rho_{probe}\hat \rho_{init} \hat U^\dagger \ket{\tilde a}
+\end{equation*}
+Se possiamo scrivere lo stato iniziale della sonda come: $\hat \rho_{probe} = \sum_i w_i \ket{\psi_i}\bra{\psi_i}$ arriviamo facilmente, per sostituzione, a:
+\begin{equation*}
+    \hat \rho_{fin} (\tilde a) = \frac{1}{P(\tilde a)} \sum_i \bra{\tilde a}\hat U \ket{\psi_i}\hat \rho_{init} \bra{\psi_i}\hat U ^\dagger \ket{\tilde a}
+\end{equation*}
+E ricordiamo che $\ket{\tilde a}$ e $\ket{\psi_i}$ sono stati della sonda e $\hat U$ agisce su entrambi gli stati. Dunque gli operatori $\bra{}\hat U \ket{}$ sono operatori dell'oggetto.
+Se la sonda si trova, inizialmente, in uno stato puro $\hat \rho_{probe} = \ket{\psi}\bra{\psi}$, allora abbiamo:
+\begin{equation*}
+    \hat \rho_{fin} (\tilde a) = \frac{1}{P(\tilde a)}\bra{\tilde a}\hat U \ket{\psi}\hat \rho_{init} \bra{\psi}\hat U ^\dagger \ket{\tilde a}
+\end{equation*}
+E possiamo identificare:
+\begin{equation*}
+    \bra{\tilde a} \hat U \ket{\psi} = \hat \Omega = \hat U_{obj}\sqrt{\hat M}
+\end{equation*}
+Con $\hat U_{obj}$ (diverso dall'operatore $\hat U$ precedente) che contiene le informazioni sulla perturbazione dell'oggetto causata dalla sonda.
+\vspace{0.5cm}
+Abbiamo già visto che abbiamo una misurazione senza demolizione nel caso in cui $[\hat A, \hat \Omega]=0$ che ora possiamo riscrivere:
+\begin{equation*}
+    \bra{\tilde a}[\hat A, \hat \Omega] \ket{\psi}=0  
+\end{equation*}
+Tale equazione deve essere vera per ogni autostato $\ket{\tilde a}$, perciò:
+\begin{equation*}
+    (\hat A \hat U - \hat U \hat A)\ket{\psi}= 0
+\end{equation*}
+Se moltiplichiamo per $\hat U^\dagger$ otteniamo:
+\begin{equation*}
+    \hat U ^\dagger (\hat A \hat U - \hat U \hat A)\ket{\psi}= (\hat U^\dagger \hat A \hat U - \hat A ) \ket{\psi}=0
+\end{equation*}
+Otteniamo, dunque, questa equazione che è la condizione per avere una QND (\textit{Quantum NonDemolition measurement}). Si noti che l'operatore fra parentesi corrisponde alla variazione dell'osservabile $A$ nella rappresentazione di Heisenberg.
+Perché questa condizione sia rispettata vi sono due possibilità:
+\begin{itemize}
+    \item che valga sempre $\hat U ^\dagger \hat A \hat U-\hat A = 0$;
+    \item che lo stato iniziale della sonda sia un autostato della differenza $\hat U^\dagger \hat A \hat U - \hat A$.
+\end{itemize}
+Il secondo caso non è stato particolarmente analizzato né dal punto di vista sperimentale né da quello teorico, mentre ci si è concentrati sulla prima condizione.
+Quest'ultima equivale a richiedere $[\hat A, \hat U] = 0$. Tale condizione è necessaria e sufficiente per avere una misura senza demolizione, ma è generalmente complesso verificare che sia verificata poiché è necessario conoscere l'evoluzione di oggetto e sonda.
+Per questo si preferisce richiedere una condizione più forte (sufficiente, ma non necessaria): $[\hat A, \hat H]=0$.
+Tipicamente avremo l'hamiltoniana scrivibile come:
+\begin{equation*}
+    \hat H = \hat H_{obj} + \hat H_{probe}+\hat H_{int}
+\end{equation*}
+Chiaramente abbiamo immediatamente la commutatività con la parte relativa alla sonda: $[\hat A, \hat H_{probe}]$=0 (poiché $\hat A$ è un osservabile dell'oggetto); mentre dovremo esplicitamente richiedere:
+\begin{align}
+    [\hat A , \hat H_{obj} ] &= 0\\
+    [\hat A , \hat H_{int} ] &= 0
+\end{align}

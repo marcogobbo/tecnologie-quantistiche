@@ -1,0 +1,138 @@
+\vspace{1cm}
+\newline
+\lecture{11}{11/11/2021}
+\noindent Come possiamo arrivare a una descrizione quantistica di qubit superconduttivi? Le giunzioni Josephson sono degli oggetti che hanno uno strano comportamento e abbiamo trattato questo effetto utilizzando un approccio classico poiché $\delta$ è trattabile solamente in modo classico. Per vedere effetti quantistici necessitiamo di sapere quando gli SQUIDS possono essere utilizzati come qubit. Per vedere effetti quantistici, dove la fase non è ben definita, trattiamo un basso numero di coppie di Cooper. L'energia associata alla capacità è data da
+\begin{equation*}
+    E_c=\frac{e^2}{2C} \, ,
+\end{equation*}
+per avere un comportamento quantistico $E_c\gg k_BT$. Procediamo con un esempio numerico
+\begin{esempio}
+    Supponiamo di essere a una temperatura di $18 \text{ mK}$, questo fornisce un'energia termica pari a $k_BT=10^{-6} \text{ eV}$. Affinché si abbia un comportamento quantistico, la capacità del condensatore deve essere $C \ll 0.1 \text{ pF}$. Cioè l'area della giunzione Josephson dovrà essere $10^{-6} \text{cm}^3$.
+\end{esempio}
+\noindent In principio noi vorremmo lavorare con temperature più alte, non solo, dobbiamo considerare la scala temporale del \textbf{principio di indeterminazione di Heisenberg}
+\begin{equation*}
+    \Delta E \Delta t = \frac \hbar 2 \, ,
+\end{equation*}
+quindi
+\begin{equation*}
+    E_c > \Delta E =\frac{\hbar}{2\Delta t} \, ,
+\end{equation*}
+siccome $\Delta t \sim RC$, $R$ deve essere superiore di $6 \text{ k}\Omega$, cioè $R=\frac{2\hbar}{(2e)^2}$. Questo è una possibile considerazione, altrimenti uno può valutare ad esempio l'energia della giunzione $E_J > k_BT$, dove $E_J = \frac{\hbar}{2e}I_0$, dove $I_0$ dipende dall'area. Il comportamento della giunzione utilizzata nei qubit dipende da $E_J$, $E_c$ e $k_BT$. L'idea di base per lavorare con i qubit è quindi avere una giunzione di piccole dimensioni e lavorare a basse temperature.
+
+\section{Quantizzazione di un circuito LC}
+Dal momento che vogliamo quantizzare un qubit necessitiamo di una lagrangiana da cui costruire la corrispondente hamiltoniana e, applicando la quantizzazione canonica, otteniamo il nostro sistema quantizzato.
+Supponiamo di considerare un semplice circuito LC come mostrato in Figura \ref{fig:lc-circuit}.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{circuitikz}
+        \draw
+        (0,0)   to[C=$C$] ++ (0, 2) -- ++ ( 2,0) 
+                to[L=$L$] ++ (0,-2) -- ++ (-2,0);
+    \end{circuitikz}
+    \caption{Circuito LC.}
+    \label{fig:lc-circuit}
+\end{figure}
+\noindent In generale, in ciascun ramo abbiamo una tensione $V_b$ e una corrente $I_b$, ciò che vogliamo andare a calcolare sono $\Phi_b$ e $Q_b$, dove
+\begin{equation*}
+    \begin{aligned}
+        \Phi_b(t)=\int_{-\infty}^t \dd{t'} V_b(t') \\
+        Q_b(t)=\int_{-\infty}^t \dd{t'} I_b(t') \, .
+    \end{aligned}
+\end{equation*}
+Ciascun elemento è caratterizzato da una relazione costitutiva che collega le variazioni di corrente e tensione. Dobbiamo distinguere tra elementi capacitivi per cui la relazione è della forma
+\begin{equation*}
+    V_b = f(Q_b) \, ,
+\end{equation*}
+ed elementi induttivi per cui la relazione è della forma
+\begin{equation*}
+    I_b = g(\Phi_b) \, .
+\end{equation*}
+Capacità e induttanze lineari usuali sono dei casi speciali in cui
+\begin{equation*}
+    \begin{aligned}
+        f(Q_b) = \frac{Q_b}{C} \\
+        g(\Phi_b) = \frac{\Phi_b}{L} \, .
+    \end{aligned}
+\end{equation*}
+Un controesempio è dato dalla giunzione tunnel Josephson che è un elemento induttivo e la funzione $g(\Phi_b)$ è un seno. Tuttavia lavorare con i rami non è una scelta ottimale. Le leggi di Kirchhoff da risolvere sono sulla corrente e tensione, ma invece di utilizzare $I_b$ e $V_b$ usiamo la carica $Q_b$ e il flusso $\Phi_b$. Questo perché il flusso e la carica in un nodo sono uguali al flusso e alla carica in un ramo, anche se in generale non sono sempre lo stesso. Siccome
+\begin{equation*}
+        \delta = \frac{2e}{\hbar}\Phi \mod{2\pi} = 2\pi \frac{\Phi}{\Phi_0}
+\end{equation*}
+\begin{equation*}
+        I_L = \frac{\Phi}{L} = \ddot{\Phi}C = I_C \, ,
+\end{equation*}
+avremo che la nostra lagrangiana sarà
+\begin{equation*}
+    L(\dot \Phi, \Phi) = C\frac{\dot{\Phi}^2}{2} - \frac{\Phi^2}{2L} \, .
+\end{equation*}
+Applicando la \textbf{trasformata di Legendre} con cui calcoliamo il momento coniugato
+\begin{equation*}
+    Q = \partialderivative{L}{\dot \Phi} = C\dot \Phi \, ,
+\end{equation*}
+possiamo scrivere ora l'hamiltoniana del nostro sistema:
+\begin{equation*}
+    H = Q\dot \Phi - L = \frac{Q^2}{2C} + \frac{\Phi^2}{2L} \, .
+\end{equation*}
+Avendo ora a disposizione l'hamiltoniana possiamo procedere ad una quantizzazione canonica in cui
+\begin{align*}
+    &\Phi \longrightarrow \hat \Phi \\
+    &Q \longrightarrow \hat Q = -i\hbar \partialderivative{\Phi} \\
+    &H \longrightarrow \hat H = \frac{\hat Q^2}{2C} + \frac{\hat \Phi^2}{2L}
+\end{align*}
+Come possiamo notare l'hamiltoniana quantizzata appena scritta assomiglia all'hamiltoniana di un oscillatore armonico, infatti possiamo notare un'analogia con
+\begin{equation*}
+    \hat H = \frac{\hat p^2}{2m} + \frac 12 m\omega^2\hat x^2 \, ,
+\end{equation*}
+\begin{align*}
+    Q &\longleftrightarrow p \\
+    \Phi &\longleftrightarrow x \\
+    C &\longleftrightarrow m \\
+    L &\longleftrightarrow \frac 1 k
+\end{align*}
+con pulsazione
+\begin{equation*}
+    \omega = \sqrt{\frac{k}{m}} = \frac{1}{\sqrt{LC}} \, .
+\end{equation*}
+In questo contesto, ricordando che
+\begin{equation*}
+    E_c = \frac{e^2}{2C} \qquad \text{e} \qquad Q = 2en \, ,
+\end{equation*}
+possiamo scrivere
+\begin{equation*}
+    \frac{Q^2}{2C} = \frac{4e^2n^2}{2C} = 4E_cn^2
+\end{equation*}
+Allo stesso modo
+\begin{equation*}
+    E_L = \left(\frac{\Phi_0}{2\pi}\right)^2\frac 1L \, ,
+\end{equation*}
+quindi 
+\begin{equation*}
+    \frac{\Phi^2}{2L} = \frac{\delta^2\Phi_0^2}{(2\pi)^2}\frac{1}{2L} = \frac{1}{2}\delta^2E_L \,
+\end{equation*}
+Un altro modo dunque di scrivere l'hamiltoniana è il seguente
+\begin{equation*}
+    \hat H = 4 E_C \hat n^2 + \frac 12 E_L \hat \delta^2 \, .
+\end{equation*}
+se prima $\comm{\hat \Phi}{\hat Q} = i\hbar$, ora abbiamo che $\comm{\hat \delta}{\hat n} = i$.
+Conoscendo l'oscillatore armonico abbiamo che le soluzioni degli autovettori $\ket k$ e degli autovalori $E{k+1} - E_k = \hbar \omega$ sono anche soluzioni del nostro circuito LC. Usando gli operatori di creazione $\hat a^\dagger$ e distruzione $\hat a$ possiamo riscrivere l'hamiltoniana come
+\begin{equation*}
+    \hat H = \hbar \omega \left(\hat a^\dagger \hat a + \frac 12 \right)
+\end{equation*}
+con 
+\begin{equation*}
+    \hat a = \frac{1}{\sqrt{2\hbar z}}\left(\hat \Phi + iz \hat Q\right) \qquad \text{e} \qquad \hat a^\dagger = \frac{1}{\sqrt{2\hbar z}}\left(\hat \Phi - iz \hat Q\right) \qquad \qquad z = \sqrt{\frac{L}{C}}
+\end{equation*}
+e le relazioni inverse
+\begin{equation*}
+    \hat Q = i\sqrt{\frac{\hbar}{2z}}\left(\hat a^\dagger - \hat a\right) \qquad \qquad \hat \Phi = \sqrt{\frac{\hbar z}{2}}\left(\hat a^\dagger + \hat a\right)
+\end{equation*}
+Possiamo inoltre valutare i valori medi di $\hat Q^2$ e $\hat \Phi^2$
+\begin{align*}
+    \expval{\hat Q^2} = \expval{\hat Q^2}{0} = \frac{\hbar}{2z} \\
+    \expval{\hat \Phi^2} = \expval{\hat \Phi^2}{0} = \frac{\hbar z}{2}
+\end{align*}
+e prendono il nome di \textbf{zero-point fluctuations} perché $\Delta Q \Delta \Phi = \frac{\hbar}{2}$.
+Come possiamo notare, il circuito LC non può essere utilizzato come qubit, questo perché il gap energetico tra i vari livelli è lo stesso, inoltre non possiamo vedere un comportamento quantistico perché $\hbar \omega \ll k_BT$. Se prendessimo $T=10 \text{ mK}$, allora $\hbar\omega > 10^{-5}\text{ eV}$, cioè $\omega \gg 10 \text{GHz}$.
+Questo fatto è interessante, perché per avere un sistema quantistico, a questa temperatura, necessitiamo solamente di una frequenza dell'ordine di $10 \text{GHz}$. Questo significa che il sistema in questione deve avere una dimensione $l < \frac{\omega}{2\pi c}$, ma questo non è un problema. Il problema risiede nel fatto che dobbiamo accoppiarlo con l'ambiente.
+Un altro fatto di cui dobbiamo tenere conto è quello riguardante la possibilità di avere tunneling, necessitiamo quindi di lavorare con livelli meno energetici del gap che c'è tra i vari livelli in un circuito LC. La probabilità di tunneling aumenta più si eccita il sistema. Martinis, Devoret e altri fisici che studiarono questo sistema rimpiazzarono l'induttore $L$ con una giunzione Josephson. La giunzione, comportandosi da elemento non lineare, va ad alterare la distribuzione dei livelli energetici.

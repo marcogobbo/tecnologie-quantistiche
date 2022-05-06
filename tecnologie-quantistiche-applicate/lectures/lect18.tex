@@ -1,0 +1,101 @@
+\vspace{0.5cm}
+\newline
+\noindent\lecture{18}{14/12/2021}
+\vspace{0.5cm}
+\noindent La teoria che descrive questo esperimento ha applicazioni molto interessanti per qubit superconduttivi che possono essere accoppiati a cavità per il \textit{readout} e anche per il \textit{controllo}.
+Nel caso di atomi veri e propri la frequenza di transizione era nell'ordine della decina di GHz, mentre per un qubit sarà nell'ordine del centinaio di MHz (cosa che porta a circuiti che occupano poco spazio). La configurazione più comune sarà quella di avere un insieme di qubit e cavità posti tutti su un piano. Il vantaggio principale è che gli atomi dovevano attraversare fisicamente la cavità (dunque l'interazione era limitata nel tempo) e il campo elettrico non era uniforme al suo interno. Questi problemi, chiaramente, un accoppiamento "a circuito" non li deve risolvere. Inoltre il fatto che il qubit sia artificiale ci permette di variare i suoi parametri molto più rapidamente. Gli svantaggi vengono invece da problemi di decoerenza e decadimento (che avviene molto più velocemente che per un atomo reale).
+
+\subsubsection{Tipologie di cavità}
+
+Nel caso dell'atomo la cavità era realizzata con due specchi elettromagnetici (generalmente costituiti dal superconduttore niobio). 
+Considerando un campo elettromagnetico classico, l'energia dei modi di oscillazione è libera; d'altra parte se consideriamo il campo come quantizzato, possiamo descrivere ogni modo come un oscillatore armonico indipendente.
+Per un qubit superconduttivo abbiamo almeno 3 differenti modalità principali di realizzazione. La più semplice, detta \textit{3D cavity}, consiste nel prendere un blocco di materiale superconduttivo (alluminio, ad esempio) e tagliarne una parte centrale in modo da ottenere una cavità con una forma speciale (ad esempio cilindrica). Il qubit è dunque posto all'interno di tale buco che viene chiuso. Due connettori posti all'esterno (e connessi al qubit in modo particolare) vengono usati per controllare e misurare il qubit.
+Chiaramente dovremo progettare la cavità in modo da modulare adeguatamente la frequenza di risonanza: per una cavità monodimensionale, ad esempio, avremo onde stazionarie per (L è la lunghezza):
+\begin{equation*}
+    \omega_c = \frac{n\pi}{\sqrt{\epsilon_0 \mu_0}L}
+\end{equation*}
+Cavità di questo tipo vengono usate per diverse applicazioni (anche per acceleratori).
+Queste cavità sono caratterizzate da un fattore di merito $Q$ che varia con le dimensioni della cavità stessa: più piccola sarà, più sarà la vita media.
+Un altro approccio possibile è quello delle guide d'onda coplanari (CPW). Con le adeguate condizioni al contorno è possibile stabilire onde stazionarie su un piano: l'idea è di usare un blocco superconduttivo e porre al centro una linea che trasporti l'onda, mentre i lati operano da terra. Isolando la guida con dei capacitori, il sistema è equivalente a un circuito LC che può essere quantizzato. Essendo un oscillatore armonico avremo l'hamiltoniana $H=\hbar\omega_c\left(a^\dagger a+\frac{1}{2}\right)$ che descrive infiniti modi d'oscillazione. Usualmente, tuttavia, solo uno di questi è dominante (e detterà la frequenza caratteristica della cavità $\omega_c$).
+Più recentemente si è anche iniziato ad usare circuiti LC reali concentrati (\textit{lumped}) accoppiati con una capacità al qubit (come abbiamo visto presentando la struttura di un XMON). Come per le semplici CPW, l'hamiltoniana risultante è quella di un oscillatore armonico con $a^\dagger a$ che indica il numero di fotoni presenti. Generalmente, l'interazione col qubit è compiuto unicamente della parte elettrica del campo, mentre la parte magnetica è trascurabile.
+Per ora le differenze fra atomo reale e artificiale sono minime. In ogni caso il qubit è un sistema a due livelli descritto dalla sua hamiltoniana:
+\begin{equation*}
+    \hat H_q=-\frac{1}{2}\hbar\omega_q\hat \sigma_z
+\end{equation*}
+Siccome generalmente vogliamo una frequenza caratteristica variabile, usiamo la configurazione del TRANSMON simmetrica (o delle semplici CPB). Si utilizza una doppia giunzione e si pone all'interno un flusso che fa variare l'energia Josephson secondo la formula (non derivata esplicitamente da noi):
+\begin{equation*}
+    E_J=E_{0J}\cos\left( \pi\frac{\Phi_e+\Phi(t)}{\Phi_0}\right)
+\end{equation*}
+In questo modo possiamo variare $\omega_q$ che è proporzionale a $\sqrt{E_c E_j}$.
+Dunque, possiamo fissare $\omega_c$ in fase di costruzione e progettazione e aggiustare $\omega_q$ con questo metodo.
+Il campo elettrico del primo modo di oscillazione stazionario lungo l'asse z (considerando una cavità 2D con assi $x$ e $z$) è descritto da:
+\begin{equation*}
+    \hat{E}_x=E_0(\hat a+\hat a^\dagger)\sin(kz)
+\end{equation*}
+Ponendoci al centro del nostro risonatore (dunque a $z=L/2$), il campo è ($k=\omega_0\sqrt{\mu_0\epsilon_0}$):
+\begin{equation*}
+    \hat E_x (z= L/2) = E_0 \left( \hat a + \hat a^\dagger \right)
+\end{equation*}
+Dunque, ora abbiamo un campo elettrico che interagisce col dipolo del qubit. L'hamiltoniana di interazione risulta:
+\begin{equation*}
+    \hat H_{int}=\hat d\cdot \hat E_x=d_x\hat \sigma_x \hat E_x =d_x E_0(\hat\sigma_{+}+\hat\sigma_{-})(\hat a+\hat a^\dagger)=g\hbar(\hat \sigma_{+}+\hat \sigma_{-})(a+a^\dagger)
+\end{equation*}
+Dove abbiamo definito l'accoppiamento (\textit{coupling)}: $g=\frac{d_xE_0}{\hbar}$.
+Questo descrive chiaramente l'atomo (dove sappiamo calcolare facilmente il dipolo), mentre per il qubit possiamo comunque ottenere il dipolo con alcune accortezze.
+Questa hamiltoniana (detta hamiltoniana di Rabi), dunque, descrive l'accoppiamento tra qubit e fotone:
+\begin{equation*}
+    H_{Rabi} = \hbar \omega_c \left( a^\dagger a + \frac{1}{2}\right) - \frac{\hbar \omega_q}{2} \sigma_z - g(\sigma_{+}+\sigma_{-})(a+a^\dagger)
+\end{equation*}
+Avremo degli autostati relativi al qubit (alla sua hamiltoniana libera) $\ket g$ e $\ket e$ (con autovalori $\pm \frac{\hbar\omega_q}{2}$, mentre per il campo avremo autostati (nello spazio di Fock) $\ket n$ (con autovalori $\omega_c(n+\frac{1}{2})$).
+Queste due basi, assieme, costituiscono quella che viene chiamata \textit{bare basis} e descrive i due sistemi disaccoppiati.
+Per prima cosa cerchiamo di semplificare il problema tramite RWA. Se assumiamo $g\ll \omega_c,\omega_q$, possiamo considerare il termine di interazione dell'hamiltoniana come perturbazione.
+Tale termine è scrivibile, moltiplicando tutto, come:
+\begin{equation*}
+    g(a\sigma_+ + a\sigma_- + a^\dagger \sigma_+ +a^\dagger \sigma_-)
+\end{equation*}
+Dove $a\sigma_-$ e $a^\dagger \sigma_+$ sono operatori di diseccitazione ed eccitazione totale (sia per il qubit che per il campo). Le frequenze caratteristiche di questi due termini ($\frac{E_c+E_q}{\hbar}$) sono molto maggiori delle frequenze relative agli altri termini: $\Delta E=\pm\hbar(\omega_c-\omega_q)<<(E_c+E_q)$. Dunque l'approssimazione RWA (ottenuta passando a un sistema in rotazione con $U=e^{i(H_c+H_q) t/\hbar}$) ci permette di trascurarli del tutto.
+Arriviamo, dunque, a una cosiddetta hamiltoniana di Jaynes-Cumming (che descrive l'interazione tra un sistema a due livelli e una cavità contenente un campo quantizzato):
+\begin{equation*}
+    H_{JC}=\hbar \omega_c ( a^\dagger a + 1/2) - \frac{1}{2}\omega_q \hbar \sigma_z + \hbar g (a \sigma_ + + a ^\dagger \sigma_-)
+\end{equation*}
+Diagonalizzando questa hamiltoniana troviamo gli autostati $\ket{n, +}$ e $\ket{n, -}$ che formano una nuova base. Un generico stato sarà, dunque, esprimibile come:
+\begin{equation*}
+    \ket \psi = C_0 \ket{n,+} + C_1 \ket{n , -}
+\end{equation*}
+Stato che evolverà come usuale.
+
+\subsection{Limite dispersivo}
+Definiamo come al solito il \textit{detuning}: $\Delta = \omega_q - \omega_c$. Se vale $\Delta \gg g$ possiamo modellare l'interazione come "dispersiva" (cioè senza che il qubit assorba alcun fotone) tramite la teoria delle perturbazioni.
+Spostandoci ora in un sistema di riferimento in rotazione con una frequenza dipendente dalla differenza di energia fra i due stati otteniamo oscillazioni fra i due stati del sistema. La frequenza di Rabi necessaria a passare questo sistema di riferimento è:
+\begin{equation*}
+    \omega_r=\frac{E_{n+}+E_{n-}}{\hbar}=\sqrt{\Delta^2+4g^2(n+1)}
+\end{equation*}
+Nel caso di un \textit{detuning} nullo, abbiamo $\omega_r = 2g\sqrt{n+1}$ (chiaramente più fotoni abbiamo nella cavità, più veloce è la rotazione risultante). Comunque anche quando non abbiamo fotoni la frequenza di Rabi è non nulla: $\omega_r^{ZPF}=\sqrt{\Delta^2 + 4g^2}$ (fluttuazione di punto zero).
+Un modo diverso di approcciarsi al limite dispersivo è quello di calcolare gli autovalori dell'hamiltoniana di Jaynes-Cumming:
+\begin{equation*}
+    E_{n\pm} = \hbar \omega (n + 1) \pm \sqrt{\left(\frac{\hbar\Delta}{2}\right)^2+\hbar^2g^2(n+1)}
+\end{equation*} 
+Espandendo al second'ordine in $g/\Delta$ otteniamo l'hamiltoniana:
+\begin{equation*}
+    H\approx \hbar \left( \omega_c + \frac{g^2}{\Delta} \sigma_x \right) (a^\dagger a + 1/2) + \hbar \omega_q \sigma_z /2
+\end{equation*}
+Qubit e cavità interagiscono ancora (tramite il termine $g^2/\Delta$), ma senza cambiare gli autostati (poiché il termine commuta col resto dell'hamiltoniana). Gli autovalori, tuttavia, vengono spostati:
+\begin{equation*}
+    E_{n\pm} = \hbar \omega_c (n + 1) \pm \frac{\hbar \omega_q}{2} \pm \hbar \frac{g^2}{\Delta}(n+1)
+\end{equation*}
+Scriviamo l'hamiltoniana approssimata usando $\chi=\frac{ g^2}{\Delta}$ (le differenze da quella scritta sopra sono tutte riconducibili a un cambio di notazione):
+\begin{equation*}
+    H = \hbar \omega_c a^\dagger a - \frac{\hbar}{2} (\omega_q - \chi ) \sigma_z + \hbar \chi a^\dagger a \sigma_z
+\end{equation*}
+Si può riscrivere come:
+\begin{equation*}
+    H=\hbar \omega_c a^\dagger a - \frac{\hbar}{2} (\omega_q - \chi  - 2\chi a^\dagger a) \sigma_z
+\end{equation*}
+E così si vede chiaramente che il qubit subisce un interazione dipendente dal numero di fotoni della cavità.
+Il termine di interazione $ \hbar \chi a^\dagger a \sigma_z$ commuta col resto dell'hamiltoniana, dunque è un'interazione senza demolizione (QND). 
+L'hamiltoniana può essere ancora riscritta:
+\begin{equation*}
+    H=\hbar (\omega_c+\chi\sigma_z) a^\dagger a - \frac{\hbar\tilde\omega_q}{2} \sigma_z 
+\end{equation*}
+Quello che possiamo vedere è che la frequenza di risonanza della cavità è variata a seconda dello stato del qubit e non varia rispetto al numero di fotoni presenti.
+Se mandiamo un segnale nelle microonde, nel limite $\frac{g\sqrt{n}}{\Delta}\ll 1$, possiamo misurare lo stato in cui si trova il qubit.

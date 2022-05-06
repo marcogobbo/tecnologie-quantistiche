@@ -1,0 +1,140 @@
+\vspace{0.5cm}
+\newline 
+\noindent \lecture{15}{30/11/2021}
+\vspace{0.5cm}
+\noindent Nel caso in cui all'estremo dell'elettrodo ci siano due giunzioni, si parla di TRANSMON simmetrico.
+\begin{figure}
+    \centering
+    \begin{circuitikz}
+        \draw (0,0)
+        to[barrier=$\Phi_e$] (0,2) 
+        to[short] (2,2)
+        to[C] (2,0) 
+        to[short] (-2,0)
+        to[barrier] (-2, 2)
+        to[short] (0,2);
+    \end{circuitikz}    
+    
+    \caption{}
+\end{figure}
+Questa configurazione permette di variare la corrente critica a piacimento, tramite l'applicazione del campo esterno $\Phi_e$:
+\begin{equation*}
+    I_0' = 2I_o \abs{\cos \frac{\pi \phi_e}{\phi_o}}
+\end{equation*}
+L'hamiltoniana, a questo punto, diventa:
+\begin{equation*}
+    H=4E_cn^2-2E_J\left|\cos(\pi\frac{\Phi_e}{\Phi_0})\right|\cos\delta
+\end{equation*}
+Perciò possiamo ora variare sia $E_C$ (progettando il circuito adeguatamente) e $E_J$ (tramite il campo esterno). L'anarmonicità risulta inoltre data da $\pi\frac{\Phi_e}{\Phi_0}=k\pi/2$ (con k interi). Abbiamo, dunque, la capacità di scegliere in modo arbitrario la frequenza di risonanza del qubit (caratteristica chiaramente necessaria, in particolare nel caso di utilizzo di più qubit contemporaneamente).
+Si noti che differenti varianti del TRANSMON simmetrico sono state proposte (ad esempio usando due giunzioni differenti si può diminuire la dipendenza dal flusso esterno della frequenza del qubit).
+Questo tipo di circuiti, tuttavia, porta con sé alcuni problemi di fabbricazione: in particolare le giunzioni devono avere dimensioni che non possono essere ottenute con litografia ottica (è necessaria la più complessa litografia a raggi ionici). Inoltre la produzione di tutti i componenti deve essere svolta nel medesimo vuoto in modo da avere superfici il più possibile uniformi.
+
+\section{Controllo di un qubit}
+
+\subsection{TRANSMON Qubit}
+
+Il motivo per cui si utilizza la configurazione "a più" dell'XMON è che in questo modo abbiamo 3 punti di accoppiamento fra la giunzione e l'esterno. Tramite questi punti potremo leggere lo stato del qubit e modificarlo.
+Il controllo del qubit (e dunque l'applicazione dei gate) viene detto \textit{XY control}: è costituito da una piccola capacità $C_d$ (\textit{d} di \textit{drive}, come viene chiamato il segnale) collegata a una sorgente \textit{RF} (la presenza della capacità serve a tenere separati i due componenti del circuito, in modo da non diminuire i tempi di decoerenza).
+L'hamiltoniana del sistema, approssimando il qubit a un semplice oscillatore armonico, risulta (con $Q=\partialderivative{\mathcal L}{\dot{\Phi}}=\dot{\Phi}(C+C_d)$):
+\begin{equation*}
+    H_0 = \frac{Q^2}{2(C+C_d)^2} +\frac{\Phi^2}{2L}
+\end{equation*}
+Alla quale bisogna aggiungere un ulteriore termine di drive:
+\begin{equation*}
+    H_d = C_d \dot \Phi V_d(t)=\frac{C_d}{C+C_d}QV_d(t)
+\end{equation*}
+A questo punto possiamo scrivere (in funzione della carica di fluttuazione di punto zero $Q_{\text{ZPF}}=\sqrt{\frac{\hbar}{2z}}$, con $z=\sqrt{\frac{L}{C}}$):
+\begin{equation*}
+    Q= -i Q_{\text{ZPF}}(a - a^\dagger)
+\end{equation*}
+E infine possiamo scrivere l'hamiltoniana totale ($\omega_q=\frac{\sqrt{8E_JE_C}-E_C}{\hbar}$):
+\begin{equation*}
+    H = \hbar \omega_q \left(a^\dagger a + \frac{1}{2}\right)- i\frac{C_d}{C_{TOT}}V_d(t)Q_{ZPF}(a-a^\dagger)
+\end{equation*}
+Modulando $V_d(t)$ dimostreremo che è possibile controllare lo stato del qubit ruotando lo spazio di Bloch.
+L'hamiltoniana, scritta con le matrici di Pauli, risulta (concentrandoci solo sui primi due livelli):
+\begin{equation*}
+    H = - \sigma_z\frac{\hbar\omega_q}{2}+\frac{C_d}{C_{\text{TOT}}}V_d(t)Q_{ZPF}\sigma_y
+\end{equation*}
+
+\subsection{Phase Qubit}
+In modo simile possiamo ragionare per il qubit di fase. Ricordiamo che il qubit di fase è costituito da un a giunzione Josephson in parallelo a una capacità, il tutto accoppiato con una corrente di bias $I_B$ (non c'è alcun elettrodo isolato per le coppie di Cooper, dunque).
+\begin{equation*}
+    \begin{aligned}
+        \hat H &= E_C \hat{n}^2 - E_J \cos {\hat \delta} - E_J\frac{\hbar}{2e} I_B \hat \delta \\
+        &=E_C\hat{n}^2-E_J\left(\cos\hat\delta+\frac{I_B}{I_0}\hat \delta\right) \\
+        &= E_C \hat{n}^2 - \frac{I_0}{2\pi}\Phi _0 \cos{\hat \delta}- \frac{I_0}{2\pi}\Phi_0 \hat \delta
+    \end{aligned}
+\end{equation*}
+La forma della curva del potenziale è determinata dal valore scelto per $I_B$. Aggiungendo (in serie) una corrente variabile nel tempo, possiamo controllare il qubit a piacimento.
+Dunque abbiamo ora $I_B=I_{B_0}+\Delta I(t)$ (con $I_{B_0}$ che definisce i livelli energetici $E_0$ e $E_1$ e i rispettivi autostati $\ket 0$ e $\ket 1$.
+L'hamiltoniana risulta data da:
+\begin{equation*}
+    \hat H' = \hat H_0 - \Delta I (t) \frac{\Phi_0}{2\pi}\hat \delta
+\end{equation*}
+Come abbiamo imparato, l'hamiltoniana considera infiniti livelli mentre noi approssimeremo il sistema solo ai primi due livelli.
+\begin{equation*}
+    \hat H' = \sum_{ij}\ket{i}\bra{i}\hat H'\ket{j}\bra{j}
+\end{equation*}
+Il primo termine di $\hat H'$ è già diagonale nella base di $\ket 0-\ket 1$, il secondo termine è leggermente più complicato e necessita dell'approssimazione di \textit{rotating wave} (che vedremo tra poco).
+Alla fine otteniamo:
+\begin{equation*}
+    \hat H = - \hat\sigma_z\frac{\hbar\omega_q}{2}+\frac{\Delta I(t)\Phi_0}{2\pi}\delta_{ZPF}\hat\sigma_x
+\end{equation*}
+Dunque otteniamo un'hamiltoniana dipendente da $\sigma_x$ e un'altra matrice di Pauli ($\sigma_y$). Questi sono gli ingredienti fondamentali per il controllo XY.
+
+\subsection{Oscillazioni di Rabi}
+
+Facciamo un passo indietro. La matrice densità nello spazio di un qubit può essere scritta come:
+\begin{equation*}
+   \rho=\frac{1}{2}(1+\sum\rho_i\sigma_i)
+\end{equation*}
+E si può rappresentare come un vettore unitario in 3 dimensioni: $\vec\rho=(\rho_x,\rho_y,\rho_z)$ o, in coordinate sferiche, $\vec\rho=(cos\phi sin\theta,sin\phi sin\theta,cos\theta)$.
+In ugual modo l'hamiltoniana può essere scritta come vettore:
+\begin{equation*}
+   H = H_x \sigma_x +  H_y \sigma_y  +  H_z \sigma_z \rightarrow \vec H = \left( H_x , H_y , H_z \right)
+\end{equation*}
+In generale si parla del termine con $\sigma_z$ come di termine di stato di qubit, mentre $\sigma_x$ e $\sigma_y$ sono adibiti al controllo del qubit. Questo perché possiamo generalmente scrivere l'hamiltoniana come:
+\begin{equation*}
+    H = \epsilon\sigma_z+\Delta(t)(\sigma_x+\sigma_y)
+\end{equation*}
+Abbiamo anche visto che l'evoluzione della matrice densità è descritta dall'equazione di Neumann-Liouville $i\hbar \partialderivative{\rho}{t} = \left[ H, \rho\right]$. Nel caso che stiamo analizzando abbiamo dei vettori e, dunque:
+
+\begin{equation*}
+ \partialderivative{\rho}{t}=\frac{1}{\hbar}\vec H\times\vec\rho
+\end{equation*}
+Chiaramente devo anche considerare i tempi di \textit{dephasing} e \textit{decoherence}, perciò otterrei, tramite i termini di Limblad:
+\begin{align*}
+    \dot\rho_x=[H\times\rho]_x-\frac{\rho_x}{T_2}  \\
+    \dot\rho_y=[H\times\rho]_y-\frac{\rho_y}{T_2}   \\
+    \dot\rho_z=[H\times\rho]_z-\frac{\rho_z-\bar{\rho_z}}{T_1}   
+\end{align*}
+Questi termini descrivono un moto di precessione attorno al vettore $\vec H$. Dunque, variando il termine dipendente dal tempo di $H$ e aspettando un certo tempo, possiamo far variare a piacimento il vettore $\vec \rho$.
+Inoltre, dopo un certo tempo e a temperatura bassa (in modo da non eccitare il qubit), il vettore $\vec \rho$ si troverà a coincidere con $\vec H$ (dunque conosceremo lo stato iniziale del sistema). 
+
+\subsection{Approssimazione di rotating wave (RWA)}
+L'approssimazione di \textit{Rotating Wave} (indicata generalmente con RWA) consiste nel passare nel sistema di riferimento in rotazione e cancellare i termini dell'hamiltoniana in rotazione con frequenza elevata. Questa approssimazione è valida nel caso in cui stiamo operando intorno alla frequenza di risonanza e ci permette di semplificare i conti in diversi momenti.
+Abbiamo appena visto che, se $\vec \rho$ e $\vec H$ non sono paralleli avremo una rotazione di $\vec \rho$. Possiamo cambiare il sistema di riferimento in modo che questa rotazione sia soppressa. 
+Se la rotazione ha una frequenza caratteristica $\omega_q=\frac{E_1-E_0}{\hbar}$ la trasformazione unitaria per il cambio di sistema di riferimento sarà:
+
+\begin{equation*}
+    U_{RF}= e^{i \frac{H_0 t}{\hbar}}
+\end{equation*}
+E, chiaramente, siamo in grado di ricavare la trasformazione contraria con facilità.
+Immaginiamo, ad esempio, di avere uno stato già in evoluzione:
+\begin{equation*}
+    \ket{\psi (t)}= U\ket{\psi_0}=e^{-i H_0 t/\hbar}\ket{\psi _0}
+\end{equation*}
+Passando al sistema di riferimento in rotazione avremo:
+\begin{equation*}
+    \ket{\psi_{rf}}=U_{rf}\ket{\psi(t)}=\ket{\psi_0}
+\end{equation*}
+Dunque abbiamo dimostrato che il vettore di stato cessa di ruotare. L'hamiltoniana (scritta inizialmente come $H=H_0+H(t)$), è modificata:
+\begin{equation*}
+   i\hbar\partialderivative{\ket{\psi_{rf}}}{t}=i\hbar\left(\partialderivative{U}{t}\ket{\psi_0}+U\partialderivative{\ket{\psi_0}}{t}\right)=\\
+   i\hbar\dot{U}U^\dagger\ket{\psi_{rf}}+UHU^\dagger\ket{\psi_{rf}}=H_{rf}\ket{\psi_{rf}}
+\end{equation*}
+Dunque abbiamo:
+\begin{equation*}
+    H_{rf}= i\hbar \dot U U^\dagger + U H U^\dagger 
+\end{equation*}

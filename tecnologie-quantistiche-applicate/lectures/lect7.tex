@@ -1,0 +1,82 @@
+\vspace{0.5cm}
+
+\noindent  \lecture{7}{28/10/2021}
+\vspace{0.5cm}
+\noindent Una delle caratteristiche della misurazione proiettiva di Von Neumann, che abbiamo già visto, è che sono ortogonali:
+\begin{equation*}
+    P_i P_j = P_i \delta _{ij}
+\end{equation*}
+E questo fondamentalmente ci dice che un risultato esclude l'altro. Una tale proprietà è estremamente ideale (per questo la misura è detta "esatta"): in un caso reale, come quando descritto nell'esperimento di Sten e Gerlach, la misura è detta "approssimata" poiché non è rispettata la condizione di ortogonalità.
+
+\noindent In una misura rumorosa o approssimata abbiamo anche una \textit{back action} poco definita. 
+
+\noindent Proviamo a vedere questo concetto più formalmente: supponiamo di avere un osservabile $A$ con autostati $\ket{a_k}$ e autovalori $a_k$. Misurando, non troviamo uno degli autovalori di $\hat A$, ma $\tilde a_k$ che è collegato alla precisione della misura a partire da una probabilità condizionata: $P(\tilde a _k | a_n)$.
+Dunque se preparo il mio stato iniziale con una matrice densità $\rho_{init}$, la probabilità di misurare un certo autovalore è data da:
+\begin{equation*}
+    P(a_k) = \bra a_k \hat \rho_{init}\ket{a_k} = \Tr \left( \ket{a_k}\bra{a_k}\hat \rho_{init}\right)
+\end{equation*}
+\noindent Data questa probabilità, posso cercare $P(\tilde a _k)$:
+\begin{equation*}
+    P(\tilde a _l ) = \sum_k P(\tilde a_l | a_k ) P(a_k)
+\end{equation*}
+E questo può essere scritto in termini di un nuovo operatore M (\textit{Measurement}):
+\begin{align}\label{eq_prob_tilde_m_op}
+    P(\tilde a_k) & = \sum_k P(\tilde a_l | a_k ) \Tr \left( \ket{a_k}\bra{a_k}\hat \rho_{init}\right) = \nonumber \\ 
+                  & = \Tr \left( \sum_k P(\tilde a_l | a_k ) \ket{a_k}\bra{a_k}\hat \rho_{init}\right) = \nonumber \\
+                  & = \Tr \left( \hat M (\tilde a_l ) \hat \rho_{init}\right)
+\end{align}
+E abbiamo definito M:
+\begin{equation*}
+    \hat M(\tilde a_l) = \sum_k P(\tilde a _l | a_k ) \ket{a_k}\bra{a_k}
+\end{equation*}
+Una proprietà fondamentale di questo nuovo operatore M è:
+\begin{equation*}
+    \left[\hat M(\tilde a_i) , \hat M(\tilde a_j) \right]=0
+\end{equation*}
+Ovvero l'operatore M per due diversi valori $\tilde a_k$ commuta, in quanto condivide gli stessi autostati (poiché in M è presente la "decomposizione di unità" data da $\sum \ket{a_k}\bra{a_k}$).
+Possiamo anche esprimere al contrario questa proprietà: ogni decomposizione di unità di operatori che autocommutano rappresenta l'operatore misura per un certo osservabile.
+\vspace{0.2cm}
+\noindent Vogliamo ora studiare la \textit{back action} relativa a una misura approssimata.
+Se partiamo da una matrice densità $\rho_{init}$ e misuriamo lo stato $\ket{\tilde a_k}$ possiamo scrivere la matrice densità finale tramite l'introduzione del simil-proiettore $\hat \Omega$ (in analogia a quanto visto per le misurazioni esatte)\footnote{Dimostrazione alla sezione \ref{sec:mis_ind}}:
+\begin{equation}\label{eq:prob_omega}
+    \hat \rho (\tilde a_k ) = \frac{1}{P(\tilde a_k}) \hat \Omega_k \hat \rho_{init}\hat \Omega^\dagger_k
+\end{equation}
+Usando la definizione nell'equazione \ref{eq_prob_tilde_m_op} e la proprietà di tutte le matrici densità per cui la loro traccia è unitaria si arriva all'uguaglianza:
+\begin{equation*}
+    \hat M(\tilde a _k ) = \hat \Omega_k^\dagger \hat \Omega_k
+\end{equation*}
+Usando la tecnica della \textit{left polar decomposition} possiamo riscrivere $\Omega$ tramite l'introduzione di un operatore unitario:
+\begin{equation*}
+    \hat\Omega_k = \hat U(\tilde a_k) \sqrt{\hat M(\tilde a_k)}
+\end{equation*}
+Chiaramente con:
+\begin{equation*}
+    \sqrt{\hat M(\tilde a_k)} = \sum_k \sqrt{P(\tilde a_l | a_k)}\ket{a_k}\bra{a_k}
+\end{equation*}
+Immediatamente otteniamo la proprietà per cui $\hat A$ e $\sqrt{\hat M}$ condividono gli stessi autostati e, dunque:
+\begin{equation*}
+    \left[ \sqrt{\hat M}, \hat A \right] = 0
+\end{equation*}
+In questa rappresentazione, possiamo considerare la misurazione come un processo a doppio step: 
+\begin{enumerate}
+    \item il primo step considera il rumore (l'approssimazione) della misura:
+        \begin{equation}
+            \hat \rho'(\tilde a_k) = \frac{1}{P(\tilde a_k)}\sqrt{\hat M(\tilde a_k)}\hat \rho_{init}\sqrt{\hat M(\tilde a_k)}
+        \end{equation}
+    \item il secondo step considera l'operatore unitario $\hat U$:
+        \begin{equation*}
+            \hat \rho (\tilde a_k) = \hat U (\tilde a_k ) \hat \rho'(\tilde a_k) \hat U^\dagger (\tilde a_k)
+        \end{equation*}
+\end{enumerate}
+Il primo step, è importante sottolinearlo, lascia invariate le probabilità di misura dell'osservabile (poiché $\hat A$ commuta con $\sqrt{\hat M}$).
+
+\vspace{0.5cm}
+
+\noindent
+Il secondo step considera la perturbazione unitaria della \textit{back action}; se vale che $\hat A$ e $\hat U$ commutano (proprietà generalmente non vera), allora la misurazione lascia il sistema completamente imperturbato. Questo significa che la probabilità di ottenere un certo autostato o autovalore è invariata anche dopo il secondo step: si parla di \textbf{quantum nondemolition measurment} (misure senza demolizione).
+
+\begin{definizione}[QND: Quantum NonDemolition measurement]
+    Una QND è un tipo speciale di misurazione di un sistema quantistico nel quale l'incertezza di misura per un certo osservabile non cresce con la normale evoluzione del sistema. Questa proprietà necessita che la misura sia in grado di preservare l'integrità del sistema e stabilisce dei vincoli sulla relazione fra "operatore di misura" e Hamiltoniana del sistema.
+    
+    \noindent Questi vincoli possono essere espressi, considerando (solamente a livello matematico) la misurazione come un processo a due step, tramite la proprietà commutazione di un operatore unitario di perturbazione con l'osservabile in questione.
+\end{definizione}

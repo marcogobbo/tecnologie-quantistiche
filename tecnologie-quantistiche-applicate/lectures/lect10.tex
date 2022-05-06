@@ -1,0 +1,123 @@
+% Mancano immagini
+\vspace{1cm}
+\newline
+\lecture{10}{9/11/2021}
+\noindent Se proviamo a far passare attraverso la giunzione Josephson una corrente $I >I_c$, allora l'eccesso di corrente dovrà essere trasportato dalle quasiparticle, in modo normale e dissipativo. Per indagare questa situazione, useremo un modello conveniente e solitamente abbastanza preciso di una \textbf{giunzione con derivazione resistiva} (RSJ) di una giunzione Josephson, dove parallelamente alla giunzione Josephson vera e propria c'è una resistenza finita $R$. Per tutto $I < I_c$ è cortocircuitato dalla supercorrente. Poi per $I > I_c$
+\begin{equation*}
+    I = I_c \sin \delta(t)+\frac{V(t)}{R} = I_c\sin \delta(t) + \frac{\hbar}{2eR}\dv{\delta}{t} \, 
+\end{equation*}
+con soluzione implicita nella forma
+\begin{equation}
+    \begin{aligned}
+        t(\delta) &= \frac{\hbar}{2eRI_c}\int_0^\delta \frac{\dd{\delta}}{I/I_c - \sin \delta}\\
+        &= \frac{\hbar}{2eRI_c}\frac{2}{\sqrt{(I/I_c)^2-1}}\arctan{\left[\frac{(I/I_c)\tan{(\phi/2)}-1}{\sqrt{(I/I_c)^2-1}}\right]} \, .
+        \label{eq:lect-10-1}
+    \end{aligned}
+\end{equation}
+La differenza di fase, e quindi la tensione, sarà una funzione periodica del tempo, con periodo
+\begin{align*}
+    T_{RSJ} &= \frac{\hbar}{2eRI_c}\int_0^{2\pi} \frac{\dd{\phi}}{I/I_c-\sin\phi} \\
+    &= \frac{2\pi}{\sqrt{(I/I_c)^2-1}}\frac{\hbar}{2eRI_c} \\
+    &= \frac{2\pi}{\omega_{RSJ}} \, .
+\end{align*}
+La tensione media Josephson sarà di conseguenza
+\begin{equation*}
+    \overline{V}_J = \frac{\hbar\omega_{RSJ}}{2e} = R\sqrt{I^2 - I_c^2} \, .
+\end{equation*}
+La soluzione esplicita per la tensione può essere ottenuta dalla \eqref{eq:lect-10-1} nella forma
+\begin{equation*}
+    V(t) = \frac{\hbar}{2e}\dv{\phi}{t} = \frac{R(I^2-I_c^2)}{I+I_c\cos\omega_{RSJ}t} \, ,
+\end{equation*}
+tali oscillazioni sono state effettivamente osservate e seguono anche un'altra proprietà interessante e utile. Secondo la definizione generale di induttanza, $V =L\dot{I}/c^2$, la giunzione Josephson può essere considerata come un'\textit{induttanza non lineare} $L_J$:
+\begin{equation*}
+    L_J(\varphi) = \frac{\hbar c^2}{2eI_c\cos\phi} \, .
+\end{equation*}
+Il fatto che questa induttanza possa essere sintonizzata (e persino cambiare segno) fissando una differenza di fase stazionaria attraverso la giunzione è molto utile per varie applicazioni.
+\section{SQUID}
+Questi dispositivi, sebbene molto semplici nel design, hanno aperto nuovi orizzonti nelle tecniche di misurazione a bassa temperatura. Molti strumenti basati su SQUID sono unici nella loro sensibilità. Gli esempi più celebri sono i magnetometri SQUID, che sono in grado di risolvere incrementi di flusso di circa $10^{-10} \text{gauss}$, e i voltmetri di precisione con la sensibilità di circa $10^{-15} \text{V}$. Allora, cos'è SQUID? Ci sono due tipi fondamentali di SQUID da distinguere: uno \textbf{SQUID RF} a giunzione singola e uno \textbf{SQUID DC} a due giunzioni.
+\subsection{RF SQUID}
+L'elemento base di uno SQUID a giunzione singola è un anello superconduttivo contenente una giunzione Josephson. Consideriamo due punti, 1 e 2, in prossimità della giunzione, come mostrato in Figura Il contorno tratteggiato 1-2 passa attraverso l'interno del superconduttore in modo tale che la sua distanza dai bordi sia ovunque maggiore di $\lambda$. Pertanto, non c'è sovracorrente in nessun punto del contorno e $v_s = 0$.
+Consideriamo la \eqref{current_density} e integriamo lungo il contorno tratteggiato dal punto 1 al punto 2.
+\begin{equation*}
+    \hbar \grad \vec{\phi}(\vec r)-q\vec{A}=m\vec v_s(t) \, ,
+\end{equation*}
+da cui
+\begin{equation*}
+    \hbar \grad \vec{\phi}(\vec r)=q\vec{A} \, ,
+\end{equation*}
+integrando
+\begin{equation*}
+    \begin{aligned}
+            \hbar \int_1^2 \dd{\vec r}\nabla \phi(\vec r) &= 2e\int_1^2 \dd{\vec r} \cdot \vec A \\
+            \hbar \left(\phi_2-\phi_1\right) &= 2e\int_1^2 \dd{\vec r} \cdot \vec A \\
+            \hbar \delta &= 2e \oint_1^2 \dd{\vec r} \cdot \vec A \\
+            \hbar \delta &= 2e\Phi \, .
+    \end{aligned}
+\end{equation*}
+Questo perché la distanza tra i punti 1 e 2 attraverso la giunzione è molto più breve della loro distanza lungo il contorno tratteggiato e il potenziale vettore non ha particolarità in prossimità della giunzione.
+Dal risultato ricavato precedente abbiamo
+\begin{equation}
+    \delta = 2\pi \frac{\Phi}{\Phi_0} \, ,
+    \label{eq:lect-10-2}
+\end{equation}
+dove $\Phi$ è il flusso magnetico totale racchiuso nell'anello SQUID. In generale, questo flusso $\Phi$ non è uguale al flusso $\Phi_e$ fornito esternamente. La loro differenza è dovuta alla corrente di schermatura che circola nell'anello superconduttore:
+\begin{equation}
+    \Phi = \Phi_e - LI_{sc} \, ,
+    \label{eq:lect-10-3}
+\end{equation}
+dove $L$ è l'induttanza dell'anello. Poiché la corrente $I_{sc}$ attraversa sia l'anello che la giunzione, la sua relazione con la differenza di fase della funzione d'onda dell'elettrone superconduttore è data dalla ben nota espressione
+\begin{equation*}
+    I_s(\delta)=I_c\sin \delta \, .
+\end{equation*}
+Mettendo insieme questa equazione con la \eqref{eq:lect-10-2} e la \eqref{eq:lect-10-3}, otteniamo
+\begin{equation*}
+    \Phi_e = \Phi + LI_c\sin\left(2\pi\Phi/\Phi_0\right) \, .
+\end{equation*}
+Questa formula può essere considerata come una relazione implicita tra $\Phi$ e $\Phi_e$. È illustrata graficamente in Figura
+
+\subsection{DC SQUID}
+
+Questo dispositivo è costituito da due giunzioni Josephson collegate in parallelo. In pratica, il circuito è costituito da due superconduttori bulk che, insieme alle giunzioni Josephson $a$ e $b$, formano un anello come in Figura. Il flusso attraverso l'anello dello SQUID è generato da una bobina magnetica posta all'interno dell'anello. Per capire come funziona questo tipo di SQUID, dobbiamo sapere come la massima corrente a tensione zero $I_{\text{max}}$ attraverso il dispositivo dipenda dal flusso magnetico totale $\Phi$ racchiuso nell'anello SQUID.
+Si considerino due coppie di punti all'interno dei superconduttori: (1, 2) e (3,4), tutti vicini alle giunzioni $a$ e $b$, come illustrato in Fig. 4.14. Effettuando l'integrazione della (4.22) lungo il contorno tratteggiato dal punto 1 al punto 3 e dal punto 4 al punto 2 si ottiene
+\begin{equation*}
+    \hbar\left(\phi_3 - \phi_1 + \phi_2 - \phi_4\right)=2e\left(\int_1^3 \vec A \cdot \dd{\vec l} + \int_4^2 \vec A \cdot \dd{\vec l}\right) \, ,
+\end{equation*}
+Il termine $2mv_s$ è stato omesso perché il contorno passa ovunque attraverso l'interno del superconduttore, ben lontano dai bordi. Non c'è sovracorrente lì e $v_s = 0$. La distanza tra i punti 1 e 2, così come tra 3 e 4, è piccola rispetto alla lunghezza del contorno tratteggiato. Inoltre, il potenziale vettore $\vec A$ non ha particolari caratteristiche in prossimità delle giunzioni. Pertanto, il lato destro dell'equazione precedente può essere integrato da un integrale lungo le sezioni 3-4 e 1-2. Di conseguenza otteniamo
+\begin{equation*}
+    \hbar(\delta_a - \delta_b)=2e\oint \vec A \cdot \dd{\vec l} \, ,
+\end{equation*}
+oppure
+\begin{equation*}
+    \delta_a - \delta_b = 2\pi \Phi/\Phi_0 \, ,
+\end{equation*}
+dove $\Phi$ è il flusso magnetico totale racchiuso nel circuito dell'interferometro, $\delta_a=\phi_3-\phi_1$, $\delta_b=\phi_4-\phi_3$, e $\Phi_0=\pi\hbar c/e$ è il quanto del flusso magnetico.
+La corrente attraverso la giunzione $a$ è
+\begin{equation*}
+    I_a = I_c\sin\delta_a \,
+\end{equation*}
+e attraverso la giunzione $b$,
+\begin{equation*}
+    I_b = I_c\sin\delta_b \, .
+\end{equation*}
+In questo caso si suppone che le giunzioni siano identiche e caratterizzate dallo stesso valore di corrente critica, $I_c$. La corrente totale attraverso l'interferometro è allora la somma di $I_a$ e $I_b$:
+\begin{equation*}
+    I=I_c\left(\sin\phi_a + \sin\phi_b\right) \, .
+\end{equation*}
+Notando che
+\begin{equation*}
+    \sin\phi_a + \sin\phi_b = 2\sin[(\phi_a+\phi_b)/2]\cos[(\phi_a-\phi_b)/2] \, ,
+\end{equation*}
+possiamo riscrivere il risultato precedente come
+\begin{equation*}
+    I=2I_c \cos \frac{\pi\Phi}{\Phi_0}\sin\left(\delta_b + \frac{\pi\Phi}{\Phi_0}\right) \, .
+\end{equation*}
+Se il flusso totale racchiuso nell'anello dello SQUID è fisso, l'unico parametro che si autoregola ad una data corrente totale è $\delta_b$. Ne consegue che la massima corrente libera da dissipazione del dispositivo è
+\begin{equation*}
+    I_{\text{max}}=2I_c\abs{\cos(\pi\Phi/\Phi_0)} \, .
+\end{equation*}
+La dipendenza di $I_{\text{max}}$ da $\Phi$ è illustrata in Figura.
+Lo stato superconduttivo dell'anello è più stabile rispetto alla corrente esterna $I$ quando un numero intero di quanti di flusso è racchiuso nell'interferometro. Al contrario, un numero semi-integrale di quanti di flusso nel ciclo corrisponde a uno stato superconduttivo instabile. Vale a dire, in quest'ultimo caso, una corrente $I$ piccola, trascurabile è sufficiente per portare il dispositivo allo stato resistivo, con una tensione finita ai capi della giunzione (vedi Figura). Vorremmo sottolineare che $\Phi$ è il flusso totale attraverso il circuito dell'interferometro. Il flusso fornito esternamente dalla bobina magnetica, $\Phi_e$, è correlato a $\Phi$ da
+\begin{equation*}
+    \Phi = \Phi_e - LI_{sc} \, ,
+\end{equation*}
+dove $L$ è l'induttanza dell'interferometro e $I_{sc}$ è la corrente di schermatura che circola in esso. Anche la corrente critica dello SQUID è periodica in $\Phi_e$, con periodo $\Phi_0$. Questa dipendenza è illustrata in Figura.
