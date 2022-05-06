@@ -20,6 +20,7 @@ L'obiettivo di questo progetto è quello di realizzare una raccolta di materiale
 * [Gabriele Morandi](https://github.com/GabboM98)
 * [Rodolfo Carobene](https://github.com/rodolfocarobene)
 * [Aurora Perego](https://github.com/AuroraPerego)
+* [Pietro Campana](https://github.com/PietroCampana)
 
 ## Licenza
 
