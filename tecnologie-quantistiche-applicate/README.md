@@ -19,7 +19,7 @@ Corso tenuto dal professore Angelo Nucciotti nell'anno accademico 2021-2022. Gli
 - Devoret, M.H. (1997). Quantum Fluctuations in Electrical Circuits. In Quantum Fluctuations (Les Houches Session LXIII). Elsevier.
 
 ### Tesi
-- Schuster, D. I. (2007). Circuit Quantum Electrodynamics. PhD Thesis, Yale University
+- Schuster, D. I. (2007). Circuit Quantum Electrodynamics. PhD Thesis, Yale University.
 - Slichter, D. H. (2011). Quantum Jumps and Measurement Backaction in a Superconducting Qubit. PhD Thesis, University of California, Berkeley.
 - Long, J. (2014). Superconducting Quantum Circuits for Quantum Information Processing. PhD Thesis, Colorado University.
 
